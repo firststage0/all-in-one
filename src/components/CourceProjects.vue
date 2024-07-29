@@ -1,27 +1,20 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import "../assets/styles.css";
 const props = defineProps(["languageName", "projects"]);
+const projects = [props.projects];
+
+for (const el of projects) {
+  console.log(el);
+}
 </script>
 
 <template>
   <p class="title">Проекты, сделанные на {{ props.languageName }}</p>
   <ul>
-    <li class="item">
-      <img src="../assets/icons/projects-icon/ethereum.png" alt="" />
-      <p>{{ props.projects[0] }}</p>
-    </li>
-    <li class="item">
-      <img src="../assets/icons/projects-icon/uniswap.png" alt="" />
-      <p>{{ props.projects[1] }}</p>
-    </li>
-    <li class="item">
-      <img src="../assets/icons/projects-icon/cryptokitties.png" alt="" />
-      <p>{{ props.projects[2] }}</p>
-    </li>
-    <li class="item">
-      <img src="../assets/icons/projects-icon/augur.png" alt="" />
-      <p>{{ props.projects[3] }}</p>
+    <li class="item" v-for="project in props.projects" :key="project">
+      <img :src="project.iconUrl" alt="" />
+      <p>{{ project.name }}</p>
     </li>
   </ul>
 </template>
@@ -50,5 +43,9 @@ ul {
   padding: 12px;
   border-radius: 12px;
   gap: 10px;
+}
+
+p::first-letter {
+  text-transform: uppercase;
 }
 </style>
