@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Kinetica";
+  src: url(../fonts/Kinetica-Light.otf);
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-Regular.ttf");
+}
+
+:root {
+  --inter-font: "Inter", sans-serif;
+  --kinetica-font: "Kinetica", sans-serif;
+  --dark-theme-color: #ffffff;
+  --background-color: #0f0f0c;
+}

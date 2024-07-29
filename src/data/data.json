@@ -1,0 +1,16 @@
+{
+	"title": "Web3 Python-разработчик",
+	"description": "На Python вы научитесь писать смарт-контракты, приложения для взаимодействия с блокчейном и торговые боты",
+	"languageName": "Python",
+	"projects": [
+		"Ethereum",
+		"Uniswap",
+		"CryptoKitties",
+		"Augur"
+	],
+	"duration": "6 мес.",
+	"startDate": "06 июля, 2024",
+	"price": "500 USDT"
+
+
+}
