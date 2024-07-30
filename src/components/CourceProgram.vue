@@ -1,29 +1,6 @@
 <script setup>
 import { ref } from "vue";
-const showStatus = ref(false);
-const changeStatus = () => {
-  showStatus.value ? (showStatus.value = false) : (showStatus.value = true);
-};
-
-// const showDescription = (id) => {
-//   const activeDiscription = document.querySelector(`#b${String(id)}`);
-//   const discriptionBlocks = document.querySelectorAll(".discription-block");
-//   const activeButton = document.querySelector(`#i${String(id)}`);
-
-//   discriptionBlocks.forEach((el) => {
-//     if (el.id !== `b${String(id)}`) {
-//       el.style.display = "none";
-//     }
-//   });
-
-//   if (activeDiscription.style.display === "block") {
-//     activeButton.style.transform = "rotate(0deg)";
-//     activeDiscription.style.display = "none";
-//   } else {
-//     activeButton.style.transform = "rotate(45deg)";
-//     activeDiscription.style.display = "block";
-//   }
-// };
+const active = ref(null);
 </script>
 
 <template>
@@ -31,9 +8,9 @@ const changeStatus = () => {
     <p class="title">Программа курса</p>
     <div class="wrapper">
       <ul>
-        <li v-for="el in 9">
+        <li v-for="(el, index) in 9">
           <div class="element">
-            <header @click="changeStatus()">
+            <header @click="active = active === index ? null : index">
               <div class="left-content">
                 <p class="element-title">
                   <span>{{ el }}.</span> Основы Python
@@ -42,13 +19,17 @@ const changeStatus = () => {
               <button class="show-description">
                 <img
                   :id="'i' + el"
-                  class="button-image"
+                  class="discription-block"
                   src="../assets/icons/button-icons/show-button.svg"
                   alt="+"
                 />
               </button>
             </header>
-            <div v-if="showStatus" class="discription-block" :id="'b' + el">
+            <div
+              v-if="active === index"
+              class="discription-block"
+              :id="'b' + el"
+            >
               <p class="discription">
                 Изучите один из самых востребованных и простых в освоении языков
                 программирования. Сможете описывать алгоритмы для решения
@@ -127,6 +108,11 @@ span {
 
 .element:hover {
   background: #303030;
+}
+
+.active {
+  margin-top: 20px;
+  height: fit-content;
 }
 
 .discription-block {
