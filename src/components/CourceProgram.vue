@@ -19,7 +19,7 @@ const active = ref(null);
               <button class="show-description">
                 <img
                   :id="'i' + el"
-                  class="discription-block"
+                  :class="{ buttonImage: active === index }"
                   src="../assets/icons/button-icons/show-button.svg"
                   alt="+"
                 />
@@ -110,24 +110,16 @@ span {
   background: #303030;
 }
 
-.active {
-  margin-top: 20px;
-  height: fit-content;
-}
-
-.discription-block {
-  margin-top: 20px;
-  height: fit-content;
-}
-
 .discription {
+  margin-top: 20px;
   font-family: var(--inter-font);
   font-weight: 500;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.64);
 }
 
-.button-image {
+.buttonImage {
   transition: 500ms;
+  transform: rotate(45deg);
 }
 </style>
