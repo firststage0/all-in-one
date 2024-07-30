@@ -2,11 +2,6 @@
 import { defineProps, ref } from "vue";
 import "../assets/styles.css";
 const props = defineProps(["languageName", "projects"]);
-const projects = [props.projects];
-
-for (const el of projects) {
-  console.log(el);
-}
 </script>
 
 <template>
@@ -21,7 +16,6 @@ for (const el of projects) {
 
 <style scoped>
 .title {
-  margin-top: 32px;
   font-family: var(--inter-font);
   font-weight: 500;
   font-size: 16px;

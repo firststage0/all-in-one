@@ -5,13 +5,13 @@ const props = defineProps(["description"]);
 </script>
 
 <template>
-  <p class="description">
+  <p class="discription">
     {{ props.description }}
   </p>
 </template>
 
 <style scoped>
-.description {
+.discription {
   margin-top: 24px;
   width: 100%;
   font-family: "Inter", sans-serif;

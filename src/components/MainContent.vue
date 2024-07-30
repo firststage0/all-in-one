@@ -1,13 +1,13 @@
 <script setup>
 import "../assets/styles.css";
 import CourceTitle from "./CourceTitle.vue";
-import jsonData from "../data/data.json";
 import { ref } from "vue";
 import CourceDescription from "./CourceDescription.vue";
 import CourceProjects from "./CourceProjects.vue";
 import CourceInfo from "./CourceInfo.vue";
 import CourceBottom from "./CourceBottom.vue";
-const data = ref(jsonData);
+const props = defineProps(["data"]);
+const data = props.data;
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const data = ref(jsonData);
       <div class="title">
         <CourceTitle :title="data.title" />
       </div>
-      <div class="description">
+      <div class="discription">
         <CourceDescription :description="data.description" />
       </div>
       <div class="projects">
@@ -51,10 +51,18 @@ const data = ref(jsonData);
 .container {
   margin-top: 64px;
   margin-bottom: 64px;
+  width: 100%;
+  background-image: url(../assets/images/python-image.png);
+  background-repeat: no-repeat;
+  background-position: 100% 10%;
+  background-size: 600px;
 }
 
 .main-content {
   max-width: 53%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .back-to-cources {

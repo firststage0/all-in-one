@@ -39,7 +39,6 @@ const props = defineProps(["duration", "startDate", "price"]);
 
 <style scoped>
 .info {
-  margin-top: 32px;
   display: flex;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 16px;

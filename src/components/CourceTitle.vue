@@ -7,8 +7,8 @@ const title = props.title.split(" ");
 
 <template>
   <p class="title">
-    <span class="span-gradient">Web3</span>
-    <span class="no-wrap">Python-разработчик</span>
+    <span class="span-gradient">{{ title[0] + " " }}</span>
+    <span class="no-wrap">{{ title[1] }}</span>
   </p>
 </template>
 
