@@ -1,11 +1,16 @@
 <script setup>
 import "../assets/styles.css";
 import BuyButton from "@/components/BuyButton.vue";
+
+const props = defineProps("SocialsWhereBuy");
 </script>
 
 <template>
   <div class="wrapper">
     <BuyButton />
+
+    <!-- TODO: Сделать отображение соцсетей через массив v-for с данными из пропсов -->
+
     <img
       class="divider"
       src="../assets\icons\projects-icon\divider.png"
