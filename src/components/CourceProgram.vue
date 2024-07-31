@@ -39,7 +39,23 @@ const active = ref(null);
                 <p class="discription">
                   Изучите один из самых востребованных и простых в освоении
                   языков программирования. Сможете описывать алгоритмы для
-                  решения повседневных задач и работы с данными.
+                  решения повседневных задач и работы с данными. Lorem ipsum
+                  dolor sit amet, consectetur adipisicing elit. Aspernatur
+                  corrupti debitis libero repellendus ipsum nulla voluptate
+                  pariatur quae asperiores, deserunt eum similique eveniet
+                  assumenda. A optio aliquam pariatur ratione et. Voluptate
+                  sequi, minus, dolor voluptates amet similique facere doloribus
+                  ipsam, nihil tenetur impedit placeat quas ab vitae facilis!
+                  Velit tempore dignissimos, nisi molestias unde quae fugiat
+                  quas quibusdam quidem nam! Pariatur veniam animi sed expedita
+                  ad totam, debitis necessitatibus, nobis ratione fugiat itaque
+                  sapiente asperiores excepturi laudantium, aut consequuntur a
+                  ab doloribus accusamus. Ad voluptatibus voluptas molestiae
+                  nihil voluptatum. Incidunt. Rem necessitatibus officia ducimus
+                  quas, incidunt voluptatem debitis animi sapiente deleniti sunt
+                  molestias temporibus reiciendis suscipit veritatis a magnam
+                  sint repellat officiis nam exercitationem vel? Quam optio
+                  quidem nisi magnam?
                 </p>
               </div>
             </transition>
@@ -75,10 +91,12 @@ ul {
 }
 
 .element {
+  box-sizing: border-box;
   width: 100%;
   background-color: #161613;
   border-radius: 24px;
   transition: 0.2s;
+  overflow: hidden;
 }
 
 .header {
@@ -122,6 +140,7 @@ span {
   font-weight: 500;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.64);
+  padding: 10px 20px 10px 20px;
 }
 
 .buttonImage {
@@ -134,14 +153,14 @@ span {
 }
 
 .discription-block {
-  height: fit-content;
-  padding: 10px 20px 20px 20px;
+  height: 80px;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: height 30ms ease-in-out;
+  transition: all 300ms ease-in-out;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   height: 0;
