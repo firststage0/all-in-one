@@ -1,8 +1,10 @@
 <script setup>
 import "@/assets/styles.css";
-// const toogleTheme = () => {
-//   console.log(window.matchMedia("(prefers-color-scheme: dark)"));
-// };
+import { ref } from "vue";
+const isThemeDark = ref(true);
+const toogleTheme = () => {
+  isThemeDark.value = !isThemeDark.value;
+};
 </script>
 
 <template>
@@ -40,15 +42,13 @@ import "@/assets/styles.css";
             </button>
           </li>
           <li class="item">
-            <button>
+            <button @click="toogleTheme">
               <div class="toogle-theme-field">
-                <div class="toogle-theme">
-                  <img
-                    class="toogle-theme-dark"
-                    src="@/assets/icons/button-icons/dark-theme-icon.svg"
-                    alt=""
-                  />
-                </div>
+                <div
+                  :class="`${
+                    isThemeDark ? 'toogle-theme-dark' : 'toogle-theme-light'
+                  }`"
+                ></div>
               </div>
             </button>
           </li>
@@ -143,26 +143,50 @@ button {
 }
 
 .toogle-theme-field {
+  position: relative;
   display: flex;
   align-items: center;
   border-radius: 360px;
   width: 55px;
   height: 28px;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.15);
+
   background: #2a2b2e;
 }
 
-.toogle-theme {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  margin-left: auto;
-  margin-right: 2px;
-  align-items: center;
-  justify-content: center;
+.toogle-theme-dark {
+  position: absolute;
+  right: 0;
+  transition: all 1s ease-out;
+  width: 28px;
+  height: 28px;
+  background-image: url("@/assets/icons/button-icons/dark-theme-icon.svg");
 }
 
-.toogle-theme-dark {
-  right: 0;
+.toogle-theme-light {
+  position: absolute;
+  left: 0;
+  transition: all 1s ease-out;
+  width: 28px;
+  height: 28px;
+  background-image: url("@/assets/icons/button-icons/light-theme-icon.svg");
+}
+
+@keyframes move-left {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 50%;
+  }
+}
+
+@keyframes move-right {
+  0% {
+    right: 0;
+  }
+  100% {
+    right: 50%;
+  }
 }
 </style>
