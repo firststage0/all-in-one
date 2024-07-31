@@ -20,22 +20,22 @@ const props = defineProps(["data"]);
         Назад к курсам
       </button>
       <div class="title">
-        <CourceTitle :title="props.data.title" />
+        <CourceTitle :title="props.data?.Name" />
       </div>
       <div class="discription">
-        <CourceDescription :description="props.data.description" />
+        <CourceDescription :description="props.data?.smallDescription" />
       </div>
       <div class="projects">
         <CourceProjects
-          :languageName="props.data.languageName"
-          :projects="props.data.projects"
+          :textForProjects="props.data?.TextForProjects"
+          :projects="props.data?.Projects"
         />
       </div>
       <div class="cource-info">
         <CourceInfo
-          :duration="data.duration"
-          :startDate="data.startDate"
-          :price="data.price"
+          :duration="data?.Duration"
+          :startDate="data?.StartDate"
+          :price="data?.Price"
         />
       </div>
       <div class="main-content-bottom">

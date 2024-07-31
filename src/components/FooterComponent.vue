@@ -2,21 +2,21 @@
 import BuyButton from "@/components/BuyButton.vue";
 import CourceInfo from "@/components/CourceInfo.vue";
 import CourceTitle from "@/components/CourceTitle.vue";
-const props = defineProps(["duration", "startDate", "price"]);
+const props = defineProps(["title, duration", "startDate", "price"]);
 </script>
 
 <template>
   <div class="container">
     <div class="wrapper">
       <div class="title">
-        <CourceTitle :title="'Web3 Python-разработчик'" />
+        <CourceTitle :title="props?.title" />
       </div>
       <div class="bottom">
         <CourceInfo
           style="background-color: #ffffff00; padding: 0"
-          :duration="props.duration"
-          :startDate="props.startDate"
-          :price="props.price"
+          :duration="props?.duration"
+          :startDate="props?.startDate"
+          :price="props?.price"
         />
         <BuyButton />
       </div>

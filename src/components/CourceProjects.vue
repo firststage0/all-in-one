@@ -1,14 +1,14 @@
 <script setup>
 import "@/assets/styles.css";
-const props = defineProps(["languageName", "projects"]);
+const props = defineProps(["textForProjects", "projects"]);
 </script>
 
 <template>
-  <p class="title">Проекты, сделанные на {{ props.languageName }}</p>
+  <p class="title">{{ props?.textForProjects }}</p>
   <ul>
     <li class="item" v-for="project in props.projects" :key="project">
-      <img :src="project.iconUrl" alt="" />
-      <p>{{ project.name }}</p>
+      <img :src="project?.PicUrl" alt="" />
+      <p>{{ project?.Name }}</p>
     </li>
   </ul>
 </template>
