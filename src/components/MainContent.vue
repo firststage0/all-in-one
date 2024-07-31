@@ -1,13 +1,11 @@
 <script setup>
-import "../assets/styles.css";
-import CourceTitle from "./CourceTitle.vue";
-import { ref } from "vue";
-import CourceDescription from "./CourceDescription.vue";
-import CourceProjects from "./CourceProjects.vue";
-import CourceInfo from "./CourceInfo.vue";
-import CourceBottom from "./CourceBottom.vue";
+import "@/assets/styles.css";
+import CourceTitle from "@/components/CourceTitle.vue";
+import CourceDescription from "@/components/CourceDescription.vue";
+import CourceProjects from "@/components/CourceProjects.vue";
+import CourceInfo from "@/components/CourceInfo.vue";
+import CourceBottom from "@/components/CourceBottom.vue";
 const props = defineProps(["data"]);
-const data = props.data;
 </script>
 
 <template>
@@ -22,15 +20,15 @@ const data = props.data;
         Назад к курсам
       </button>
       <div class="title">
-        <CourceTitle :title="data.title" />
+        <CourceTitle :title="props.data.title" />
       </div>
       <div class="discription">
-        <CourceDescription :description="data.description" />
+        <CourceDescription :description="props.data.description" />
       </div>
       <div class="projects">
         <CourceProjects
-          :languageName="data.languageName"
-          :projects="data.projects"
+          :languageName="props.data.languageName"
+          :projects="props.data.projects"
         />
       </div>
       <div class="cource-info">

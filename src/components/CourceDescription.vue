@@ -1,6 +1,5 @@
 <script setup>
-import { defineProps } from "vue";
-import "../assets/styles.css";
+import "@/assets/styles.css";
 const props = defineProps(["description"]);
 </script>
 

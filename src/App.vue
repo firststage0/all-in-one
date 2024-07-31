@@ -10,30 +10,55 @@ import jsonData from "./data/data.json";
 const data = ref(jsonData);
 </script>
 
-<template>
-  <header>
+<template class="template">
+  <header class="header">
     <HeaderComponent />
   </header>
-  <main>
-    <MainContent :data="data" />
-    <WhatLearn />
-    <FutureAchievements />
-    <CourceProgram />
+  <main class="main">
+    <div class="container"><MainContent :data="data" /></div>
+    <div class="container"><WhatLearn /></div>
+    <div class="container"><FutureAchievements /></div>
+    <div class="center-background"></div>
+    <div class="container"><CourceProgram /></div>
   </main>
-  <footer>
-    <FooterComponent
-      :duration="data.duration"
-      :startDate="data.startDate"
-      :price="data.price"
-    />
+  <footer class="footer">
+    <div class="container">
+      <FooterComponent
+        :duration="data.duration"
+        :startDate="data.startDate"
+        :price="data.price"
+      />
+    </div>
   </footer>
 </template>
 
 <style scoped>
-main,
-footer {
+.container {
   margin: auto auto;
   width: 1440px;
+  margin-top: 64px;
+}
+
+.main {
+  margin-top: 64px;
+}
+
+.footer {
+  margin-top: 42px;
+  margin-bottom: 64px;
+}
+
+.center-background {
+  position: absolute;
+  z-index: -1;
+  top: 60%;
+  width: 100%;
+  height: 2000px;
+
+  background-image: url(@/assets/images/half-corus.png),
+    url(@/assets/images/spiral.png), url(@/assets/images/Vector2.svg);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: 95% 33%, 4% 77%, 0 10%;
 }
 
 header {

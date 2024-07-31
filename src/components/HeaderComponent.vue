@@ -1,5 +1,5 @@
 <script setup>
-import "../assets/styles.css";
+import "@/assets/styles.css";
 // const toogleTheme = () => {
 //   console.log(window.matchMedia("(prefers-color-scheme: dark)"));
 // };

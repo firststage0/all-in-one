@@ -1,6 +1,6 @@
 <script setup>
 import "../assets/styles.css";
-import BuyButton from "./BuyButton.vue";
+import BuyButton from "@/components/BuyButton.vue";
 </script>
 
 <template>

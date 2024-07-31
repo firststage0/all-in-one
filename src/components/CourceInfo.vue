@@ -1,6 +1,5 @@
 <script setup>
-import { defineProps } from "vue";
-import "../assets/styles.css";
+import "@/assets/styles.css";
 const props = defineProps(["duration", "startDate", "price"]);
 </script>
 
@@ -15,7 +14,7 @@ const props = defineProps(["duration", "startDate", "price"]);
     </div>
     <img
       class="divider"
-      src="../assets/icons/projects-icon/divider.png"
+      src="@/assets/icons/projects-icon/divider.png"
       alt=""
     />
     <div class="element">

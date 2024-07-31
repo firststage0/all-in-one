@@ -1,14 +1,19 @@
 <script setup>
-import { defineProps } from "vue";
-import "../assets/styles.css";
-const props = defineProps(["title"]);
-const title = props.title.split(" ");
+import { computed } from "vue";
+import "@/assets/styles.css";
+const props = defineProps({
+  title: String,
+});
+const titles = computed(() => {
+  return props.title.split(" ");
+});
+const [spanTitle, primaryTitle] = titles.value;
 </script>
 
 <template>
   <p class="title">
-    <span class="span-gradient">{{ title[0] + " " }}</span>
-    <span class="no-wrap">{{ title[1] }}</span>
+    <span class="span-gradient">{{ spanTitle + " " }}</span>
+    <span class="no-wrap">{{ primaryTitle }}</span>
   </p>
 </template>
 

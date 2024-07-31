@@ -1,8 +1,7 @@
 <script setup>
-import BuyButton from "./BuyButton.vue";
-import CourceInfo from "./CourceInfo.vue";
-import CourceTitle from "./CourceTitle.vue";
-import { defineProps } from "vue";
+import BuyButton from "@/components/BuyButton.vue";
+import CourceInfo from "@/components/CourceInfo.vue";
+import CourceTitle from "@/components/CourceTitle.vue";
 const props = defineProps(["duration", "startDate", "price"]);
 </script>
 

@@ -6,11 +6,9 @@
 }
 body {
   background-color: var(--background-color);
-  background-image: url(../assets/images/half-corus.png),
-    url(../assets/images/spiral.png), url(../assets/images/Vector2.svg),
-    url(../assets/images/Vector1.svg);
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-  background-position: 93.3% 41%, 5% 62%, 0% 45%, 100% 0%;
+  background-image: url(@/assets/images/Vector1.svg);
+  background-repeat: no-repeat;
+  background-position: 100% 0%;
 }
 
 button {

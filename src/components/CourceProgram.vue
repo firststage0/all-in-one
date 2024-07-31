@@ -10,7 +10,10 @@ const active = ref(null);
       <ul>
         <li v-for="(el, index) in 9">
           <div class="element">
-            <header @click="active = active === index ? null : index">
+            <header
+              class="header"
+              @click="active = active === index ? null : index"
+            >
               <div class="left-content">
                 <p class="element-title">
                   <span>{{ el }}.</span> Основы Python
@@ -19,23 +22,27 @@ const active = ref(null);
               <button class="show-description">
                 <img
                   :id="'i' + el"
-                  :class="{ buttonImage: active === index }"
-                  src="../assets/icons/button-icons/show-button.svg"
+                  :class="
+                    active === index ? 'buttonImageActive' : 'buttonImage'
+                  "
+                  src="@/assets/icons/button-icons/show-button.svg"
                   alt="+"
                 />
               </button>
             </header>
-            <div
-              v-if="active === index"
-              class="discription-block"
-              :id="'b' + el"
-            >
-              <p class="discription">
-                Изучите один из самых востребованных и простых в освоении языков
-                программирования. Сможете описывать алгоритмы для решения
-                повседневных задач и работы с данными.
-              </p>
-            </div>
+            <transition name="fade">
+              <div
+                v-if="active === index"
+                class="discription-block"
+                :id="'b' + el"
+              >
+                <p class="discription">
+                  Изучите один из самых востребованных и простых в освоении
+                  языков программирования. Сможете описывать алгоритмы для
+                  решения повседневных задач и работы с данными.
+                </p>
+              </div>
+            </transition>
           </div>
         </li>
       </ul>
@@ -72,13 +79,13 @@ ul {
   background-color: #161613;
   border-radius: 24px;
   transition: 0.2s;
-  padding: 20px;
 }
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  padding: 20px;
 }
 
 .element-title {
@@ -111,7 +118,6 @@ span {
 }
 
 .discription {
-  margin-top: 20px;
   font-family: var(--inter-font);
   font-weight: 500;
   font-size: 16px;
@@ -120,6 +126,24 @@ span {
 
 .buttonImage {
   transition: 500ms;
+}
+
+.buttonImageActive {
+  transition: 500ms;
   transform: rotate(45deg);
+}
+
+.discription-block {
+  height: fit-content;
+  padding: 10px 20px 20px 20px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: height 30ms ease-in-out;
+}
+.fade-enter-from,
+.fade-leave-to {
+  height: 0;
 }
 </style>
