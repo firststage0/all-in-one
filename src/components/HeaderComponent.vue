@@ -44,13 +44,8 @@ import "@/assets/styles.css";
               <div class="toogle-theme-field">
                 <div class="toogle-theme">
                   <img
-                    class="toogle-theme-circle"
-                    src="../assets/icons/switch-el-night.svg"
-                    alt=""
-                  />
-                  <img
-                    class="toogle-theme-icon"
-                    src="../assets/icons/theme-icon.svg"
+                    class="toogle-theme-dark"
+                    src="@/assets/icons/button-icons/dark-theme-icon.svg"
                     alt=""
                   />
                 </div>
@@ -158,7 +153,6 @@ button {
 }
 
 .toogle-theme {
-  position: relative;
   width: 24px;
   height: 24px;
   display: flex;
@@ -167,7 +161,8 @@ button {
   align-items: center;
   justify-content: center;
 }
-.toogle-theme img {
-  position: absolute;
+
+.toogle-theme-dark {
+  right: 0;
 }
 </style>

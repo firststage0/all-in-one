@@ -16,9 +16,9 @@ const data = ref(jsonData);
   </header>
   <main class="main">
     <div class="container"><MainContent :data="data" /></div>
+
     <div class="container"><WhatLearn /></div>
     <div class="container"><FutureAchievements /></div>
-    <div class="center-background"></div>
     <div class="container"><CourceProgram /></div>
   </main>
   <footer class="footer">
@@ -46,19 +46,6 @@ const data = ref(jsonData);
 .footer {
   margin-top: 42px;
   margin-bottom: 64px;
-}
-
-.center-background {
-  position: absolute;
-  z-index: -1;
-  top: 60%;
-  width: 100%;
-  height: 2000px;
-
-  background-image: url(@/assets/images/half-corus.png),
-    url(@/assets/images/spiral.png), url(@/assets/images/Vector2.svg);
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: 95% 33%, 4% 77%, 0 10%;
 }
 
 header {

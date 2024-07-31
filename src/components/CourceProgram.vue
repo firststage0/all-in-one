@@ -30,35 +30,19 @@ const active = ref(null);
                 />
               </button>
             </header>
-            <transition name="fade">
-              <div
-                v-if="active === index"
-                class="discription-block"
-                :id="'b' + el"
-              >
-                <p class="discription">
-                  Изучите один из самых востребованных и простых в освоении
-                  языков программирования. Сможете описывать алгоритмы для
-                  решения повседневных задач и работы с данными. Lorem ipsum
-                  dolor sit amet, consectetur adipisicing elit. Aspernatur
-                  corrupti debitis libero repellendus ipsum nulla voluptate
-                  pariatur quae asperiores, deserunt eum similique eveniet
-                  assumenda. A optio aliquam pariatur ratione et. Voluptate
-                  sequi, minus, dolor voluptates amet similique facere doloribus
-                  ipsam, nihil tenetur impedit placeat quas ab vitae facilis!
-                  Velit tempore dignissimos, nisi molestias unde quae fugiat
-                  quas quibusdam quidem nam! Pariatur veniam animi sed expedita
-                  ad totam, debitis necessitatibus, nobis ratione fugiat itaque
-                  sapiente asperiores excepturi laudantium, aut consequuntur a
-                  ab doloribus accusamus. Ad voluptatibus voluptas molestiae
-                  nihil voluptatum. Incidunt. Rem necessitatibus officia ducimus
-                  quas, incidunt voluptatem debitis animi sapiente deleniti sunt
-                  molestias temporibus reiciendis suscipit veritatis a magnam
-                  sint repellat officiis nam exercitationem vel? Quam optio
-                  quidem nisi magnam?
-                </p>
-              </div>
-            </transition>
+            <div
+              v-if="active === index"
+              :class="
+                active === index ? 'discriptionblockActive' : 'discriptionBlock'
+              "
+              :id="'b' + el"
+            >
+              <p class="discription">
+                Изучите один из самых востребованных и простых в освоении языков
+                программирования. Сможете описывать алгоритмы для решения
+                повседневных задач и работы с данными.
+              </p>
+            </div>
           </div>
         </li>
       </ul>
@@ -152,11 +136,16 @@ span {
   transform: rotate(45deg);
 }
 
-.discription-block {
-  height: 80px;
+.discriptionBlock {
+  transition: 500ms;
 }
 
-.fade-enter-active,
+.discriptionBlockActive {
+  transition: 500ms;
+  transform: height 500ms ease-in-out;
+}
+
+/* .fade-enter-active,
 .fade-leave-active {
   transition: all 300ms ease-in-out;
 }
@@ -164,5 +153,5 @@ span {
 .fade-enter-from,
 .fade-leave-to {
   height: 0;
-}
+} */
 </style>

@@ -7,9 +7,10 @@
 }
 body {
   background-color: var(--background-color);
-  background-image: url(@/assets/images/Vector1.svg);
-  background-repeat: no-repeat;
-  background-position: 100% 0%;
+  background-image: url(@/assets/images/Vector1.svg),
+    url(@/assets/images/half-corus.png), url(@/assets/images/center-image.png);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: 100% 0%, 93% 2000px, -1080px 850px;
 }
 
 button {
