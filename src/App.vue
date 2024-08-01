@@ -5,35 +5,50 @@ import MainContent from "@/components/MainContent.vue";
 import WhatLearn from "@/components/WhatLearn.vue";
 import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
+import "@/assets/styles.css";
 
 import { ref } from "vue";
 
 import { fetcher } from "@/functions/fetcher";
 
 const jsonData = ref({});
+const isLoading = ref(false);
 
 const url = "https://aiostudy.com/api/v1/courses/get-course?CourseID=3";
-onload = async () => {
+
+const getHeaderHeight = () => {
+  const root = document.documentElement;
+  const rootStyles = window.getComputedStyle(root);
+  const headerHeight = rootStyles.getPropertyValue("--header-height");
+  console.log("Header height", headerHeight);
+};
+const getData = async () => {
   const promise = fetcher(url);
+  isLoading.value = true;
   promise.then((data) => {
-    jsonData.value = data;
-    console.log(jsonData.value);
+    jsonData.value = data.Course;
+    isLoading.value = false;
   });
+};
+
+onload = () => {
+  getHeaderHeight();
+  getData();
 };
 </script>
 
-<template class="template">
+<template v-if="!isLoading" class="template">
   <header class="header">
-    <HeaderComponent />
+    <HeaderComponent class="header" />
   </header>
   <main class="main">
     <div class="container"><MainContent :data="jsonData" /></div>
 
-    <div class="container"><WhatLearn /></div>
+    <!-- <div class="container"><WhatLearn /></div>
     <div class="container"><FutureAchievements /></div>
-    <div class="container"><CourceProgram /></div>
+    <div class="container"><CourceProgram /></div> -->
   </main>
-  <footer class="footer">
+  <!-- <footer class="footer">
     <div class="container">
       <FooterComponent
         :title="jsonData?.Name"
@@ -42,7 +57,7 @@ onload = async () => {
         :price="jsonData?.Price"
       />
     </div>
-  </footer>
+  </footer> -->
 </template>
 
 <style scoped>
@@ -53,7 +68,7 @@ onload = async () => {
 }
 
 .main {
-  margin-top: 64px;
+  margin-top: calc(var(--header-height) + 64px);
 }
 
 .footer {
@@ -63,7 +78,7 @@ onload = async () => {
 
 header {
   top: 0;
-  position: sticky;
+  position: fixed;
   z-index: 3;
 }
 </style>

@@ -5,6 +5,15 @@ const isThemeDark = ref(true);
 const toogleTheme = () => {
   isThemeDark.value = !isThemeDark.value;
 };
+
+const setHeaderHeight = () => {
+  const headerHeight = document.querySelector(".container").offsetHeight;
+  console.log("Header height", headerHeight);
+  // const root = document.documentElement;
+  // root.style.setProperty("--header-height", `${headerHeight}px`);
+};
+
+setHeaderHeight();
 </script>
 
 <template>
