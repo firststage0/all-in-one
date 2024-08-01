@@ -3,8 +3,6 @@ import "../assets/styles.css";
 import BuyButton from "@/components/BuyButton.vue";
 
 const props = defineProps(["socialsWhereBuy"]);
-
-console.log("CourceBottom ", props.socialsWhereBuy);
 </script>
 
 <template>

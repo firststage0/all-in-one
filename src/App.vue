@@ -38,7 +38,9 @@ onload = () => {
     <div class="container"><MainContent :data="jsonData" /></div>
 
     <div class="container"><WhatLearn /></div>
-    <div class="container"><FutureAchievements /></div>
+    <div class="container">
+      <FutureAchievements :achievements="jsonData?.Achievements" />
+    </div>
     <div class="container"><CourceProgram /></div>
   </main>
   <footer class="footer">

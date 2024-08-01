@@ -1,10 +1,12 @@
-<script setup></script>
+<script setup>
+const props = defineProps(["achievements"]);
+</script>
 
 <template>
   <div class="container">
     <p class="title">Будущие достижения</p>
     <div class="wrapper">
-      <div>Первое взаимодействие с блокчейном</div>
+      <!-- <div>Первое взаимодействие с блокчейном</div>
       <div>Свап на Uniswap V3</div>
       <div>Свап на Uniswap V3</div>
       <div>Свап на Uniswap V3</div>
@@ -19,6 +21,10 @@
       <div>Свап на Uniswap V3</div>
       <div>Свап на Uniswap V3</div>
       <div>Свап на Uniswap V3</div>
+      -->
+      <div v-for="achievement in props.achievements">
+        {{ achievement?.Name }}
+      </div>
     </div>
   </div>
 </template>

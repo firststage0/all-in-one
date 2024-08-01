@@ -2,14 +2,14 @@
 import BuyButton from "@/components/BuyButton.vue";
 import CourceInfo from "@/components/CourceInfo.vue";
 import CourceTitle from "@/components/CourceTitle.vue";
-const props = defineProps(["title, duration", "startDate", "price"]);
+const props = defineProps(["title", "duration", "startDate", "price"]);
 </script>
 
 <template>
   <div class="container">
     <div class="wrapper">
       <div class="title">
-        <CourceTitle :title="props?.title" />
+        <CourceTitle :title="props.title" />
       </div>
       <div class="bottom">
         <CourceInfo

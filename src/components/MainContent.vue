@@ -10,12 +10,10 @@ import { ref } from "vue";
 const props = defineProps(["data"]);
 const isLoading = ref(false);
 
-console.log(props.data);
 if (!props.data?.SocialsWhereBuy) {
   isLoading.value = true;
 } else {
   isLoading.value = false;
-  console.log(isLoading.value);
 }
 </script>
 
