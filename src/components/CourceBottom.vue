@@ -9,8 +9,6 @@ const props = defineProps(["socialsWhereBuy"]);
   <div class="wrapper">
     <BuyButton />
 
-    <!-- TODO: Сделать отображение соцсетей через массив v-for с данными из пропсов -->
-
     <img
       class="divider"
       src="../assets\icons\projects-icon\divider.png"
@@ -18,8 +16,9 @@ const props = defineProps(["socialsWhereBuy"]);
     />
     <ul>
       <li v-for="social in props.socialsWhereBuy">
-        <a :href="social.Link" target="_blank"
-          ><p>{{ social.Name }}</p></a
+        <a :href="social.Link" target="_blank">
+          <img src="@/assets/icons/telegram.svg" alt="" class="socialsIcon" />
+          <p>{{ social.Name }}</p></a
         >
       </li>
     </ul>
@@ -36,7 +35,13 @@ const props = defineProps(["socialsWhereBuy"]);
 .wrapper > * {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 24px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 a {
@@ -46,8 +51,19 @@ a {
   font-size: 14px;
 }
 
-ul {
-  list-style-type: none;
+a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+a > img {
+  transition: 300ms;
+  filter: invert(80%);
+}
+
+a:hover > img {
+  filter: invert(0);
 }
 
 p {

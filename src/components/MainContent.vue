@@ -62,10 +62,6 @@ if (!props.data?.SocialsWhereBuy) {
   margin-top: 64px;
   margin-bottom: 64px;
   width: 100%;
-  background-image: url(../assets/images/python-image.png);
-  background-repeat: no-repeat;
-  background-position: 100% 10%;
-  background-size: 600px;
 }
 
 .title {

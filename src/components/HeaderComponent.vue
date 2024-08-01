@@ -5,6 +5,11 @@ import { onMounted, ref } from "vue";
 import flagRussia from "@/assets/icons/flag-russia.svg";
 import flagAmerica from "@/assets/icons/flag-america.svg";
 
+import {
+  toogleWindowStatus,
+  isWindowActive,
+} from "@/functions/profileModalWindow";
+
 const isThemeDark = ref(true);
 const toogleTheme = () => {
   isThemeDark.value = !isThemeDark.value;
@@ -28,6 +33,10 @@ const languages = {
   ru: { name: "RU", url: flagRussia },
   en: { name: "EN", url: flagAmerica },
 };
+
+const logStatus = () => {
+  console.log(isWindowActive.status);
+};
 </script>
 
 <template>
@@ -40,7 +49,7 @@ const languages = {
       <nav class="nav-bar">
         <ul>
           <li class="item">
-            <button class="referral">
+            <button class="referral" @click="toogleWindowStatus">
               Referal
               <img
                 class="referral-image"
@@ -50,7 +59,7 @@ const languages = {
             </button>
           </li>
           <li class="item">
-            <button>
+            <button @click="logStatus">
               <img
                 class="profile-image"
                 src="../assets/icons/profile-image.png"

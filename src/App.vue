@@ -5,11 +5,15 @@ import MainContent from "@/components/MainContent.vue";
 import WhatLearn from "@/components/WhatLearn.vue";
 import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
+
+import { isWindowActive } from "./functions/profileModalWindow";
+
 import "@/assets/styles.css";
 
 import { ref } from "vue";
 
 import { fetcher } from "@/functions/fetcher";
+import ProfileModalWindow from "./components/ProfileModalWindow.vue";
 
 const jsonData = ref({});
 const isLoading = ref(false);
@@ -35,6 +39,8 @@ onload = () => {
     <HeaderComponent class="header" />
   </header>
   <main class="main">
+    <ProfileModalWindow />
+
     <div class="container"><MainContent :data="jsonData" /></div>
 
     <div class="container"><WhatLearn /></div>
