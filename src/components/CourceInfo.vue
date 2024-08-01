@@ -1,6 +1,13 @@
 <script setup>
 import "@/assets/styles.css";
+
 const props = defineProps(["duration", "startDate", "price"]);
+const date = new Date(props.startDate);
+const options = { year: "numeric", month: "long", day: "numeric" };
+const year = date.getFullYear();
+const formattedDate = date
+  .toLocaleDateString("ru-RU", options)
+  .replace(/\s*\d{4}\s*г\./, `, ${year}`);
 </script>
 
 <template>
@@ -19,9 +26,7 @@ const props = defineProps(["duration", "startDate", "price"]);
     />
     <div class="element">
       <p class="title">Начало</p>
-      <p class="value">
-        {{ props.startDate }}
-      </p>
+      <p class="value">{{ formattedDate }}</p>
     </div>
     <img
       class="divider"
@@ -31,7 +36,7 @@ const props = defineProps(["duration", "startDate", "price"]);
     <div class="element">
       <p class="title">Цена</p>
 
-      <p class="value">{{ props.price }}</p>
+      <p class="value">{{ props.price }} USDT</p>
     </div>
   </div>
 </template>

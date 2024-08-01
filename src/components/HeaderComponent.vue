@@ -1,6 +1,10 @@
 <script setup>
 import "@/assets/styles.css";
 import { onMounted, ref } from "vue";
+
+import flagRussia from "@/assets/icons/flag-russia.svg";
+import flagAmerica from "@/assets/icons/flag-america.svg";
+
 const isThemeDark = ref(true);
 const toogleTheme = () => {
   isThemeDark.value = !isThemeDark.value;
@@ -15,6 +19,15 @@ onMounted(() => {
   const header = document.querySelector(".container").offsetHeight;
   setHeaderHeight(header);
 });
+
+const activeLanguage = ref("ru");
+
+const dropDownShow = ref(false);
+
+const languages = {
+  ru: { name: "RU", url: flagRussia },
+  en: { name: "EN", url: flagAmerica },
+};
 </script>
 
 <template>
@@ -82,10 +95,23 @@ onMounted(() => {
             </button>
           </li>
           <li class="item">
-            <button style="gap: 4px">
-              <img src="../assets/icons/flag-russia.png" alt="" class="flag" />
-              RU
+            <button style="gap: 4px" @click="dropDownShow = true">
+              <img :src="languages[activeLanguage].url" alt="" class="flag" />
+              {{ languages[activeLanguage].name }}
             </button>
+            <div v-if="dropDownShow" class="dropdown-box">
+              <button
+                v-for="(el, index) in languages"
+                class="dropdown-item"
+                @click="
+                  activeLanguage = index;
+                  dropDownShow = false;
+                "
+              >
+                <img :src="el.url" alt="" class="flag" />
+                {{ el.name }}
+              </button>
+            </div>
           </li>
         </ul>
       </nav>
@@ -150,6 +176,38 @@ button {
   background: linear-gradient(225deg, #bdff00 0%, #edff7b 100%);
   color: #000000;
   padding: 14px 20px;
+}
+
+.flag {
+  width: 24px;
+  height: 24px;
+}
+
+.dropdown-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  width: fit-content;
+  background-color: #1e1e18;
+  border: 1px solid #ffffff29;
+  border-radius: 14px;
+  padding: 10px 12px;
+  z-index: 10;
+}
+
+.dropdown-item {
+  transition: all 300ms;
+  border: 1px solid #24222229;
+  background-color: #0f0f0c;
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.dropdown-item:hover {
+  border: 1px solid #286ce0;
 }
 
 .toogle-theme-field {
