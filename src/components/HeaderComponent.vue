@@ -1,19 +1,20 @@
 <script setup>
 import "@/assets/styles.css";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 const isThemeDark = ref(true);
 const toogleTheme = () => {
   isThemeDark.value = !isThemeDark.value;
 };
 
-const setHeaderHeight = () => {
-  const headerHeight = document.querySelector(".container").offsetHeight;
-  console.log("Header height", headerHeight);
-  // const root = document.documentElement;
-  // root.style.setProperty("--header-height", `${headerHeight}px`);
+const setHeaderHeight = (height) => {
+  const root = document.documentElement;
+  root.style.setProperty("--header-height", `${height}px`);
 };
 
-setHeaderHeight();
+onMounted(() => {
+  const header = document.querySelector(".container").offsetHeight;
+  setHeaderHeight(header);
+});
 </script>
 
 <template>

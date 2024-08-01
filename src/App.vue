@@ -16,12 +16,6 @@ const isLoading = ref(false);
 
 const url = "https://aiostudy.com/api/v1/courses/get-course?CourseID=3";
 
-const getHeaderHeight = () => {
-  const root = document.documentElement;
-  const rootStyles = window.getComputedStyle(root);
-  const headerHeight = rootStyles.getPropertyValue("--header-height");
-  console.log("Header height", headerHeight);
-};
 const getData = async () => {
   const promise = fetcher(url);
   isLoading.value = true;
@@ -32,7 +26,6 @@ const getData = async () => {
 };
 
 onload = () => {
-  getHeaderHeight();
   getData();
 };
 </script>
