@@ -11,7 +11,6 @@ const props = defineProps(["description"]);
 
 <style scoped>
 .discription {
-  margin-top: 24px;
   width: 100%;
   font-family: "Inter", sans-serif;
   font-weight: 500;

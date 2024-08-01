@@ -2,7 +2,9 @@
 import "../assets/styles.css";
 import BuyButton from "@/components/BuyButton.vue";
 
-const props = defineProps("SocialsWhereBuy");
+const props = defineProps(["socialsWhereBuy"]);
+
+console.log("CourceBottom ", props.socialsWhereBuy);
 </script>
 
 <template>
@@ -16,22 +18,13 @@ const props = defineProps("SocialsWhereBuy");
       src="../assets\icons\projects-icon\divider.png"
       alt=""
     />
-    <a href="http://google.com" target="_blank" rel="noopener noreferrer">
-      <img src="../assets/icons/telegram.svg" alt="" />
-      <p>Telegram</p>
-    </a>
-    <a href="http://google.com" target="_blank" rel="noopener noreferrer">
-      <img src="../assets/icons/telegram.svg" alt="" />
-      <p>Telegram</p>
-    </a>
-    <a href="http://google.com" target="_blank" rel="noopener noreferrer">
-      <img src="../assets/icons/telegram.svg" alt="" />
-      <p>Telegram</p>
-    </a>
-    <a href="http://google.com" target="_blank" rel="noopener noreferrer">
-      <img src="../assets/icons/telegram.svg" alt="" />
-      <p>Telegram</p>
-    </a>
+    <ul>
+      <li v-for="social in props.socialsWhereBuy">
+        <a :href="social.Link" target="_blank"
+          ><p>{{ social.Name }}</p></a
+        >
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -53,6 +46,10 @@ a {
   font-family: var(--inter-font);
   font-weight: 600;
   font-size: 14px;
+}
+
+ul {
+  list-style-type: none;
 }
 
 p {

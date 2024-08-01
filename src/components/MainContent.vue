@@ -5,7 +5,18 @@ import CourceDescription from "@/components/CourceDescription.vue";
 import CourceProjects from "@/components/CourceProjects.vue";
 import CourceInfo from "@/components/CourceInfo.vue";
 import CourceBottom from "@/components/CourceBottom.vue";
+import { ref } from "vue";
+
 const props = defineProps(["data"]);
+const isLoading = ref(false);
+
+console.log(props.data);
+if (!props.data?.SocialsWhereBuy) {
+  isLoading.value = true;
+} else {
+  isLoading.value = false;
+  console.log(isLoading.value);
+}
 </script>
 
 <template>
@@ -21,9 +32,9 @@ const props = defineProps(["data"]);
       </button>
       <div class="title">
         <CourceTitle :title="props.data?.Name" />
-      </div>
-      <div class="discription">
-        <CourceDescription :description="props.data?.smallDescription" />
+        <div class="discription">
+          <CourceDescription :description="props.data?.smallDescription" />
+        </div>
       </div>
       <div class="projects">
         <CourceProjects
@@ -39,7 +50,10 @@ const props = defineProps(["data"]);
         />
       </div>
       <div class="main-content-bottom">
-        <CourceBottom />
+        <CourceBottom
+          v-if="!isLoading"
+          :socialsWhereBuy="props.data.SocialsWhereBuy"
+        />
       </div>
     </div>
   </div>
@@ -54,6 +68,15 @@ const props = defineProps(["data"]);
   background-repeat: no-repeat;
   background-position: 100% 10%;
   background-size: 600px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.discription {
+  margin-top: 12px;
 }
 
 .main-content {

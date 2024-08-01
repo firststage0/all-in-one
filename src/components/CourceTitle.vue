@@ -7,6 +7,7 @@ const props = defineProps({
 const titles = computed(() => {
   return props.title.split(" ");
 });
+
 const [spanTitle, primaryTitle] = titles.value;
 </script>
 

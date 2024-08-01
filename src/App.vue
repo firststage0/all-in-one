@@ -37,11 +37,11 @@ onload = () => {
   <main class="main">
     <div class="container"><MainContent :data="jsonData" /></div>
 
-    <!-- <div class="container"><WhatLearn /></div>
+    <div class="container"><WhatLearn /></div>
     <div class="container"><FutureAchievements /></div>
-    <div class="container"><CourceProgram /></div> -->
+    <div class="container"><CourceProgram /></div>
   </main>
-  <!-- <footer class="footer">
+  <footer class="footer">
     <div class="container">
       <FooterComponent
         :title="jsonData?.Name"
@@ -50,7 +50,7 @@ onload = () => {
         :price="jsonData?.Price"
       />
     </div>
-  </footer> -->
+  </footer>
 </template>
 
 <style scoped>

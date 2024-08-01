@@ -7,7 +7,7 @@ const props = defineProps(["textForProjects", "projects"]);
   <p class="title">{{ props?.textForProjects }}</p>
   <ul>
     <li class="item" v-for="project in props.projects" :key="project">
-      <img :src="project?.PicUrl" alt="" />
+      <img class="image" :src="project?.PicUrl" alt="" />
       <p>{{ project?.Name }}</p>
     </li>
   </ul>
@@ -27,6 +27,12 @@ ul {
   display: flex;
   list-style-type: none;
   gap: 12px;
+}
+
+.image {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
 }
 
 .item {
