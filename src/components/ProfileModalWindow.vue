@@ -1,12 +1,12 @@
 <script setup>
 import "@/assets/styles.css";
 import { computed, ref, watch } from "vue";
-import { toogleWindowStatus } from "../functions/profileModalWindow";
+import { toogleWindowStatus } from "../functions/modalWindowsStatus";
 import "@/assets/styles.css";
 </script>
 
 <template>
-  <div class="content" @click.self="toogleWindowStatus">
+  <div class="content" @click.self="toogleWindowStatus('profile')">
     <div class="wrapper-profile">
       <header class="profile-modal-header">
         <div class="header-block">
@@ -15,7 +15,10 @@ import "@/assets/styles.css";
               <p class="header-title">Profile</p>
             </li>
             <li class="header-item">
-              <button class="close-button" @click.stop="toogleWindowStatus">
+              <button
+                class="close-button"
+                @click.stop="toogleWindowStatus('profile')"
+              >
                 <img
                   class="close-img"
                   src="@/assets/icons/close-icon.svg"

@@ -5,10 +5,7 @@ import { onMounted, ref } from "vue";
 import flagRussia from "@/assets/icons/flag-russia.svg";
 import flagAmerica from "@/assets/icons/flag-america.svg";
 
-import {
-  toogleWindowStatus,
-  isWindowActive,
-} from "@/functions/profileModalWindow";
+import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 
 const isThemeDark = ref(true);
 const toogleTheme = () => {
@@ -55,7 +52,10 @@ const languages = {
             </button>
           </li>
           <li class="item">
-            <button class="profile-button" @click="toogleWindowStatus">
+            <button
+              class="profile-button"
+              @click="toogleWindowStatus('profile')"
+            >
               <img
                 class="profile-image"
                 src="@/assets/icons/profile-image.svg"

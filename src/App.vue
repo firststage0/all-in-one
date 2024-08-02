@@ -6,7 +6,7 @@ import WhatLearn from "@/components/WhatLearn.vue";
 import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 
-import { isWindowActive } from "@/functions/profileModalWindow";
+import { isWindowActive } from "@/functions/modalWindowsStatus";
 
 import "@/assets/styles.css";
 
@@ -31,14 +31,16 @@ const getData = async () => {
   });
 };
 
-const activeWindow = ref(false);
+// const activeWindow = ref(isWindowActive);
 
-activeWindow.value = computed(() => {
-  return isWindowActive.status;
-});
+// activeWindow.value = computed(() => {
+//   return isWindowActive;
+// });
 
-watch(activeWindow.value, (newValue) => {
-  if (newValue) {
+console.log(isWindowActive);
+
+watch(isWindowActive, () => {
+  if (isWindowActive["profile"].status) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "unset";
@@ -55,7 +57,7 @@ onload = () => {
     <HeaderComponent class="header" />
   </header>
   <main class="main">
-    <ProfileModalWindow v-if="activeWindow.value" />
+    <ProfileModalWindow v-if="isWindowActive['profile'].status" />
     <!-- <RefferalModalWindow /> -->
     <!-- <ConnectedReferalModalWindow /> -->
 
