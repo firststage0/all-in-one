@@ -42,7 +42,10 @@ const languages = {
       <nav class="nav-bar">
         <ul>
           <li class="item">
-            <button class="referral">
+            <button
+              class="referral"
+              @click="toogleWindowStatus('activeRefferal')"
+            >
               Referal
               <img
                 class="referral-image"

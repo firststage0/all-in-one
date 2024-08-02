@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 
 export const isWindowActive = reactive({
 	"profile": {status: false}, 
-	"acriveRefferal": {status: false},
+	"activeRefferal": {status: false},
 	"connectedRefferal": {status: false},
 
 });

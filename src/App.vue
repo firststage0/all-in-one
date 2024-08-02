@@ -31,16 +31,17 @@ const getData = async () => {
   });
 };
 
-// const activeWindow = ref(isWindowActive);
-
-// activeWindow.value = computed(() => {
-//   return isWindowActive;
-// });
-
 console.log(isWindowActive);
 
 watch(isWindowActive, () => {
-  if (isWindowActive["profile"].status) {
+  const isScrollBlocked = ref(false);
+  for (let key in isWindowActive) {
+    if (isWindowActive[key].status) {
+      isScrollBlocked.value = true;
+      break;
+    }
+  }
+  if (isScrollBlocked.value) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "unset";
@@ -58,8 +59,10 @@ onload = () => {
   </header>
   <main class="main">
     <ProfileModalWindow v-if="isWindowActive['profile'].status" />
-    <!-- <RefferalModalWindow /> -->
-    <!-- <ConnectedReferalModalWindow /> -->
+    <RefferalModalWindow v-if="isWindowActive['activeRefferal'].status" />
+    <ConnectedReferalModalWindow
+      v-if="isWindowActive['connectedRefferal'].status"
+    />
 
     <div class="container"><MainContent :data="jsonData" /></div>
 

@@ -1,7 +1,12 @@
-<script setup></script>
+<script setup>
+import { toogleWindowStatus } from "../functions/modalWindowsStatus";
+</script>
 
 <template>
-  <div class="refferal-modal-container">
+  <div
+    class="refferal-modal-container"
+    @click.self="toogleWindowStatus('activeRefferal')"
+  >
     <div class="refferal-modal-wrapper">
       <p class="title">Refferal</p>
       <div class="refferal-modal-card">
