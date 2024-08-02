@@ -6,11 +6,11 @@ import WhatLearn from "@/components/WhatLearn.vue";
 import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 
-import { isWindowActive } from "./functions/profileModalWindow";
+import { isWindowActive } from "@/functions/profileModalWindow";
 
 import "@/assets/styles.css";
 
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 
 import { fetcher } from "@/functions/fetcher";
 import ProfileModalWindow from "./components/ProfileModalWindow.vue";
@@ -29,6 +29,20 @@ const getData = async () => {
   });
 };
 
+const activeWindow = ref(false);
+
+activeWindow.value = computed(() => {
+  return isWindowActive.status;
+});
+
+watch(activeWindow.value, (newValue) => {
+  if (newValue) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "unset";
+  }
+});
+
 onload = () => {
   getData();
 };
@@ -39,7 +53,7 @@ onload = () => {
     <HeaderComponent class="header" />
   </header>
   <main class="main">
-    <ProfileModalWindow />
+    <ProfileModalWindow v-if="activeWindow.value" />
 
     <div class="container"><MainContent :data="jsonData" /></div>
 

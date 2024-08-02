@@ -33,10 +33,6 @@ const languages = {
   ru: { name: "RU", url: flagRussia },
   en: { name: "EN", url: flagAmerica },
 };
-
-const logStatus = () => {
-  console.log(isWindowActive.status);
-};
 </script>
 
 <template>
@@ -49,25 +45,25 @@ const logStatus = () => {
       <nav class="nav-bar">
         <ul>
           <li class="item">
-            <button class="referral" @click="toogleWindowStatus">
+            <button class="referral">
               Referal
               <img
                 class="referral-image"
-                src="../assets/icons/referral.svg"
+                src="@/assets/icons/referral.svg"
                 alt="percent-image"
               />
             </button>
           </li>
           <li class="item">
-            <button @click="logStatus">
+            <button class="profile-button" @click="toogleWindowStatus">
               <img
                 class="profile-image"
-                src="../assets/icons/profile-image.png"
+                src="@/assets/icons/profile-image.svg"
                 alt="profile-image"
               />
               0x831B49F
               <img
-                src="../assets/icons/copy-image.svg"
+                src="@/assets/icons/copy-image.svg"
                 alt=""
                 class="copy-image"
               />
