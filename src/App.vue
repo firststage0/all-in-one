@@ -14,6 +14,8 @@ import { ref, computed, watch } from "vue";
 
 import { fetcher } from "@/functions/fetcher";
 import ProfileModalWindow from "./components/ProfileModalWindow.vue";
+import RefferalModalWindow from "./components/RefferalModalWindow.vue";
+import ConnectedReferalModalWindow from "./components/ConnectedReferalModalWindow.vue";
 
 const jsonData = ref({});
 const isLoading = ref(false);
@@ -54,6 +56,8 @@ onload = () => {
   </header>
   <main class="main">
     <ProfileModalWindow v-if="activeWindow.value" />
+    <!-- <RefferalModalWindow /> -->
+    <!-- <ConnectedReferalModalWindow /> -->
 
     <div class="container"><MainContent :data="jsonData" /></div>
 

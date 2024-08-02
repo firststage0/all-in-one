@@ -126,7 +126,7 @@ const languages = {
 
 <style scoped>
 header {
-  background-color: #0f0f0c;
+  background-color: #0c0c09;
   width: 100%;
   color: #ffff;
 }
