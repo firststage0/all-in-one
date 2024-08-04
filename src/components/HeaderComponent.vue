@@ -93,14 +93,16 @@ const languages = {
             </button>
           </li>
           <li class="item">
-            <button style="gap: 10px">
-              <img
-                class="question-mark-img"
-                src="../assets/icons/question-mark.svg"
-                alt=""
-              />
-              FAQ
-            </button>
+            <router-link to="/faq" style="text-decoration: none">
+              <button style="gap: 10px">
+                <img
+                  class="question-mark-img"
+                  src="../assets/icons/question-mark.svg"
+                  alt=""
+                />
+                FAQ
+              </button>
+            </router-link>
           </li>
           <li class="item">
             <button style="gap: 4px" @click="dropDownShow = true">
