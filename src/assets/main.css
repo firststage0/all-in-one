@@ -5,7 +5,9 @@
   color: var(--dark-theme-color);
   box-sizing: border-box;
 }
+
 body {
+  color: var(--vt-c-white);
   background-color: var(--background-color);
   background-image: url(@/assets/images/top-right-background.svg),
     url(@/assets/images/half-corus.png), url(@/assets/images/center-image.png);

@@ -10,8 +10,6 @@ import "@/assets/main.css";
 
 import { isWindowActive } from "@/functions/modalWindowsStatus";
 
-import "@/assets/styles.css";
-
 import { ref, watch } from "vue";
 
 import { fetcher } from "@/functions/fetcher";
