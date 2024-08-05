@@ -9,11 +9,6 @@
 body {
   color: var(--vt-c-white);
   background-color: var(--background-color);
-  background-image: url(@/assets/images/top-right-background.svg),
-    url(@/assets/images/half-corus.png), url(@/assets/images/center-image.png);
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: calc(50% + 500px) -5%, calc(50% + 820px) 1590px,
-    calc(50% - 1170px) 410px;
 }
 
 button {

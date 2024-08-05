@@ -64,15 +64,9 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 </template>
 
 <style scoped>
-.header {
-  width: 100%;
-  position: fixed;
-}
-
 .refferal-window-container {
   width: 100%;
   height: 100vh;
-  background-color: #0c0c09;
   display: flex;
   justify-content: center;
   align-items: center;

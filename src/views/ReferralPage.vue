@@ -1,5 +1,6 @@
 <script setup>
 import HeaderComponent from "../components/HeaderComponent.vue";
+import "@/assets/styles.css";
 </script>
 
 <template>
@@ -36,15 +37,9 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 </template>
 
 <style scoped>
-.header {
-  width: 100%;
-  position: fixed;
-}
-
 .refferal-modal-container {
   width: 100%;
   height: 100dvh;
-  background-color: #0c0c09;
   display: flex;
   justify-content: center;
   align-items: center;

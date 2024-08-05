@@ -81,6 +81,7 @@ if (!props.data?.SocialsWhereBuy) {
 }
 
 .back-to-cources {
+  width: fit-content;
   font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 20px;

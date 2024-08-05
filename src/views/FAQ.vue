@@ -54,6 +54,11 @@ const active = ref(null);
 </template>
 
 <style scoped>
+.header {
+  position: fixed;
+  width: 100%;
+}
+
 .wrapper {
   width: 100%;
   height: 100%;
@@ -61,12 +66,11 @@ const active = ref(null);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  background-color: #0c0c09;
 }
 
 .faq-container {
   margin-top: calc(var(--header-height) + 46px);
+  margin-bottom: 46px;
   width: fit-content;
   display: flex;
   width: 850px;

@@ -14,8 +14,6 @@ import { ref, watch } from "vue";
 
 import { fetcher } from "@/functions/fetcher";
 import ProfileModalWindow from "@/components/ProfileModalWindow.vue";
-// import RefferalModalWindow from "@/components/RefferalModalWindow.vue";
-// import ConnectedReferalModalWindow from "@/components/ConnectedReferalModalWindow.vue";
 
 const jsonData = ref({});
 const isLoading = ref(false);
@@ -53,40 +51,42 @@ watch(isWindowActive, () => {
   <header class="header">
     <HeaderComponent class="header" />
   </header>
-  <main class="main">
-    <ProfileModalWindow v-if="isWindowActive['profile'].status" />
-    <!-- <RefferalModalWindow v-if="isWindowActive['activeRefferal'].status" />
-    <ConnectedReferalModalWindow
-      v-if="isWindowActive['connectedRefferal'].status"
-    /> -->
+  <div class="background-container">
+    <main class="main">
+      <ProfileModalWindow v-if="isWindowActive['profile'].status" />
 
-    <div class="container"><MainContent :data="jsonData" /></div>
+      <div class="container"><MainContent :data="jsonData" /></div>
 
-    <div class="container"><WhatLearn /></div>
-    <div class="container">
-      <FutureAchievements :achievements="jsonData?.Achievements" />
-    </div>
-    <div class="container"><CourceProgram /></div>
-  </main>
-  <footer class="footer">
-    <div class="container">
-      <FooterComponent
-        :title="jsonData?.Name"
-        :duration="jsonData?.Duration"
-        :startDate="jsonData?.StartDate"
-        :price="jsonData?.Price"
-      />
-    </div>
-  </footer>
+      <div class="container"><WhatLearn /></div>
+      <div class="container">
+        <FutureAchievements :achievements="jsonData?.Achievements" />
+      </div>
+      <div class="container"><CourceProgram /></div>
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <FooterComponent
+          :title="jsonData?.Name"
+          :duration="jsonData?.Duration"
+          :startDate="jsonData?.StartDate"
+          :price="jsonData?.Price"
+        />
+      </div>
+    </footer>
+  </div>
 </template>
 
 <style scoped>
-body {
+.background-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
   background-image: url(@/assets/images/top-right-background.svg),
     url(@/assets/images/half-corus.png), url(@/assets/images/center-image.png);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: calc(50% + 500px) -5%, calc(50% + 820px) 1590px,
     calc(50% - 1170px) 410px;
+  padding: 1px;
 }
 
 .container {
