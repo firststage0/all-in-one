@@ -5,6 +5,8 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 
 const active = ref(null);
 const activeBlock = ref(null);
+
+const activeBlocks = ref(Array(5).fill(null));
 </script>
 
 <template>
@@ -32,9 +34,8 @@ const activeBlock = ref(null);
                 class="item-header"
                 @click="
                   {
-                    active = active === index ? null : index;
-                    activeBlock =
-                      activeBlock === sectionIndex ? null : sectionIndex;
+                    activeBlocks[sectionIndex] =
+                      activeBlocks[sectionIndex] === index ? null : index;
                   }
                 "
               >
@@ -42,9 +43,7 @@ const activeBlock = ref(null);
                 <button class="show-button">
                   <img
                     :class="`show-img ${
-                      active === index && activeBlock === sectionIndex
-                        ? 'active'
-                        : ''
+                      activeBlocks[sectionIndex] === index ? 'active' : ''
                     }`"
                     src="@/assets/icons/button-icons/faq-show-img.svg"
                     alt=""
@@ -53,16 +52,12 @@ const activeBlock = ref(null);
               </header>
               <div
                 :class="`item-discription ${
-                  active === index && activeBlock === sectionIndex
-                    ? 'active'
-                    : ''
+                  activeBlocks[sectionIndex] === index ? 'active' : ''
                 }`"
               >
                 <p
                   :class="`item-discription-text ${
-                    active === index && activeBlock === sectionIndex
-                      ? 'active'
-                      : ''
+                    activeBlocks[sectionIndex] === index ? 'active' : ''
                   }`"
                 >
                   Discription
