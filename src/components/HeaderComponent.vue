@@ -33,7 +33,7 @@ const languages = {
 </script>
 
 <template>
-  <header>
+  <header class="header-component">
     <div class="container">
       <div class="title">
         <h1 class="primary-title">All-IN-ONE</h1>
@@ -133,7 +133,8 @@ const languages = {
 </template>
 
 <style scoped>
-header {
+.header-component {
+  position: fixed;
   background-color: #0c0c09;
   width: 100%;
   color: #ffff;

@@ -17,8 +17,3 @@
   --header-height: 0;
   --content-opacity: 0.7;
 }
-
-.header {
-  position: fixed;
-  width: 100%;
-}

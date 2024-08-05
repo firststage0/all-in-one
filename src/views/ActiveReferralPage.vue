@@ -3,9 +3,8 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 </script>
 
 <template>
-  <div class="header">
-    <HeaderComponent />
-  </div>
+  <HeaderComponent />
+
   <div class="refferal-window-container">
     <div class="wrapper">
       <p class="label">Refferal</p>

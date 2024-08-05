@@ -47,11 +47,9 @@ watch(isWindowActive, () => {
 });
 </script>
 
-<template v-if="!isLoading" class="cource-template">
-  <header class="header">
-    <HeaderComponent class="header" />
-  </header>
-  <div class="background-container">
+<template>
+  <HeaderComponent />
+  <div class="background-container" v-if="!isLoading">
     <main class="main">
       <ProfileModalWindow v-if="isWindowActive['profile'].status" />
 
@@ -102,11 +100,5 @@ watch(isWindowActive, () => {
 .footer {
   margin-top: 42px;
   margin-bottom: 64px;
-}
-
-header {
-  top: 0;
-  position: fixed;
-  z-index: 3;
 }
 </style>

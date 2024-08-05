@@ -11,7 +11,7 @@ const active = ref(null);
         <li v-for="(el, index) in 9">
           <div class="element">
             <header
-              class="header"
+              class="cource-program-header"
               @click="active = active === index ? null : index"
             >
               <div class="left-content">
@@ -83,7 +83,7 @@ ul {
   overflow: hidden;
 }
 
-.header {
+.cource-program-header {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
