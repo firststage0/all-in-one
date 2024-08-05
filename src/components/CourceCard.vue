@@ -2,11 +2,18 @@
 const props = defineProps({
   data: Object,
   isFooterActive: Boolean,
+  isBackButtonShow: Boolean,
 });
 </script>
 
 <template>
   <div class="wrapper">
+    <router-link v-if="isBackButtonShow" to="/lessons-list" class="router-link">
+      <button class="back-button">
+        <img src="@/assets/icons/button-icons/arrow.svg" alt="" />
+        <p>Назад</p>
+      </button>
+    </router-link>
     <div class="content">
       <header class="header">
         <div class="type-block">
@@ -77,11 +84,34 @@ const props = defineProps({
   height: fit-content;
   padding: 16px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   border-radius: 32px;
   background: #151514;
   cursor: pointer;
+  gap: 12px;
+}
+
+.back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: inherit;
+  gap: 10px;
+}
+
+.back-button > img {
+  width: 6px;
+  height: 12px;
+  opacity: 0.64;
+}
+
+.back-button > p {
+  font-family: var(--inter-font);
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.64);
 }
 
 .content {
