@@ -4,6 +4,7 @@ import { ref } from "vue";
 import HeaderComponent from "../components/HeaderComponent.vue";
 
 const active = ref(null);
+const activeBlock = ref(null);
 </script>
 
 <template>
@@ -15,31 +16,53 @@ const active = ref(null);
       <p class="faq-label">FAQ</p>
       <div class="faq-content">
         <div class="faq-menu">
-          <button v-for="i in 5" class="menu-button"><p>Основное</p></button>
+          <button v-for="(i, menu_index) in 5" class="menu-button" @click="">
+            <a :href="`#s${menu_index}`">Основное</a>
+          </button>
         </div>
         <div class="question-section">
-          <div v-for="i in 4" class="question-block">
+          <div
+            v-for="(i, sectionIndex) in 5"
+            class="question-block"
+            :id="`s${sectionIndex}`"
+          >
             <p class="question-block-title">Основное</p>
             <li v-for="(el, index) in 5" class="item">
               <header
                 class="item-header"
-                @click="active = active === index ? null : index"
+                @click="
+                  {
+                    active = active === index ? null : index;
+                    activeBlock =
+                      activeBlock === sectionIndex ? null : sectionIndex;
+                  }
+                "
               >
                 <p class="item-title">Label</p>
                 <button class="show-button">
                   <img
-                    :class="`show-img ${active === index ? 'active' : ''}`"
+                    :class="`show-img ${
+                      active === index && activeBlock === sectionIndex
+                        ? 'active'
+                        : ''
+                    }`"
                     src="@/assets/icons/button-icons/faq-show-img.svg"
                     alt=""
                   />
                 </button>
               </header>
               <div
-                :class="`item-discription ${active === index ? 'active' : ''}`"
+                :class="`item-discription ${
+                  active === index && activeBlock === sectionIndex
+                    ? 'active'
+                    : ''
+                }`"
               >
                 <p
                   :class="`item-discription-text ${
-                    active === index ? 'active' : ''
+                    active === index && activeBlock === sectionIndex
+                      ? 'active'
+                      : ''
                   }`"
                 >
                   Discription
@@ -107,7 +130,7 @@ const active = ref(null);
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  padding: 12px 100px;
+
   width: 280px;
   height: 43px;
   border: none;
@@ -115,12 +138,18 @@ const active = ref(null);
   transition: 400ms;
 }
 
-.menu-button > p {
+.menu-button > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   transition: 400ms;
   font-family: var(--inter-font);
   font-weight: 600;
   font-size: 16px;
   color: #b9b9b9;
+  text-decoration: none;
 }
 
 .menu-button:hover {
