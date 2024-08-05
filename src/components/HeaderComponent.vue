@@ -43,7 +43,7 @@ const languages = {
         <ul>
           <li class="item">
             <button
-              class="referral"
+              class="refferral"
               @click="toogleWindowStatus('activeRefferal')"
             >
               Referal
@@ -94,7 +94,7 @@ const languages = {
           </li>
           <li class="item">
             <router-link to="/faq" style="text-decoration: none">
-              <button style="gap: 10px">
+              <button class="faq-button" style="gap: 10px">
                 <img
                   class="question-mark-img"
                   src="../assets/icons/question-mark.svg"
@@ -105,7 +105,11 @@ const languages = {
             </router-link>
           </li>
           <li class="item">
-            <button style="gap: 4px" @click="dropDownShow = true">
+            <button
+              class="language-button"
+              style="gap: 4px"
+              @click="dropDownShow = !dropDownShow"
+            >
               <img :src="languages[activeLanguage].url" alt="" class="flag" />
               {{ languages[activeLanguage].name }}
             </button>
@@ -170,7 +174,8 @@ ul {
 }
 
 button {
-  /* color: #ffff; */
+  font-family: var(--inter-font);
+  transition: 300ms;
   display: flex;
   gap: 12px;
   align-items: center;
@@ -182,10 +187,28 @@ button {
   padding: 10px 12px;
 }
 
-.referral {
+button:not(.refferral):hover {
+  transition: 300ms;
+  border: 1px solid #286ce0;
+}
+
+.profile-button {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.question-mark-img {
+  opacity: 0.8;
+}
+
+.refferral {
   background: linear-gradient(225deg, #bdff00 0%, #edff7b 100%);
-  color: #000000;
+  border-radius: 8px;
   padding: 14px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #242222;
 }
 
 .flag {
@@ -193,10 +216,21 @@ button {
   height: 24px;
 }
 
+.faq-button,
+.language-button {
+  font-weight: 700;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.language-button {
+  width: 76px;
+}
+
 .dropdown-box {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
   position: absolute;
   top: 70px;
   right: 10px;
@@ -214,6 +248,7 @@ button {
   background-color: #0f0f0c;
   border-radius: 14px;
   padding: 10px 12px;
+  gap: 6px;
 }
 
 .dropdown-item:hover {
