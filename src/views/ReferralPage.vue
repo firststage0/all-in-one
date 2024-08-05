@@ -1,12 +1,12 @@
 <script setup>
-import { toogleWindowStatus } from "../functions/modalWindowsStatus";
+import HeaderComponent from "../components/HeaderComponent.vue";
 </script>
 
 <template>
-  <div
-    class="refferal-modal-container"
-    @click.self="toogleWindowStatus('activeRefferal')"
-  >
+  <header class="header">
+    <HeaderComponent />
+  </header>
+  <div class="refferal-modal-container">
     <div class="refferal-modal-wrapper">
       <p class="title">Refferal</p>
       <div class="refferal-modal-card">
@@ -36,13 +36,14 @@ import { toogleWindowStatus } from "../functions/modalWindowsStatus";
 </template>
 
 <style scoped>
-.refferal-modal-container {
-  position: fixed;
-  z-index: 2;
-  top: 0;
-  left: 0;
+.header {
   width: 100%;
-  height: 100vh;
+  position: fixed;
+}
+
+.refferal-modal-container {
+  width: 100%;
+  height: 100dvh;
   background-color: #0c0c09;
   display: flex;
   justify-content: center;
@@ -70,7 +71,6 @@ import { toogleWindowStatus } from "../functions/modalWindowsStatus";
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 16px;
-
   padding: 24px;
   gap: 16px;
 }

@@ -1,6 +1,11 @@
-<script setup></script>
+<script setup>
+import HeaderComponent from "../components/HeaderComponent.vue";
+</script>
 
 <template>
+  <div class="header">
+    <HeaderComponent />
+  </div>
   <div class="refferal-window-container">
     <div class="wrapper">
       <p class="label">Refferal</p>
@@ -59,11 +64,12 @@
 </template>
 
 <style scoped>
-.refferal-window-container {
+.header {
+  width: 100%;
   position: fixed;
-  z-index: 2;
-  top: 0;
-  left: 0;
+}
+
+.refferal-window-container {
   width: 100%;
   height: 100vh;
   background-color: #0c0c09;

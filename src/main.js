@@ -17,6 +17,16 @@ const router = createRouter({
       name: "FAQ",
       component: () => import("./views/FAQ.vue"),
     },
+    {
+      path: "/referral",
+      name: "Referral",
+      component: () => import("./views/ReferralPage.vue"),
+    },
+    {
+      path: "/active-referral",
+      name: "Active Referral",
+      component: () => import("./views/ActiveReferralPage.vue"),
+    },
   ],
 });
 

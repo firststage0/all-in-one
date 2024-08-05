@@ -42,17 +42,16 @@ const languages = {
       <nav class="nav-bar">
         <ul>
           <li class="item">
-            <button
-              class="refferral"
-              @click="toogleWindowStatus('activeRefferal')"
-            >
-              Referal
-              <img
-                class="referral-image"
-                src="@/assets/icons/referral.svg"
-                alt="percent-image"
-              />
-            </button>
+            <router-link class="router-link" to="/referral">
+              <button class="referral">
+                Referal
+                <img
+                  class="referral-image"
+                  src="@/assets/icons/referral.svg"
+                  alt="percent-image"
+                />
+              </button>
+            </router-link>
           </li>
           <li class="item">
             <button
@@ -93,7 +92,7 @@ const languages = {
             </button>
           </li>
           <li class="item">
-            <router-link to="/faq" style="text-decoration: none">
+            <router-link class="router-link" to="/faq">
               <button class="faq-button" style="gap: 10px">
                 <img
                   class="question-mark-img"
@@ -147,6 +146,10 @@ header {
   align-items: center;
 }
 
+.router-link {
+  text-decoration: none;
+}
+
 .title {
   display: flex;
   align-items: center;
@@ -187,7 +190,7 @@ button {
   padding: 10px 12px;
 }
 
-button:not(.refferral):hover {
+button:not(.referral):hover {
   transition: 300ms;
   border: 1px solid #286ce0;
 }
@@ -201,7 +204,7 @@ button:not(.refferral):hover {
   opacity: 0.8;
 }
 
-.refferral {
+.referral {
   background: linear-gradient(225deg, #bdff00 0%, #edff7b 100%);
   border-radius: 8px;
   padding: 14px 20px;
