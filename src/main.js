@@ -27,6 +27,16 @@ const router = createRouter({
       name: "Active Referral",
       component: () => import("./views/ActiveReferralPage.vue"),
     },
+    {
+      path: "/lessons-list",
+      name: "Lessons list",
+      component: () => import("./views/LessonsList.vue"),
+    },
+    {
+      path: "/education",
+      name: "Education",
+      component: () => import("./views/Education.vue"),
+    },
   ],
 });
 
