@@ -18,3 +18,7 @@ button {
 html {
   scroll-behavior: smooth;
 }
+
+.router-link {
+  text-decoration: none;
+}

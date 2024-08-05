@@ -1,5 +1,7 @@
 <script setup>
 import "@/assets/styles.css";
+import "@/assets/main.css";
+
 import { onMounted, ref } from "vue";
 
 import flagRussia from "@/assets/icons/flag-russia.svg";
@@ -36,7 +38,9 @@ const languages = {
   <header class="header-component">
     <div class="container">
       <div class="title">
-        <h1 class="primary-title">All-IN-ONE</h1>
+        <router-link to="/" class="router-link"
+          ><h1 class="primary-title">All-IN-ONE</h1></router-link
+        >
         <h2 class="secondary-title">Study</h2>
       </div>
       <nav class="nav-bar">
