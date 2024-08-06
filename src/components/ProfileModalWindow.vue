@@ -1,7 +1,6 @@
 <script setup>
 import "@/assets/styles.css";
-import { computed, ref, watch } from "vue";
-import { toogleWindowStatus } from "../functions/modalWindowsStatus";
+import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import "@/assets/styles.css";
 </script>
 
