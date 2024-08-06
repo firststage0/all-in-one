@@ -21,11 +21,7 @@ if (!props.data?.SocialsWhereBuy) {
   <div class="container">
     <div class="main-content">
       <button class="back-to-cources">
-        <img
-          class="arrow"
-          src="../assets\icons\main-content-icons\arrow.svg"
-          alt=""
-        />
+        <img class="arrow" src="@/assets\icons\button-icons\arrow.svg" alt="" />
         Назад к курсам
       </button>
       <div class="title">
