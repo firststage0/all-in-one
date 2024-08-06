@@ -11,25 +11,11 @@ import "@/assets/main.css";
 import { isWindowActive } from "@/functions/modalWindowsStatus";
 
 import { ref, watch } from "vue";
+import { jsonData } from "@/functions/getDataFromServer";
 
-import { fetcher } from "@/functions/fetcher";
 import ProfileModalWindow from "@/components/ProfileModalWindow.vue";
 
-const jsonData = ref({});
 const isLoading = ref(false);
-
-const url = "https://aiostudy.com/api/v1/courses/get-course?CourseID=3";
-
-const getData = async () => {
-  const promise = fetcher(url);
-  isLoading.value = true;
-  promise.then((data) => {
-    jsonData.value = data.Course;
-    isLoading.value = false;
-  });
-};
-
-getData();
 
 watch(isWindowActive, () => {
   const isScrollBlocked = ref(false);

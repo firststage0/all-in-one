@@ -12,8 +12,6 @@ const isMarked = ref({
 
 const themes = ref(themesData);
 
-console.log(themes.value);
-
 const activeMenuButtonIndex = ref(null);
 
 const toogleNavButton = (id) => {
@@ -107,6 +105,10 @@ const toogleNavButton = (id) => {
           </div>
         </div>
       </div>
+
+      <div v-if="isMarked[2]" class="homework-interface"></div>
+
+      <div v-if="isMarked[3]" class="achievements-interface"></div>
     </div>
   </div>
 </template>
