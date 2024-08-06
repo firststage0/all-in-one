@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="cource-card-wrapper">
     <router-link v-if="isBackButtonShow" to="/lessons-list" class="router-link">
       <button class="back-button">
         <img src="@/assets/icons/button-icons/arrow.svg" alt="" />
@@ -79,7 +79,7 @@ const props = defineProps({
 </template>
 
 <style scoped>
-.wrapper {
+.cource-card-wrapper {
   width: 950px;
   height: fit-content;
   padding: 16px;

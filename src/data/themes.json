@@ -1,0 +1,100 @@
+[
+		{
+			"id": 1,
+			"title": "Тема 1",
+			"description": "Циклы и массивы",
+			"lessons": [
+				{
+					"id": 1,
+					"typeIconUrl": "@/assets/icons/type-icons/video.svg",
+					"type": "Видеокурс",
+					"title": "Вводный курс студента",
+					"durationIconUrl": "@/assets/icons/duration.svg",
+					"duration": "20 мин.",
+					"isCompleted": false
+				},
+				{
+					"id": 2,
+					"typeIconUrl": "@/assets/icons/type-icons/vebinar.svg",
+					"type": "Вебинарный формат",
+					"title": "Модуль 1",
+					"durationIconUrl": "@/assets/icons/duration.svg",
+					"duration": "20 мин.",
+					"isCompleted": true
+				},
+				{
+					"id": 3,
+					"typeIconUrl": "@/assets/icons/type-icons/vebinar.svg",
+					"type": "Вебинарный формат",
+					"title": "Модуль 2",
+					"durationIconUrl": "@/assets/icons/duration.svg",
+					"duration": "20 мин.",
+					"isCompleted": false
+				},
+				{
+					"id": 4,
+					"typeIconUrl": "@/assets/icons/type-icons/vebinar.svg",
+					"type": "Вебинарный формат",
+					"title": "Модуль 3",
+					"durationIconUrl": "@/assets/icons/duration.svg",
+					"duration": "20 мин.",
+					"isCompleted": false
+				},
+				{
+					"id": 5,
+					"typeIconUrl": "@/assets/icons/type-icons/vebinar.svg",
+					"type": "Вебинарный формат",
+					"title": "Модуль 4",
+					"durationIconUrl": "@/assets/icons/duration.svg",
+					"duration": "20 мин.",
+					"isCompleted": false
+				},
+				{
+					"id": 6,
+					"typeIconUrl": "@/assets/icons/type-icons/vebinar.svg",
+					"type": "Вебинарный формат",
+					"title": "Модуль 5",
+					"durationIconUrl": "@/assets/icons/duration.svg",
+					"duration": "20 мин.",
+					"isCompleted": false
+				}
+			]
+		},
+		{
+			"id": 2,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+			
+		},
+		{
+			"id": 3,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+		},
+		{
+			"id": 4,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+		},
+		{
+			"id": 5,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+		},
+		{
+			"id": 6,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+		},
+		{
+			"id": 7,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+		},
+		{
+			"id": 8,
+			"title": "Тема 1",
+			"description": "Циклы и массивы"
+		}
+	
+]
