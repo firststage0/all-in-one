@@ -142,6 +142,7 @@ const languages = {
   background-color: #0c0c09;
   width: 100%;
   color: #ffff;
+  z-index: 10;
 }
 
 .container {

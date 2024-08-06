@@ -104,7 +104,7 @@ const props = defineProps({
 .back-button > img {
   width: 6px;
   height: 12px;
-  opacity: 0.64;
+  filter: opacity(0.6);
 }
 
 .back-button > p {
