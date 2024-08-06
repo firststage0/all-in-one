@@ -111,7 +111,7 @@ const toogleNavButton = (id) => {
 
       <div v-if="isMarked[2]" class="homework-interface">
         <div class="homework-wrapper">
-          <HomeworkCard v-for="i in homeworks" :data="i" :isAdmin="true" />
+          <HomeworkCard v-for="i in homeworks" :data="i" :isAdmin="false" />
         </div>
       </div>
 
