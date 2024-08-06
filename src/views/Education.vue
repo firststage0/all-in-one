@@ -4,6 +4,9 @@ import themesData from "@/data/themes.json";
 import { ref } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
+import homeworks from "@/data/homeworks.json";
+import HomeworkCard from "@/components/HomeworkCard.vue";
+
 const isMarked = ref({
   1: true,
   2: false,
@@ -106,7 +109,11 @@ const toogleNavButton = (id) => {
         </div>
       </div>
 
-      <div v-if="isMarked[2]" class="homework-interface"></div>
+      <div v-if="isMarked[2]" class="homework-interface">
+        <div class="homework-wrapper">
+          <HomeworkCard v-for="i in homeworks" :data="i" />
+        </div>
+      </div>
 
       <div v-if="isMarked[3]" class="achievements-interface">
         <div class="achievements-grid">
@@ -134,6 +141,7 @@ const toogleNavButton = (id) => {
 
 .main-container {
   margin-top: calc(var(--header-height) + 16px);
+  margin-bottom: 42px;
   width: 1440px;
   display: flex;
   flex-direction: column;
@@ -314,6 +322,15 @@ const toogleNavButton = (id) => {
 
 .go-to-text.inactive {
   color: #32b413;
+}
+
+.homework-wrapper {
+  display: grid;
+  background-color: #151514;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 32px;
+  padding: 16px;
+  gap: 16px;
 }
 
 .achievements-grid {

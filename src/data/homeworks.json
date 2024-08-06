@@ -1,0 +1,56 @@
+[
+	{
+		"attistationType": "Промежуточная аттестация",
+		"cource": "Web3 Python-разработчик",
+		"title": "Обсуждение проекта и портфолио",
+		"theme": "Тема 1. Циклы и Массивы",
+		"status": "waiting",
+		"deadline": "16.07.2024",
+		"grade": null
+	},
+	{
+		"attistationType": "Итоговая аттестация",
+		"cource": "Web3 Python-разработчик",
+		"title": "Защита проекта",
+		"theme": "Тема 1. Циклы и Массивы",
+		"status": "checking",
+		"deadline": "16.07.2024",
+		"grade": null
+	},
+	{
+		"attistationType": "Промежуточная аттестация",
+		"cource": "Web3 Python-разработчик",
+		"title": "Обсуждение проекта и портфолио",
+		"theme": "Тема 1. Циклы и Массивы",
+		"status": "checked",
+		"deadline": null,
+		"grade": 4
+	},
+	{
+		"attistationType": "Итоговая аттестация",
+		"cource": "Web3 Python-разработчик",
+		"title": "Защита проекта",
+		"theme": "Тема 1. Циклы и Массивы",
+		"status": "checked",
+		"deadline": null,
+		"grade": 3
+	},
+	{
+		"attistationType": "Промежуточная аттестация",
+		"cource": "Web3 Python-разработчик",
+		"title": "Обсуждение проекта и портфолио",
+		"theme": "Тема 1. Циклы и Массивы",
+		"status": "checked",
+		"deadline": null,
+		"grade": 2
+	},
+	{
+		"attistationType": "Итоговая аттестация",
+		"cource": "Web3 Python-разработчик",
+		"title": "Защита проекта",
+		"theme": "Тема 1. Циклы и Массивы",
+		"status": "checked",
+		"deadline": null,
+		"grade": 5
+	}
+]
