@@ -6,15 +6,19 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
 import homeworks from "@/data/homeworks.json";
 import HomeworkCard from "@/components/HomeworkCard.vue";
+import LessonCard from "@/components/LessonCard.vue";
+import LessonPage from "@/components/LessonPage.vue";
+
+const isShowCardButton = ref(true);
 
 const isMarked = ref({
+  0: false,
   1: true,
   2: false,
   3: false,
 });
 
 const themes = ref(themesData);
-
 const activeMenuButtonIndex = ref(null);
 
 const toogleNavButton = (id) => {
@@ -23,6 +27,12 @@ const toogleNavButton = (id) => {
       ? (isMarked.value[key] = true)
       : (isMarked.value[key] = false);
   }
+  isShowCardButton.value = true;
+};
+
+const handleLessonsCardClick = () => {
+  toogleNavButton(0);
+  isShowCardButton.value = false;
 };
 </script>
 
@@ -30,7 +40,7 @@ const toogleNavButton = (id) => {
   <HeaderComponent />
   <div class="education-wrapper">
     <div class="main-container">
-      <CourceCard isBackButtonShow="true" />
+      <CourceCard :isBackButtonShow="isShowCardButton" />
 
       <nav class="nav-bar">
         <button
@@ -76,36 +86,11 @@ const toogleNavButton = (id) => {
           "
           class="lessons-block"
         >
-          <div
-            v-for="i in themes[activeMenuButtonIndex].lessons"
-            :class="`card ${i.isCompleted ? 'inactive' : ''}`"
-          >
-            <main class="card-main">
-              <div class="type-block">
-                <img :src="`${i.typeIconUrl}`" alt="" class="type-img" />
-                <p class="type-title">{{ i.type }}</p>
-              </div>
-              <p class="card-title">{{ i.title }}</p>
-            </main>
-            <footer class="card-footer">
-              <div class="duration-block">
-                <img
-                  :src="`${i?.durationIconUrl}`"
-                  alt=""
-                  class="duration-img"
-                />
-                <p class="duration">Длительность</p>
-                <p class="duration-value">{{ i.duration }}</p>
-              </div>
-              <button
-                :class="`go-to-button ${i.isCompleted ? 'inactive' : ''}`"
-              >
-                <p :class="`go-to-text ${i.isCompleted ? 'inactive' : ''}`">
-                  {{ i.isCompleted ? "Урок пройден" : "Перейти к уроку" }}
-                </p>
-              </button>
-            </footer>
-          </div>
+          <LessonCard
+            @click="handleLessonsCardClick"
+            v-for="element in themes[activeMenuButtonIndex].lessons"
+            :data="element"
+          />
         </div>
       </div>
 
@@ -114,7 +99,6 @@ const toogleNavButton = (id) => {
           <HomeworkCard v-for="i in homeworks" :data="i" :isAdmin="false" />
         </div>
       </div>
-
       <div v-if="isMarked[3]" class="achievements-interface">
         <div class="achievements-grid">
           <Achievements
@@ -127,6 +111,9 @@ const toogleNavButton = (id) => {
             :isCompleted="i === 1 || i === 2 ? true : false"
           />
         </div>
+      </div>
+      <div v-if="isMarked[0]" class="lesson">
+        <LessonPage />
       </div>
     </div>
   </div>
@@ -226,102 +213,6 @@ const toogleNavButton = (id) => {
   padding: 16px;
   gap: 10px;
   grid-template-columns: 1fr 1fr;
-}
-
-.card {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 16px;
-  border-radius: 16px;
-  padding: 16px;
-  background: #1f2022;
-}
-
-.card.inactive {
-  opacity: 0.64;
-}
-
-.card-main {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.type-block {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-}
-
-.type-img {
-  width: 20px;
-  height: 20px;
-  scale: 1.2;
-}
-
-.type-title {
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.card-title {
-  font-family: var(--inter-font);
-  font-weight: 400;
-  font-size: 20px;
-}
-
-.card-footer {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.duration-block {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-}
-
-.duration {
-  font-family: var(--inter-font);
-  font-weight: 400;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.48);
-  text-align: center;
-}
-
-.duration-value {
-  font-weight: 400;
-  font-size: 14px;
-  text-align: center;
-}
-
-.go-to-button {
-  border-radius: 12px;
-  padding: 12px 24px;
-  border: none;
-  background-color: #ffffff0a;
-}
-
-.go-to-button.inactive {
-  pointer-events: none;
-}
-
-.go-to-text {
-  font-family: var(--inter-font);
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.go-to-text.inactive {
-  color: #32b413;
 }
 
 .homework-wrapper {

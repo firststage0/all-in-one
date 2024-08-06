@@ -1,0 +1,140 @@
+<script setup>
+const props = defineProps({
+  data: Object,
+});
+</script>
+
+<template>
+  <div :class="`card ${props.data.isCompleted ? 'inactive' : ''}`">
+    <main class="card-main">
+      <div class="type-block">
+        <img :src="`${props.data.typeIconUrl}`" alt="" class="type-img" />
+        <p class="type-title">{{ props.data.type }}</p>
+      </div>
+      <p class="card-title">{{ props.data.title }}</p>
+    </main>
+    <footer class="card-footer">
+      <div class="duration-block">
+        <img
+          :src="`${props.data.durationIconUrl}`"
+          alt=""
+          class="duration-img"
+        />
+        <p class="duration">Длительность</p>
+        <p class="duration-value">{{ props.data.duration }}</p>
+      </div>
+      <button
+        :class="`go-to-button ${props.data.isCompleted ? 'inactive' : ''}`"
+      >
+        <p :class="`go-to-text ${props.data.isCompleted ? 'inactive' : ''}`">
+          {{ props.data.isCompleted ? "Урок пройден" : "Перейти к уроку" }}
+        </p>
+      </button>
+    </footer>
+  </div>
+</template>
+
+<style scoped>
+.card {
+  transition: 400ms;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  padding: 16px;
+  background: #26272b;
+  cursor: pointer;
+}
+
+.card:not(.inactive):hover {
+  transition: 400ms;
+  background: #1f2022;
+}
+
+.card.inactive {
+  background: rgba(31, 32, 34, 0.64);
+}
+
+.card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.type-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.type-img {
+  width: 20px;
+  height: 20px;
+  scale: 1.2;
+}
+
+.type-title {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.card-title {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.card-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.duration-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.duration {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.48);
+  text-align: center;
+}
+
+.duration-value {
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+}
+
+.go-to-button {
+  border-radius: 12px;
+  padding: 12px 24px;
+  border: none;
+  background-color: #ffffff0a;
+}
+
+.go-to-button.inactive {
+  pointer-events: none;
+}
+
+.go-to-text {
+  font-family: var(--inter-font);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.go-to-text.inactive {
+  color: #32b413;
+}
+</style>
