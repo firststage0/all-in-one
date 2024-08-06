@@ -141,6 +141,7 @@ const toogleNavButton = (id) => {
 
 .main-container {
   margin-top: calc(var(--header-height) + 16px);
+  margin-bottom: 42px;
   width: 1440px;
   display: flex;
   flex-direction: column;

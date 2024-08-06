@@ -64,51 +64,54 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="homework-card">
-    <div class="main-block">
-      <header class="card-header">
-        <div class="attestation">
-          <p>{{ props.data.attistationType }}</p>
+  <router-link class="router-link">
+    <div class="homework-card">
+      <div class="main-block">
+        <header class="card-header">
+          <div class="attestation">
+            <p>{{ props.data.attistationType }}</p>
+          </div>
+          <div class="cource">
+            <p>{{ props.data.cource }}</p>
+          </div>
+        </header>
+        <p class="title">{{ props.data.title }}</p>
+      </div>
+      <p class="theme">Курс: {{ props.data.theme }}</p>
+      <div class="divider"></div>
+      <footer class="card-footer">
+        <div v-if="status.isWaiting" class="info-block">
+          <p class="status">
+            {{
+              status.isCkecking
+                ? "Проверяется преподавателем"
+                : "Ждем вашего ответа"
+            }}
+          </p>
+          <div class="deadline">
+            <img src="@/assets/icons/duration.svg" alt="" />
+            <p class="deadline-text">Дедлайн:</p>
+            <p class="time">{{ props.data.deadline }}</p>
+          </div>
         </div>
-        <div class="cource">
-          <p>{{ props.data.cource }}</p>
+        <div v-if="!status.isWaiting" class="grade-block">
+          <p class="status">Проверено преподавателем</p>
+          <div class="grade">
+            <p class="grade-text">Оценка:</p>
+            <p :class="`grade-value ${grade.color}`">{{ grade.text }}</p>
+          </div>
         </div>
-      </header>
-      <p class="title">{{ props.data.title }}</p>
+        <button class="goto-button">
+          <img src="@/assets/icons/button-icons/go-to-arrow.svg" alt="" />
+        </button>
+      </footer>
     </div>
-    <p class="theme">Курс: {{ props.data.theme }}</p>
-    <div class="divider"></div>
-    <footer class="card-footer">
-      <div v-if="status.isWaiting" class="info-block">
-        <p class="status">
-          {{
-            status.isCkecking
-              ? "Проверяется преподавателем"
-              : "Ждем вашего ответа"
-          }}
-        </p>
-        <div class="deadline">
-          <img src="@/assets/icons/duration.svg" alt="" />
-          <p class="deadline-text">Дедлайн:</p>
-          <p class="time">{{ props.data.deadline }}</p>
-        </div>
-      </div>
-      <div v-if="!status.isWaiting" class="grade-block">
-        <p class="status">Проверено преподавателем</p>
-        <div class="grade">
-          <p class="grade-text">Оценка:</p>
-          <p :class="`grade-value ${grade.color}`">{{ grade.text }}</p>
-        </div>
-      </div>
-      <button class="goto-button">
-        <img src="@/assets/icons/button-icons/go-to-arrow.svg" alt="" />
-      </button>
-    </footer>
-  </div>
+  </router-link>
 </template>
 
 <style scoped>
 .homework-card {
+  transition: 400ms;
   border-radius: 16px;
   padding: 16px;
   display: flex;
@@ -116,6 +119,12 @@ onMounted(() => {
   justify-content: flex-start;
   flex-direction: column;
   gap: 16px;
+  background: #26272b;
+  cursor: pointer;
+}
+
+.homework-card:hover {
+  transition: 400ms;
   background: #1f2022;
 }
 
