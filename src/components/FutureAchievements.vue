@@ -1,14 +1,16 @@
 <script setup>
-const props = defineProps(["achievements"]);
+import Achievements from "@/components/Achievements.vue";
+import { jsonData } from "@/functions/getDataFromServer";
 </script>
 
 <template>
   <div class="container">
     <p class="title">Будущие достижения</p>
-    <div class="wrapper">
-      <div v-for="achievement in props.achievements">
-        {{ achievement?.Name }}
-      </div>
+    <div class="achievements-grid">
+      <Achievements
+        v-for="achievement in jsonData?.Achievements"
+        :name="achievement.Name"
+      />
     </div>
   </div>
 </template>
@@ -18,29 +20,16 @@ const props = defineProps(["achievements"]);
   margin: 64px 0;
 }
 
-.title {
-  font-family: var(--inter-font);
-  font-weight: 600;
-  font-size: 72px;
-}
-
-.wrapper {
+.achievements-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-top: 42px;
 }
 
-.wrapper > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #161613;
-  padding: 32px;
-  border-radius: 24px;
-  max-width: 275px;
+.title {
   font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 72px;
 }
 </style>

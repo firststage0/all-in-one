@@ -3,7 +3,7 @@ import CourceCard from "@/components/CourceCard.vue";
 import themesData from "@/data/themes.json";
 import { ref } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-
+import Achievements from "@/components/Achievements.vue";
 const isMarked = ref({
   1: true,
   2: false,
@@ -25,7 +25,7 @@ const toogleNavButton = (id) => {
 
 <template>
   <HeaderComponent />
-  <div class="wrapper">
+  <div class="education-wrapper">
     <div class="main-container">
       <CourceCard isBackButtonShow="true" />
 
@@ -108,13 +108,25 @@ const toogleNavButton = (id) => {
 
       <div v-if="isMarked[2]" class="homework-interface"></div>
 
-      <div v-if="isMarked[3]" class="achievements-interface"></div>
+      <div v-if="isMarked[3]" class="achievements-interface">
+        <div class="achievements-grid">
+          <Achievements
+            v-for="i in 10"
+            :name="
+              i === 1 || i === 6
+                ? 'Первое взаимодействие с блокчейном'
+                : 'Свап на Uniswap V3'
+            "
+            :isCompleted="i === 1 || i === 2 ? true : false"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.wrapper {
+.education-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -302,5 +314,12 @@ const toogleNavButton = (id) => {
 
 .go-to-text.inactive {
   color: #32b413;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(136px);
+  gap: 16px;
 }
 </style>

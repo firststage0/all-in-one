@@ -43,7 +43,7 @@ watch(isWindowActive, () => {
 
       <div class="container"><WhatLearn /></div>
       <div class="container">
-        <FutureAchievements :achievements="jsonData?.Achievements" />
+        <FutureAchievements />
       </div>
       <div class="container"><CourceProgram /></div>
     </main>
