@@ -37,10 +37,7 @@ import "@/assets/css/style.css";
           </div>
           <div class="course-box-item-top-right">Для начинающих</div>
         </div>
-        <div
-          class="course-box-item-img"
-          style="background-image: url(@/assets/imgs/python.png)"
-        ></div>
+        <div class="course-box-item-img python"></div>
         <div class="course-box-item-title">Web3 Python-разработчик</div>
         <div class="course-box-item-desc">
           <div class="course-box-item-desc-first">
@@ -91,10 +88,7 @@ import "@/assets/css/style.css";
           </div>
           <div class="course-box-item-top-right">Для начинающих</div>
         </div>
-        <div
-          class="course-box-item-img"
-          style="background-image: url(@/assets/imgs/python.png)"
-        ></div>
+        <div class="course-box-item-img js"></div>
         <div class="course-box-item-title">Web3 JS-разработчик</div>
         <div class="course-box-item-desc">
           <div class="course-box-item-desc-first">
@@ -137,4 +131,12 @@ import "@/assets/css/style.css";
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.course-box-item-img.python {
+  background-image: url(@/assets/imgs/python.png);
+}
+
+.course-box-item-img.js {
+  background-image: url(@/assets/imgs/js.png);
+}
+</style>

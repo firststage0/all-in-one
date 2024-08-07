@@ -1,9 +1,11 @@
 <script setup>
 import { watch } from "vue";
+import { useRoute } from "vue-router";
+const $route = useRoute();
 
-// watch($route, () => {
-//   document.title = $route.meta.title;
-// });
+watch($route, () => {
+  console.log($route).matched;
+});
 </script>
 
 <template>

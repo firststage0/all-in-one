@@ -62,7 +62,7 @@ const activeMenuButtonIndex = ref(null);
           class="lessons-block"
         >
           <router-link
-            class="router-link"
+            :class="`router-link ${element.isCompleted ? 'inactive' : ''}`"
             :to="`/lesson/${element.id}`"
             v-for="element in themes[activeMenuButtonIndex].lessons"
           >
@@ -72,7 +72,13 @@ const activeMenuButtonIndex = ref(null);
       </div>
       <div v-if="isMarked[2]" class="homework-interface">
         <div class="homework-wrapper">
-          <HomeworkCard v-for="i in homeworks" :data="i" :isAdmin="false" />
+          <router-link
+            class="router-link"
+            :to="`/homework/${element.id}`"
+            v-for="element in homeworks"
+          >
+            <HomeworkCard :data="element" :isAdmin="false" />
+          </router-link>
         </div>
       </div>
       <div v-if="isMarked[3]" class="achievements-interface">
@@ -106,6 +112,10 @@ const activeMenuButtonIndex = ref(null);
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.inactive {
+  pointer-events: none;
 }
 
 .education-interface {

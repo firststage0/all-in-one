@@ -5,6 +5,8 @@ import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 import { onMounted, ref, watch } from "vue";
 import "@/assets/plyr-custom.css";
+import HelpButton from "@/components/HelpButton.vue";
+import TextField from "@/components/TextField.vue";
 
 const props = defineProps({
   data: Object,
@@ -26,8 +28,6 @@ watch(currentPage, () => {
     pagesStack.value.push(currentPage.value);
   }
 });
-
-console.log();
 
 onMounted(() => {
   const player = new Plyr("#player");
@@ -87,33 +87,8 @@ onMounted(() => {
           v-html="props.data.pages[currentPage - 1].descriptionBlock[index]"
         ></p>
       </div>
-      <div
-        v-if="props.data.pages[currentPage - 1].textField"
-        class="input-group"
-      >
-        <textarea
-          class="textarea"
-          name="homework-answer"
-          placeholder="Ваш ответ"
-        ></textarea>
-        <div class="input-button-group">
-          <button class="add-file-button">
-            <img
-              src="@/assets/icons/button-icons/paperclip.svg"
-              alt=""
-              class="add-file"
-            />
-            <p>Прикрепить файл</p>
-          </button>
-          <button class="send-button">
-            <p>Отправить</p>
-          </button>
-        </div>
-      </div>
-      <button v-if="currentPage === maxPage" class="help">
-        <img src="@/assets/icons/question-mark.svg" alt="" />
-        <p>Нужна помощь с заданием</p>
-      </button>
+      <TextField v-if="props.data.pages[currentPage - 1].textField" />
+      <HelpButton v-if="currentPage === maxPage" />
       <div class="divider"></div>
       <footer class="lesson-footer">
         <NextPrevNavigation v-model="currentPage" :maxPage="maxPage" />
@@ -238,71 +213,6 @@ onMounted(() => {
   line-height: 1.5;
 }
 
-b {
-  font-weight: 700;
-}
-
-.input-group {
-  width: 100%;
-  position: relative;
-}
-
-.textarea {
-  width: 100%;
-  height: 120px;
-  border: none;
-  border-radius: 16px;
-  resize: none;
-  padding: 16px;
-  background: #1f2022;
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 16px;
-  color: #fff;
-}
-
-.input-button-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.homework-answer::placeholder {
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.input-button-group > button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  gap: 8px;
-  border-radius: 12px;
-}
-
-.input-button-group > button > p {
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 16px;
-  text-align: center;
-}
-
-.add-file-button {
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.send-button {
-  padding: 12px 32px;
-  background: linear-gradient(135deg, #2870dd 0%, #aa54b7 100%);
-}
-
 .divider {
   width: 100%;
   height: 1px;
@@ -314,29 +224,5 @@ b {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
-
-.help {
-  border: none;
-  width: 148px;
-  height: 96px;
-  position: absolute;
-  top: calc(50% + 300px);
-  right: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  border-radius: 16px;
-  padding: 12px;
-  background: linear-gradient(135deg, #2870dd 0%, #aa54b7 100%);
-}
-
-.help > p {
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 16px;
-  text-align: center;
 }
 </style>

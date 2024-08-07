@@ -8,18 +8,18 @@ const props = defineProps({
   <div :class="`card ${props.data.isCompleted ? 'inactive' : ''}`">
     <main class="card-main">
       <div class="type-block">
-        <img :src="`${props.data.typeIconUrl}`" alt="" class="type-img" />
+        <img
+          src="@/assets/icons/type-icons/video.svg"
+          alt=""
+          class="type-img"
+        />
         <p class="type-title">{{ props.data.type }}</p>
       </div>
       <p class="card-title">{{ props.data.title }}</p>
     </main>
     <footer class="card-footer">
       <div class="duration-block">
-        <img
-          :src="`${props.data.durationIconUrl}`"
-          alt=""
-          class="duration-img"
-        />
+        <img src="@/assets/icons/duration.svg" alt="" class="duration-img" />
         <p class="duration">Длительность</p>
         <p class="duration-value">{{ props.data.duration }}</p>
       </div>

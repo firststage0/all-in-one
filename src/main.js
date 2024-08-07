@@ -45,16 +45,17 @@ const router = createRouter({
     },
     {
       path: "/lessons-list",
-      name: "Lessons list",
+      name: "lessons-list",
       component: () => import("@/views/LessonsList.vue"),
       meta: {
         title: "Список уроков",
         breadcrumb: "Список уроков",
       },
+      children: [],
     },
     {
       path: "/education",
-      name: "Education",
+      name: "education",
       component: () => import("@/views/Education.vue"),
       meta: {
         title: "Моё обучение",
@@ -65,6 +66,11 @@ const router = createRouter({
       path: "/lesson/:id",
       name: "Lesson",
       component: () => import("@/views/LessonPage.vue"),
+    },
+    {
+      path: "/homework/:id",
+      name: "Homework",
+      component: () => import("@/views/HomeworkPage.vue"),
     },
   ],
 });
