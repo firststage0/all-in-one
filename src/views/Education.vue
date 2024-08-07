@@ -1,67 +1,42 @@
 <script setup>
 import CourceCard from "@/components/CourceCard.vue";
 import themesData from "@/data/themes.json";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
 import homeworks from "@/data/homeworks.json";
 import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
-import Lesson from "@/components/Lesson.vue";
-
-const isShowCardButton = ref(true);
+import SlideNavBar from "@/components/SlideNavBar.vue";
 
 const isMarked = ref({
-  0: false,
   1: true,
   2: false,
   3: false,
 });
 
-const themes = ref(themesData);
-const activeMenuButtonIndex = ref(null);
+const buttonId = ref(1);
 
-const toogleNavButton = (id) => {
+watch(buttonId, () => {
   for (const key in isMarked.value) {
-    id === Number(key)
+    buttonId.value === Number(key)
       ? (isMarked.value[key] = true)
       : (isMarked.value[key] = false);
   }
-  isShowCardButton.value = true;
-};
+});
 
-const handleLessonsCardClick = () => {
-  toogleNavButton(0);
-  isShowCardButton.value = false;
-};
+const themes = ref(themesData);
+const activeMenuButtonIndex = ref(null);
 </script>
 
 <template>
   <HeaderComponent />
   <div class="education-wrapper">
     <div class="main-container">
-      <CourceCard :isBackButtonShow="isShowCardButton" />
+      <CourceCard :isBackButtonShow="true" />
 
-      <nav class="nav-bar">
-        <button
-          :class="`nav-button ${isMarked[1] ? 'active' : ''}`"
-          @click="toogleNavButton(1)"
-        >
-          Обучение
-        </button>
-        <button
-          :class="`nav-button ${isMarked[2] ? 'active' : ''}`"
-          @click="toogleNavButton(2)"
-        >
-          Домашние работы
-        </button>
-        <button
-          :class="`nav-button ${isMarked[3] ? 'active' : ''}`"
-          @click="toogleNavButton(3)"
-        >
-          Достижения
-        </button>
-      </nav>
+      <SlideNavBar v-model="buttonId" />
+
       <div v-if="isMarked[1]" class="education-interface">
         <div class="menu">
           <button
@@ -113,9 +88,6 @@ const handleLessonsCardClick = () => {
           />
         </div>
       </div>
-      <div v-if="isMarked[0]" class="lesson">
-        <Lesson />
-      </div>
     </div>
   </div>
 </template>
@@ -134,40 +106,6 @@ const handleLessonsCardClick = () => {
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.nav-bar {
-  width: fit-content;
-  height: 51px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  border-radius: 16px;
-  gap: 4px;
-  padding: 4px;
-  background-color: #171717;
-}
-
-.nav-button {
-  transition: 500ms;
-  width: 240px;
-  height: 43px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background-color: inherit;
-  padding: 6px 12px;
-  color: #b9b9b9;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 12px;
-}
-
-.nav-button.active {
-  transition: 500ms;
-  background-color: #2870dd29;
-  color: #2870dd;
 }
 
 .education-interface {

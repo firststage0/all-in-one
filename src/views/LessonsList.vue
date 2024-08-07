@@ -3,10 +3,11 @@ import { ref } from "vue";
 
 import "@/assets/main.css";
 
-import HeaderComponent from "../components/HeaderComponent.vue";
-import CourceCard from "../components/CourceCard.vue";
-import CourcesNoConnectedWallet from "../components/CourcesNoConnectedWallet.vue";
-import NoActiveCources from "../components/NoActiveCources.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import CourceCard from "@/components/CourceCard.vue";
+import CourcesNoConnectedWallet from "@/components/CourcesNoConnectedWallet.vue";
+import NoActiveCources from "@/components/NoActiveCources.vue";
+import AllCources from "@/components/AllCources.vue";
 
 const showRightBlock = () => {
   isMarkerLeft.value = false;
@@ -43,6 +44,9 @@ const scenario = ref(0);
       <CourcesNoConnectedWallet v-if="scenario === 1" />
 
       <NoActiveCources v-if="scenario === 2" />
+    </div>
+    <div v-if="isLeftBlockActive">
+      <AllCources />
     </div>
   </div>
 </template>
