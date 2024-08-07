@@ -64,72 +64,70 @@ onMounted(() => {
 </script>
 
 <template>
-  <router-link class="router-link">
-    <div class="homework-card">
-      <div class="main-block">
-        <header class="card-header">
-          <div class="attestation">
-            <p>{{ props.data.attistationType }}</p>
-          </div>
-          <div class="cource">
-            <p>{{ props.data.cource }}</p>
-          </div>
-        </header>
-        <p class="title">{{ props.data.title }}</p>
-      </div>
-      <p class="theme">Курс: {{ props.data.theme }}</p>
-      <div class="divider"></div>
-      <footer v-if="!isAdmin" class="card-footer">
-        <div v-if="status.isWaiting" class="info-block">
-          <p class="status">
-            {{
-              status.isCkecking
-                ? "Проверяется преподавателем"
-                : "Ждем вашего ответа"
-            }}
-          </p>
-          <div class="deadline">
-            <img src="@/assets/icons/duration.svg" alt="" />
-            <p class="deadline-text">Дедлайн:</p>
-            <p class="time">{{ props.data.deadline }}</p>
-          </div>
+  <div class="homework-card">
+    <div class="main-block">
+      <header class="card-header">
+        <div class="attestation">
+          <p>{{ props.data.attistationType }}</p>
         </div>
-        <div v-if="!status.isWaiting" class="grade-block">
-          <p class="status">Проверено преподавателем</p>
-          <div class="grade">
-            <p class="grade-text">Оценка:</p>
-            <p :class="`grade-value ${grade.color}`">{{ grade.text }}</p>
-          </div>
+        <div class="cource">
+          <p>{{ props.data.cource }}</p>
         </div>
-        <button class="goto-button">
-          <img src="@/assets/icons/button-icons/go-to-arrow.svg" alt="" />
-        </button>
-      </footer>
-
-      <footer v-if="isAdmin" class="card-footer">
-        <div class="blocks">
-          <div class="footer-block">
-            <p class="block-title">Сдали работы</p>
-            <p class="count"><span class="count-span">3</span> / 32</p>
-          </div>
-          <div class="vertical-divider"></div>
-          <div class="footer-block">
-            <p class="block-title">Ждут оценки</p>
-            <p class="count"><span class="count-span">1</span> / 3</p>
-          </div>
-          <div class="vertical-divider"></div>
-          <div class="deadline">
-            <img src="@/assets/icons/duration.svg" alt="" />
-            <p class="deadline-text">Дедлайн:</p>
-            <p class="time">{{ props.data.deadline }}</p>
-          </div>
-        </div>
-        <button class="goto-button">
-          <img src="@/assets/icons/button-icons/go-to-arrow.svg" alt="" />
-        </button>
-      </footer>
+      </header>
+      <p class="title">{{ props.data.title }}</p>
     </div>
-  </router-link>
+    <p class="theme">Курс: {{ props.data.theme }}</p>
+    <div class="divider"></div>
+    <footer v-if="!isAdmin" class="card-footer">
+      <div v-if="status.isWaiting" class="info-block">
+        <p class="status">
+          {{
+            status.isCkecking
+              ? "Проверяется преподавателем"
+              : "Ждем вашего ответа"
+          }}
+        </p>
+        <div class="deadline">
+          <img src="@/assets/icons/duration.svg" alt="" />
+          <p class="deadline-text">Дедлайн:</p>
+          <p class="time">{{ props.data.deadline }}</p>
+        </div>
+      </div>
+      <div v-if="!status.isWaiting" class="grade-block">
+        <p class="status">Проверено преподавателем</p>
+        <div class="grade">
+          <p class="grade-text">Оценка:</p>
+          <p :class="`grade-value ${grade.color}`">{{ grade.text }}</p>
+        </div>
+      </div>
+      <button class="goto-button">
+        <img src="@/assets/icons/button-icons/go-to-arrow.svg" alt="" />
+      </button>
+    </footer>
+
+    <footer v-if="isAdmin" class="card-footer">
+      <div class="blocks">
+        <div class="footer-block">
+          <p class="block-title">Сдали работы</p>
+          <p class="count"><span class="count-span">3</span> / 32</p>
+        </div>
+        <div class="vertical-divider"></div>
+        <div class="footer-block">
+          <p class="block-title">Ждут оценки</p>
+          <p class="count"><span class="count-span">1</span> / 3</p>
+        </div>
+        <div class="vertical-divider"></div>
+        <div class="deadline">
+          <img src="@/assets/icons/duration.svg" alt="" />
+          <p class="deadline-text">Дедлайн:</p>
+          <p class="time">{{ props.data.deadline }}</p>
+        </div>
+      </div>
+      <button class="goto-button">
+        <img src="@/assets/icons/button-icons/go-to-arrow.svg" alt="" />
+      </button>
+    </footer>
+  </div>
 </template>
 
 <style scoped>

@@ -41,6 +41,7 @@ const scenario = ref(0);
       <router-link to="/education" class="router-link">
         <CourceCard v-if="scenario === 0" :isFooterActive="true" />
       </router-link>
+
       <CourcesNoConnectedWallet v-if="scenario === 1" />
 
       <NoActiveCources v-if="scenario === 2" />
