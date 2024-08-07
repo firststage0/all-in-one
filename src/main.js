@@ -10,32 +10,37 @@ const router = createRouter({
     {
       path: "/",
       name: "Cource Page",
-      component: () => import("./views/CourcePage.vue"),
+      component: () => import("@/views/CourcePage.vue"),
     },
     {
       path: "/faq",
       name: "FAQ",
-      component: () => import("./views/FAQ.vue"),
+      component: () => import("@/views/FAQ.vue"),
     },
     {
       path: "/referral",
       name: "Referral",
-      component: () => import("./views/ReferralPage.vue"),
+      component: () => import("@/views/ReferralPage.vue"),
     },
     {
       path: "/active-referral",
       name: "Active Referral",
-      component: () => import("./views/ActiveReferralPage.vue"),
+      component: () => import("@/views/ActiveReferralPage.vue"),
     },
     {
       path: "/lessons-list",
       name: "Lessons list",
-      component: () => import("./views/LessonsList.vue"),
+      component: () => import("@/views/LessonsList.vue"),
     },
     {
       path: "/education",
       name: "Education",
-      component: () => import("./views/Education.vue"),
+      component: () => import("@/views/Education.vue"),
+    },
+    {
+      path: "/lesson/:id",
+      name: "Lesson",
+      component: () => import("@/views/LessonPage.vue"),
     },
   ],
 });

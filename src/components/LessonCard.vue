@@ -54,6 +54,7 @@ const props = defineProps({
 }
 
 .card.inactive {
+  pointer-events: none;
   background: rgba(31, 32, 34, 0.64);
 }
 

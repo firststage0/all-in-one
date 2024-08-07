@@ -7,7 +7,7 @@ import Achievements from "@/components/Achievements.vue";
 import homeworks from "@/data/homeworks.json";
 import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
-import LessonPage from "@/components/LessonPage.vue";
+import Lesson from "@/components/Lesson.vue";
 
 const isShowCardButton = ref(true);
 
@@ -86,14 +86,15 @@ const handleLessonsCardClick = () => {
           "
           class="lessons-block"
         >
-          <LessonCard
-            @click="handleLessonsCardClick"
+          <router-link
+            class="router-link"
+            :to="`/lesson/${element.id}`"
             v-for="element in themes[activeMenuButtonIndex].lessons"
-            :data="element"
-          />
+          >
+            <LessonCard :data="element" />
+          </router-link>
         </div>
       </div>
-
       <div v-if="isMarked[2]" class="homework-interface">
         <div class="homework-wrapper">
           <HomeworkCard v-for="i in homeworks" :data="i" :isAdmin="false" />
@@ -113,7 +114,7 @@ const handleLessonsCardClick = () => {
         </div>
       </div>
       <div v-if="isMarked[0]" class="lesson">
-        <LessonPage />
+        <Lesson />
       </div>
     </div>
   </div>
