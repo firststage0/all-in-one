@@ -1,3 +1,4 @@
-.plyr__menu__container .plyr__control {
-  color: black;
+.plyr__menu__container .plyr__control > span,
+.plyr__menu__container .plyr__menu__value {
+  color: var(--vt-c-black);
 }

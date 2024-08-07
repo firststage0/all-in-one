@@ -60,7 +60,6 @@ onMounted(() => {
     setStatus();
     setGrade();
   }
-  console.log(grade.value.color);
 });
 </script>
 

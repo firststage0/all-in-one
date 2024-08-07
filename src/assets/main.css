@@ -22,3 +22,7 @@ html {
 .router-link {
   text-decoration: none;
 }
+
+b {
+  font-weight: 700;
+}
