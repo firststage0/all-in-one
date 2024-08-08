@@ -14,7 +14,7 @@ const props = defineProps({
 const pagesStack = ref([]);
 
 const currentPage = ref(1);
-const maxPage = ref(props.data.pages.length);
+const maxPage = ref(props.data?.pages.length);
 
 watch(currentPage, () => {
   if (!pagesStack.value.includes(currentPage.value)) {
@@ -39,7 +39,7 @@ onMounted(() => {
       <div class="header-top">
         <p class="lessons-count">
           <span>{{ currentPage }}</span> / {{ maxPage }}
-          <span> {{ " " + props.data.pages[currentPage - 1].title }}</span>
+          <span> {{ " " + props.data?.pages[currentPage - 1].title }}</span>
         </p>
         <NextPrevNavigation v-model="currentPage" :maxPage="maxPage" />
       </div>
@@ -62,7 +62,7 @@ onMounted(() => {
       </div>
     </header>
     <div class="lesson-wrapper">
-      <div v-if="props.data.pages[currentPage - 1].videoUrl" class="player">
+      <div v-if="props.data?.pages[currentPage - 1].videoUrl" class="player">
         <video
           id="player"
           playsinline
@@ -70,23 +70,24 @@ onMounted(() => {
           poster="https://atuin.ru/demo/plyr/poster.jpg"
         >
           <source
-            :src="props.data.pages[currentPage - 1].videoUrl"
+            :src="props.data?.pages[currentPage - 1].videoUrl"
             type="video/mp4"
           />
         </video>
       </div>
       <p class="description-title">Описание</p>
       <div
-        v-for="(i, index) in props.data.pages[currentPage - 1].descriptionBlock"
+        v-for="(i, index) in props.data?.pages[currentPage - 1]
+          .descriptionBlock"
         class="description-block"
       >
         <div class="divider"></div>
         <p
           class="description-text"
-          v-html="props.data.pages[currentPage - 1].descriptionBlock[index]"
+          v-html="props.data?.pages[currentPage - 1].descriptionBlock[index]"
         ></p>
       </div>
-      <TextField v-if="props.data.pages[currentPage - 1].textField" />
+      <TextField v-if="props.data?.pages[currentPage - 1].textField" />
       <HelpButton v-if="currentPage === maxPage" />
       <div class="divider"></div>
       <footer class="lesson-footer">

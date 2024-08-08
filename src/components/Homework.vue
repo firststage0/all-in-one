@@ -21,7 +21,6 @@ onMounted(() => {
       break;
   }
   const player = new Plyr("#player");
-  console.log(player);
 });
 </script>
 
