@@ -8,7 +8,35 @@
     "tasks": ["Задание от преподавателя"],
     "status": "waiting",
     "deadline": "16.07.2024",
-    "grade": null
+    "grade": null,
+    "test": [
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      }
+    ],
+    "isTestCompleted": false
   },
   {
     "id": 2,

@@ -5,6 +5,7 @@ import HelpButton from "@/components/HelpButton.vue";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 import "@/assets/plyr-custom.css";
+import Test from "@/components/Test.vue";
 const props = defineProps({ data: Object });
 const status = ref("");
 
@@ -42,6 +43,10 @@ onMounted(() => {
       <p v-for="(el, index) in props.data.tasks" class="task-text">
         {{ props.data.tasks[index] }}
       </p>
+      <Test
+        :data="props.data?.test"
+        :isTestCompleted="props.data.isTestCompleted"
+      />
       <div v-show="status === 'Проверено преподавателем'" class="teacher-block">
         <p class="time">Ср, 14 окт., 22:01 MSK (UTC+3)</p>
         <div class="teacher-info">

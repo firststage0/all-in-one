@@ -6,27 +6,14 @@ import "@/assets/plyr-custom.css";
 import { onMounted, ref, watch } from "vue";
 import HelpButton from "@/components/HelpButton.vue";
 import TextField from "@/components/TextField.vue";
+import Progresbar from "@/components/Progresbar.vue";
 
 const props = defineProps({
   data: Object,
 });
 
-const pagesStack = ref([]);
-
 const currentPage = ref(1);
 const maxPage = ref(props.data?.pages.length);
-
-watch(currentPage, () => {
-  if (!pagesStack.value.includes(currentPage.value)) {
-    pagesStack.value.push(currentPage.value - 1);
-  }
-  if (
-    currentPage.value === maxPage.value &&
-    !pagesStack.value.includes(currentPage.value)
-  ) {
-    pagesStack.value.push(currentPage.value);
-  }
-});
 
 onMounted(() => {
   const player = new Plyr("#player");
@@ -47,18 +34,11 @@ onMounted(() => {
         <div class="theme-block">
           <p class="theme">{{ props.data.theme }}</p>
         </div>
-        <div class="progress-bar">
-          <div
-            v-for="i in maxPage"
-            :class="`progress-cell ${
-              i === currentPage
-                ? 'current'
-                : pagesStack.includes(i)
-                ? 'completed'
-                : ''
-            }`"
-          ></div>
-        </div>
+        <Progresbar
+          v-model="currentPage"
+          :maxPage="maxPage"
+          :currentPage="currentPage"
+        />
       </div>
     </header>
     <div class="lesson-wrapper">
@@ -152,26 +132,6 @@ onMounted(() => {
   border-radius: 4px;
   padding: 6px 12px;
   background: rgba(255, 255, 255, 0.08);
-}
-
-.progress-bar {
-  display: flex;
-  gap: 8px;
-}
-
-.progress-cell {
-  border-radius: 6px;
-  width: 102px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.progress-cell.current {
-  background: rgba(255, 255, 255, 0.64);
-}
-
-.progress-cell.completed {
-  background: rgba(50, 180, 19, 0.64);
 }
 
 .lesson-wrapper {
