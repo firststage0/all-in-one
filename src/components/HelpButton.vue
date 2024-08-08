@@ -1,10 +1,12 @@
 <script setup></script>
 
 <template>
-  <button class="help">
-    <img src="@/assets/icons/question-mark.svg" alt="" />
-    <p>Нужна помощь с заданием</p>
-  </button>
+  <a href="">
+    <button class="help">
+      <img src="@/assets/icons/question-mark.svg" alt="" />
+      <p>Нужна помощь с заданием</p>
+    </button>
+  </a>
 </template>
 
 <style scoped>

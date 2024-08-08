@@ -16,7 +16,12 @@ const currentPage = ref(1);
 const maxPage = ref(props.data?.pages.length);
 
 onMounted(() => {
-  const player = new Plyr("#player");
+  const player = new Plyr("#player", {
+    captions: {
+      active: false,
+      update: true,
+    },
+  });
 });
 </script>
 
@@ -53,7 +58,14 @@ onMounted(() => {
             :src="props.data?.pages[currentPage - 1].videoUrl"
             type="video/mp4"
           />
+          <track
+            label="English"
+            srclang="en"
+            default="true,"
+            src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+          />
         </video>
+        <plyr-captions />
       </div>
       <p class="description-title">Описание</p>
       <div
