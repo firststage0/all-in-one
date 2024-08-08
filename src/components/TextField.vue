@@ -1,16 +1,46 @@
 <script setup>
 const props = defineProps({
   isSended: Boolean,
+  isFiles: Boolean,
+  ifTime: Boolean,
 });
 </script>
 
 <template>
   <div class="input-group">
-    <textarea
-      class="textarea"
-      name="homework-answer"
+    <div v-if="props.isFiles" class="files-block">
+      <div class="file">
+        <img src="@/assets/icons/button-icons/pdf.svg" alt="" />
+        <div class="file-info">
+          <p class="file-name">my-cv.pdf</p>
+          <p class="file-size">20 KB</p>
+        </div>
+        <button class="delete-file">
+          <img src="@/assets/icons/button-icons/trash.svg" alt="" />
+        </button>
+      </div>
+
+      <div class="file">
+        <img src="@/assets/icons/button-icons/pdf.svg" alt="" />
+        <div class="file-info">
+          <p class="file-name">my-cvvvvvvvv.pdf</p>
+          <p class="file-size">20 KB</p>
+        </div>
+        <button class="delete-file">
+          <img src="@/assets/icons/button-icons/trash.svg" alt="" />
+        </button>
+      </div>
+    </div>
+    <p v-if="props.ifTime" class="time">Вт, 13 окт., 22:01 MSK (UTC+3)</p>
+    <div
+      :class="`textarea ${props.isFiles ? 'with-files' : ''}`"
+      contenteditable="true"
       placeholder="Ваш ответ"
-    ></textarea>
+    >
+      Для участия в челлендже (первую копию не доделал :( , не имел понятия,
+      через трансформ делается или другим способом)
+      https://www.dropbox.com/s/r60qgzqpugh0tnp/4.%20%D0%A7%D0%B5%D0%?dl=0
+    </div>
     <div class="input-button-group">
       <button v-if="!props.isSended" class="add-file-button">
         <img
@@ -34,21 +64,94 @@ const props = defineProps({
 <style scoped>
 .input-group {
   width: 100%;
+  min-height: 140px;
   position: relative;
+  background: #1c1c1b;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.files-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.file {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 16px 16px 16px 14px;
+  background: #1f2022;
+}
+
+.file-info {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.file-name {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.42857;
+  letter-spacing: -0.01em;
+}
+
+.file-size {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.delete-file {
+  border: none;
+  background-color: inherit;
+  display: flex;
+  width: fit-content;
+  align-self: flex-start;
+}
+
+.time {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .textarea {
-  width: 100%;
-  height: 120px;
+  width: 74%;
+  min-height: 100px;
   border: none;
-  border-radius: 16px;
-  resize: none;
-  padding: 16px;
-  background: #1f2022;
+  outline: none;
+  background: inherit;
   font-family: var(--inter-font);
   font-weight: 500;
   font-size: 16px;
-  color: #fff;
+  line-height: 1.375;
+}
+
+.textarea.with-files {
+  min-height: fit-content;
+}
+
+.textarea:empty:before {
+  content: attr(placeholder);
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .input-button-group {
@@ -56,15 +159,8 @@ const props = defineProps({
   align-items: center;
   gap: 10px;
   position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.homework-answer::placeholder {
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.32);
+  right: 10px;
+  bottom: 10px;
 }
 
 .input-button-group > button {

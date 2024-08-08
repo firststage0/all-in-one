@@ -1,10 +1,9 @@
 <script setup>
-import GoBackButton from "@/components/GoBackButton.vue";
 import NextPrevNavigation from "@/components/NextPrevNavigation.vue";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
-import { onMounted, ref, watch } from "vue";
 import "@/assets/plyr-custom.css";
+import { onMounted, ref, watch } from "vue";
 import HelpButton from "@/components/HelpButton.vue";
 import TextField from "@/components/TextField.vue";
 

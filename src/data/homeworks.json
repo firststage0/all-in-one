@@ -30,7 +30,8 @@
     "tasks": ["Задание от преподавателя"],
     "status": "checked",
     "deadline": null,
-    "grade": 4
+    "grade": 4,
+    "videoUrl": "https://atuin.ru/demo/plyr/1280.mp4"
   },
   {
     "id": 4,

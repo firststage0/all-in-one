@@ -39,9 +39,8 @@ const languages = {
     <div class="container">
       <div class="title">
         <router-link to="/" class="router-link"
-          ><h1 class="primary-title">All-IN-ONE</h1></router-link
-        >
-        <h2 class="secondary-title">Study</h2>
+          ><h1 class="primary-title">All-IN-ONE<span>Study</span></h1>
+        </router-link>
       </div>
       <nav class="nav-bar">
         <ul>
@@ -163,12 +162,15 @@ const languages = {
 }
 
 .primary-title {
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
   font-size: 19px;
-  font-family: var(--kinetica-font);
+  font-family: var(--kinetica-bold-font);
+  gap: 10px;
 }
 
-.secondary-title {
+.primary-title > span {
   font-weight: 300;
   font-size: 20px;
   color: rgba(255, 255, 255, 0.32);

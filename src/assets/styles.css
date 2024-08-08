@@ -8,9 +8,15 @@
   src: url("../fonts/Inter-Regular.ttf");
 }
 
+@font-face {
+  font-family: "KineticaBold";
+  src: url(@/assets/fonts/Kinetica-Bold.otf);
+}
+
 :root {
   --inter-font: "Inter", sans-serif;
   --kinetica-font: "Kinetica", sans-serif;
+  --kinetica-bold-font: "KineticaBold", sans-serif;
   --dark-theme-color: #ffffff;
   --background-color: #0c0c09;
 
