@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 const props = defineProps({
   data: Object,
   isTestCompleted: Boolean,
@@ -8,9 +8,32 @@ console.log(props.data);
 
 import Progresbar from "@/components/Progresbar.vue";
 const currentPage = ref(1);
-
+const clickedButton = ref(null);
 const answers = ref([]);
 const clicked = ref(false);
+const isTestCompleted = ref(false);
+
+const writeAnswer = (index) => {
+  clicked.value = true;
+  clickedButton.value = index;
+  const answerObject = {};
+  answerObject.index = index;
+  answerObject.rightAnswer = props.data[currentPage.value - 1].rightAnswer;
+  answers.value.push(answerObject);
+};
+
+watch(answers.value, () => {
+  console.log(answers.value);
+});
+
+const changePage = () => {
+  clicked.value = false;
+  clickedButton.value = null;
+  if (currentPage.value === props.data.length) {
+    isTestCompleted.value = true;
+    console.log("Test completed");
+  } else currentPage.value++;
+};
 
 const checkAnswer = (index) => {
   clicked.value = true;
@@ -36,6 +59,7 @@ const checkAnswer = (index) => {
         <p class="question-count">{{ props.data.length }} вопросов</p>
       </header>
       <Progresbar
+        v-if="!isTestCompleted"
         class="progress-bar"
         :maxPage="props.data.length"
         v-model="currentPage"
@@ -56,45 +80,70 @@ const checkAnswer = (index) => {
           {{ props.data[currentPage - 1].question }}
         </p>
       </div>
-      <ul class="question-list">
+
+      <ul v-if="!isTestCompleted" class="question-list">
         <li
           v-for="(element, index) in props.data[currentPage - 1].variants"
-          :class="`question-variant ${
-            answers[currentPage - 1]?.index === index &&
-            answers[currentPage - 1]?.answer
-              ? 'right'
-              : clicked && answers[currentPage - 1]?.index === index
-              ? 'wrong'
-              : index === answers[currentPage - 1]?.rightAnswer
-              ? 'actualRight'
-              : ''
-          }`"
-          @click="checkAnswer(index)"
+          :class="`question-variant ${index === clickedButton ? 'right' : ''}`"
+          @click="writeAnswer(index)"
         >
-          <!-- TODO: В общем тут (ниже и выше) логика такая: если ничего на элемент нажали, и он правильный, то изображение и рамка зеленые
-									Если нажатие было, но элемент неправильный, то рамка и изображение красные,
-									Если нажатие было, элемент неправильный, но индекс равен правильному индексу, то изображение и фоновое изображение зеленые 
-				-->
-
           <div
-            :class="`variant-image ${
-              answers[currentPage - 1]?.index === index &&
-              answers[currentPage - 1]?.answer
-                ? 'right'
-                : clicked && answers[currentPage - 1]?.index === index
-                ? 'wrong'
-                : index === answers[currentPage - 1]?.rightAnswer
-                ? 'right'
-                : ''
-            }`"
+            :class="`variant-image ${index === clickedButton ? 'right' : ''}`"
           ></div>
           <p class="variant-text">
             {{ props.data[currentPage - 1].variants[index] }}
           </p>
         </li>
       </ul>
+
+      <ul v-if="isTestCompleted" class="question-list">
+        <div class="completed-test-question-block">
+          <p class="question-text">
+            <!-- Сюда дописать цикл v-for для блоков сданного теста -->
+            {{ props.data[currentPage - 1].question }}
+          </p>
+          <li
+            v-for="(element, index) in props.data[currentPage - 1].variants"
+            :class="`question-variant ${
+              answers[currentPage - 1]?.index === index &&
+              answers[currentPage - 1]?.answer
+                ? 'right'
+                : clicked && answers[currentPage - 1]?.index === index
+                ? 'wrong'
+                : index === answers[currentPage - 1]?.rightAnswer
+                ? 'actualRight'
+                : ''
+            }`"
+            @click="checkAnswer(index)"
+          >
+            <!-- TODO: В общем тут (ниже и выше) логика такая: если ничего на элемент нажали, и он правильный, то изображение и рамка зеленые
+									Если нажатие было, но элемент неправильный, то рамка и изображение красные,
+									Если нажатие было, элемент неправильный, но индекс равен правильному индексу, то изображение и фоновое изображение зеленые 
+				-->
+
+            <div
+              :class="`variant-image ${
+                answers[currentPage - 1]?.index === index &&
+                answers[currentPage - 1]?.answer
+                  ? 'right'
+                  : clicked && answers[currentPage - 1]?.index === index
+                  ? 'wrong'
+                  : index === answers[currentPage - 1]?.rightAnswer
+                  ? 'right'
+                  : ''
+              }`"
+            ></div>
+            <p class="variant-text">
+              {{ props.data[currentPage - 1].variants[index] }}
+            </p>
+          </li>
+        </div>
+      </ul>
     </div>
-    <button class="button" @click="currentPage++">
+    <button
+      :class="`button ${!clicked ? 'inactive' : ''}`"
+      @click="changePage()"
+    >
       <p>
         {{
           currentPage === props.data.length
@@ -286,6 +335,12 @@ const checkAnswer = (index) => {
   text-align: center;
   font-weight: bold;
   font-size: 16px;
+}
+
+.completed-test-question-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .button {
