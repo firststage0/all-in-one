@@ -26,9 +26,47 @@ body {
   background-color: #0c0c09;
 }
 
+.course-box-item.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  height: 100%;
+}
+
+.center > img {
+  stroke: rgba(255, 255, 255, 0.32);
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.center > p {
+  font-family: "InterSemiBold";
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.course-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .course-box-list {
   display: flex;
   flex-wrap: wrap;
+  width: 1566px;
+  justify-content: flex-start;
   gap: 10px;
 }
 .course-box-item {

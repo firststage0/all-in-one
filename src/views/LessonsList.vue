@@ -50,7 +50,7 @@ const scenario = ref(0);
       <NoActiveCources v-if="scenario === 2" />
     </div>
     <div v-if="isLeftBlockActive">
-      <AllCources />
+      <AllCources :isAdmin="true" />
     </div>
   </div>
 </template>
