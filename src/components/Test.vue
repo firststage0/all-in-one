@@ -22,7 +22,12 @@ const writeAnswer = (index) => {
   answers.value.push(answerObject);
 };
 
+const rightAnswers = ref(0);
+
 watch(answers.value, () => {
+  if (clickedButton.value === props.data[currentPage.value - 1].rightAnswer) {
+    rightAnswers.value++;
+  }
   console.log(answers.value);
 });
 
@@ -35,19 +40,13 @@ const changePage = () => {
   } else currentPage.value++;
 };
 
-const checkAnswer = (index) => {
-  clicked.value = true;
-  const answerObject = {};
-  if (index === props.data[currentPage.value - 1].rightAnswer) {
-    answerObject.answer = true;
-    answerObject.index = index;
-  } else {
-    answerObject.answer = false;
-    answerObject.index = index;
-    answerObject.rightAnswer = props.data[currentPage.value - 1].rightAnswer;
-  }
-  answers.value.push(answerObject);
-  console.log(answers.value);
+const restartTest = () => {
+  currentPage.value = 1;
+  clicked.value = false;
+  clickedButton.value = null;
+  answers.value = [];
+  rightAnswers.value = 0;
+  isTestCompleted.value = false;
 };
 </script>
 
@@ -55,8 +54,10 @@ const checkAnswer = (index) => {
   <div class="wrapper">
     <header class="header">
       <header class="header-text">
-        <p class="title">Тест</p>
-        <p class="question-count">{{ props.data.length }} вопросов</p>
+        <p class="title">{{ isTestCompleted ? "Тест пройден" : "Тест" }}</p>
+        <p v-if="!isTestCompleted" class="question-count">
+          {{ props.data.length }} вопросов
+        </p>
       </header>
       <Progresbar
         v-if="!isTestCompleted"
@@ -66,81 +67,92 @@ const checkAnswer = (index) => {
       />
     </header>
     <div class="result-block">
-      <div v-if="!props.data.isTestCompleted" class="test-not-completed">
+      <div v-if="!isTestCompleted" class="test-not-completed">
         Результат будет известен после прохождения теста
       </div>
-      <div v-if="props.data.isTestCompleted" class="test-completed">
-        Оценка: <span>Хорошо</span>
+      <div v-if="isTestCompleted" class="test-completed">
+        <p class="right-answers">
+          Вы ответили на {{ rightAnswers }} вопросов из {{ props.data.length }}
+        </p>
+        <p class="mark">Оценка: <span class="green">Хорошо</span></p>
       </div>
     </div>
     <div class="question-block">
-      <div class="question-header">
+      <div class="question-header"></div>
+
+      <div v-if="!isTestCompleted" class="question">
         <p class="question-number">{{ currentPage }} вопрос</p>
-        <p class="question-text">
-          {{ props.data[currentPage - 1].question }}
-        </p>
-      </div>
-
-      <ul v-if="!isTestCompleted" class="question-list">
-        <li
-          v-for="(element, index) in props.data[currentPage - 1].variants"
-          :class="`question-variant ${index === clickedButton ? 'right' : ''}`"
-          @click="writeAnswer(index)"
-        >
-          <div
-            :class="`variant-image ${index === clickedButton ? 'right' : ''}`"
-          ></div>
-          <p class="variant-text">
-            {{ props.data[currentPage - 1].variants[index] }}
-          </p>
-        </li>
-      </ul>
-
-      <ul v-if="isTestCompleted" class="question-list">
-        <div class="completed-test-question-block">
-          <p class="question-text">
-            <!-- Сюда дописать цикл v-for для блоков сданного теста -->
+        <ul class="question-list">
+          <p class="question-text completed">
             {{ props.data[currentPage - 1].question }}
           </p>
           <li
             v-for="(element, index) in props.data[currentPage - 1].variants"
             :class="`question-variant ${
-              answers[currentPage - 1]?.index === index &&
-              answers[currentPage - 1]?.answer
+              index === clickedButton ? 'right' : ''
+            }`"
+            @click="writeAnswer(index)"
+          >
+            <div
+              :class="`variant-image ${index === clickedButton ? 'right' : ''}`"
+            ></div>
+            <p class="variant-text">
+              {{ props.data[currentPage - 1].variants[index] }}
+            </p>
+          </li>
+        </ul>
+      </div>
+      <ul v-if="isTestCompleted" class="question-list completed">
+        <div
+          v-for="(element, blockIndex) in props.data[currentPage - 1].variants"
+          class="completed-test-question-block"
+        >
+          <p class="question-text completed">
+            {{ blockIndex + 1 + " вопрос. " + props.data[blockIndex].question }}
+          </p>
+          <li
+            v-for="(element, index) in props.data[blockIndex].variants"
+            :class="`question-variant ${
+              index === answers[blockIndex].index &&
+              index === answers[blockIndex].rightAnswer
                 ? 'right'
-                : clicked && answers[currentPage - 1]?.index === index
+                : index !== answers[blockIndex].index &&
+                  index === answers[blockIndex].rightAnswer
+                ? 'actual-right'
+                : index === answers[blockIndex].index &&
+                  index !== answers[blockIndex].rightAnswer
                 ? 'wrong'
-                : index === answers[currentPage - 1]?.rightAnswer
-                ? 'actualRight'
                 : ''
             }`"
-            @click="checkAnswer(index)"
           >
-            <!-- TODO: В общем тут (ниже и выше) логика такая: если ничего на элемент нажали, и он правильный, то изображение и рамка зеленые
-									Если нажатие было, но элемент неправильный, то рамка и изображение красные,
-									Если нажатие было, элемент неправильный, но индекс равен правильному индексу, то изображение и фоновое изображение зеленые 
+            <!-- TODO: В общем тут (ниже и выше) логика такая: если текущий элемент соответствует выбранному элементу и соответствует верному, то он отмечается правильным,
+                       иначе если элемент не соответствует выбранному элементу но соответствует верному, то он отмечается как настоящий правильный,
+                       если элемент не соответствует выбранному элементу и не соответствует верному, то он отмечается как неправильный
 				-->
 
             <div
               :class="`variant-image ${
-                answers[currentPage - 1]?.index === index &&
-                answers[currentPage - 1]?.answer
+                index === answers[blockIndex].index &&
+                index === answers[blockIndex].rightAnswer
                   ? 'right'
-                  : clicked && answers[currentPage - 1]?.index === index
+                  : index !== answers[blockIndex].index &&
+                    index === answers[blockIndex].rightAnswer
+                  ? 'right'
+                  : index === answers[blockIndex].index &&
+                    index !== answers[blockIndex].rightAnswer
                   ? 'wrong'
-                  : index === answers[currentPage - 1]?.rightAnswer
-                  ? 'right'
                   : ''
               }`"
             ></div>
             <p class="variant-text">
-              {{ props.data[currentPage - 1].variants[index] }}
+              {{ props.data[blockIndex].variants[index] }}
             </p>
           </li>
         </div>
       </ul>
     </div>
     <button
+      v-if="!isTestCompleted"
       :class="`button ${!clicked ? 'inactive' : ''}`"
       @click="changePage()"
     >
@@ -151,6 +163,10 @@ const checkAnswer = (index) => {
             : "Следующий вопрос"
         }}
       </p>
+    </button>
+    <button v-if="isTestCompleted" class="restart" @click="restartTest()">
+      <img src="@/assets/icons/button-icons/restart.svg" alt="" />
+      <p>Пересдать тест</p>
     </button>
   </div>
 </template>
@@ -229,15 +245,26 @@ const checkAnswer = (index) => {
 .test-completed {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   gap: 4px;
+}
+
+.right-answers {
+  font-family: var(--inter-font);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.mark {
   font-family: var(--inter-font);
   font-weight: 400;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.48);
 }
 
-.test-completed > span {
+.mark > span {
   font-weight: 500;
   font-size: 14px;
   text-align: center;
@@ -259,7 +286,6 @@ const checkAnswer = (index) => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .question-header {
@@ -272,6 +298,7 @@ const checkAnswer = (index) => {
   font-family: var(--inter-font);
   font-weight: bold;
   font-size: 20px;
+  margin-bottom: 12px;
 }
 
 .question-text {
@@ -281,6 +308,10 @@ const checkAnswer = (index) => {
   color: #b9b9b9;
 }
 
+.question-text.completed {
+  margin-bottom: 8px;
+}
+
 .question-list {
   margin: 0;
   padding: 0;
@@ -288,6 +319,10 @@ const checkAnswer = (index) => {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.question-list.completed {
+  gap: 16px;
 }
 
 .question-variant {
@@ -310,7 +345,7 @@ const checkAnswer = (index) => {
   border: 1px solid #e33;
 }
 
-.question-variant.actualRight {
+.question-variant.actual-right {
   background: rgba(50, 180, 19, 0.04);
 }
 
@@ -364,6 +399,26 @@ const checkAnswer = (index) => {
 .button > p {
   font-family: var(--inter-font);
   font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+.restart {
+  border: none;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.restart > p {
+  font-family: var(--inter-font);
+  font-weight: 500;
   font-size: 16px;
   text-align: center;
 }
