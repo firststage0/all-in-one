@@ -1,13 +1,16 @@
 <script setup>
 import CourceCard from "@/components/CourceCard.vue";
 import themesData from "@/data/themes.json";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
 import homeworks from "@/data/homeworks.json";
 import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
+import { useRoute } from "vue-router";
+
+const $route = useRoute();
 
 const isMarked = ref({
   1: true,
@@ -15,7 +18,7 @@ const isMarked = ref({
   3: false,
 });
 
-const buttonId = ref(1);
+const buttonId = ref(null);
 
 watch(buttonId, () => {
   for (const key in isMarked.value) {
@@ -23,6 +26,10 @@ watch(buttonId, () => {
       ? (isMarked.value[key] = true)
       : (isMarked.value[key] = false);
   }
+});
+
+onMounted(() => {
+  buttonId.value = Number($route.query.buttonId || 1);
 });
 
 const themes = ref(themesData);
@@ -63,7 +70,7 @@ const activeMenuButtonIndex = ref(null);
         >
           <router-link
             :class="`router-link ${element.isCompleted ? 'inactive' : ''}`"
-            :to="`/lesson/${element.id}`"
+            :to="{ path: `/lesson/${element.id}`, query: { buttonId: 1 } }"
             v-for="element in themes[activeMenuButtonIndex].lessons"
           >
             <LessonCard :data="element" />
@@ -74,7 +81,7 @@ const activeMenuButtonIndex = ref(null);
         <div class="homework-wrapper">
           <router-link
             class="router-link"
-            :to="`/homework/${element.id}`"
+            :to="{ path: `/homework/${element.id}`, query: { buttonId: 2 } }"
             v-for="element in homeworks"
           >
             <HomeworkCard :data="element" :isAdmin="false" />

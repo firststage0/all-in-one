@@ -38,7 +38,10 @@ const scenario = ref(0);
     </div>
 
     <div v-if="!isLeftBlockActive" class="education-block">
-      <router-link to="/education" class="router-link">
+      <router-link
+        :to="{ path: '/education', query: { buttonId: 1 } }"
+        class="router-link"
+      >
         <CourceCard v-if="scenario === 0" :isFooterActive="true" />
       </router-link>
 

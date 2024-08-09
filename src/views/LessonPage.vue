@@ -6,6 +6,15 @@ import CourceCard from "@/components/CourceCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
 import GoBackButton from "@/components/GoBackButton.vue";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+const $route = useRoute();
+
+const buttonId = ref(null || 1);
+
+onMounted(() => {
+  buttonId.value = Number($route.query.buttonId || 1);
+});
 </script>
 
 <template>
@@ -14,7 +23,7 @@ import Breadcrumbs from "@/components/Breadcrumbs.vue";
     <div class="wrapper">
       <Breadcrumbs />
       <CourceCard />
-      <SlideNavBar />
+      <SlideNavBar v-model="buttonId" />
       <router-link to="/education" class="router-link"
         ><GoBackButton />
       </router-link>

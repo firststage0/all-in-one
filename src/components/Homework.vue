@@ -2,7 +2,10 @@
 import { ref, onMounted } from "vue";
 import TextField from "@/components/TextField.vue";
 import HelpButton from "@/components/HelpButton.vue";
-
+import Plyr from "plyr";
+import "plyr/dist/plyr.css";
+import "@/assets/plyr-custom.css";
+import Test from "@/components/Test.vue";
 const props = defineProps({ data: Object });
 const status = ref("");
 
@@ -18,6 +21,7 @@ onMounted(() => {
       status.value = "Проверено преподавателем";
       break;
   }
+  const player = new Plyr("#player");
 });
 </script>
 
@@ -39,7 +43,35 @@ onMounted(() => {
       <p v-for="(el, index) in props.data.tasks" class="task-text">
         {{ props.data.tasks[index] }}
       </p>
-      <TextField class="text-field" />
+      <Test
+        :data="props.data?.test"
+        :isTestCompleted="props.data.isTestCompleted"
+      />
+      <div v-show="status === 'Проверено преподавателем'" class="teacher-block">
+        <p class="time">Ср, 14 окт., 22:01 MSK (UTC+3)</p>
+        <div class="teacher-info">
+          <p class="teacher-info-title">Преподаватель</p>
+          <p class="name">Иван Иванов</p>
+        </div>
+        <p class="teacher-comment">Привет! Всё круто! Молодец!</p>
+        <div class="player">
+          <video
+            v-if="props.data.videoUrl"
+            id="player"
+            playsinline
+            controls
+            poster="https://atuin.ru/demo/plyr/poster.jpg"
+          >
+            <source :src="props.data.videoUrl" type="video/mp4" />
+          </video>
+        </div>
+        <div class="divider"></div>
+        <div class="mark-block">
+          <p class="mark-text">Оценка:</p>
+          <p class="mark-value green">Отлично</p>
+        </div>
+      </div>
+      <TextField class="text-field" :isFiles="true" :ifTime="true" />
       <HelpButton />
     </main>
   </div>
@@ -132,6 +164,83 @@ onMounted(() => {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
+}
+
+.teacher-block {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(40, 112, 221, 0.08);
+}
+
+.time {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.teacher-info-title {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.teacher-name {
+  font-family: var(--inter-font);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.teacher-comment {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+}
+
+.player {
+  width: 40%;
+}
+
+.mark-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.mark-text {
+  font-family: var(--inter-font);
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.mark-value {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+}
+
+.green {
+  color: #32b413;
+}
+
+.yellow {
+  color: #fcac34;
+}
+
+.red {
+  color: #e33;
 }
 
 .text-field {

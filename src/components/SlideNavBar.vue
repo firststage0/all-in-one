@@ -8,24 +8,39 @@ const toogleNavButton = (id) => {
 
 <template>
   <nav class="nav-bar">
-    <button
-      :class="`nav-button ${buttonId === 1 ? 'active' : ''}`"
-      @click="toogleNavButton(1)"
+    <router-link
+      class="router-link"
+      :to="{ path: '/education', query: { buttonId: 1 } }"
     >
-      Обучение
-    </button>
-    <button
-      :class="`nav-button ${buttonId === 2 ? 'active' : ''}`"
-      @click="toogleNavButton(2)"
+      <button
+        :class="`nav-button ${buttonId === 1 ? 'active' : ''}`"
+        @click="toogleNavButton(1)"
+      >
+        Обучение
+      </button></router-link
     >
-      Домашние работы
-    </button>
-    <button
-      :class="`nav-button ${buttonId === 3 ? 'active' : ''}`"
-      @click="toogleNavButton(3)"
+    <router-link
+      class="router-link"
+      :to="{ path: '/education', query: { buttonId: 2 } }"
     >
-      Достижения
-    </button>
+      <button
+        :class="`nav-button ${buttonId === 2 ? 'active' : ''}`"
+        @click="toogleNavButton(2)"
+      >
+        Домашние работы
+      </button>
+    </router-link>
+    <router-link
+      class="router-link"
+      :to="{ path: '/education', query: { buttonId: 3 } }"
+    >
+      <button
+        :class="`nav-button ${buttonId === 3 ? 'active' : ''}`"
+        @click="toogleNavButton(3)"
+      >
+        Достижения
+      </button>
+    </router-link>
   </nav>
 </template>
 

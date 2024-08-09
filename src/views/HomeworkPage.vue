@@ -5,6 +5,15 @@ import SlideNavBar from "@/components/SlideNavBar.vue";
 import homeworks from "@/data/homeworks.json";
 import GoBackButton from "@/components/GoBackButton.vue";
 import Homework from "@/components/Homework.vue";
+import { useRoute } from "vue-router";
+import { onMounted, ref } from "vue";
+const $route = useRoute();
+
+const buttonId = ref(null || 1);
+
+onMounted(() => {
+  buttonId.value = Number($route.query.buttonId || 1);
+});
 </script>
 
 <template>
@@ -12,7 +21,7 @@ import Homework from "@/components/Homework.vue";
   <div class="homework-page">
     <div class="homework-page-wrapper">
       <CourceCard />
-      <SlideNavBar />
+      <SlideNavBar v-model="buttonId" />
       <router-link to="/education" class="router-link"
         ><GoBackButton />
       </router-link>

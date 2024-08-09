@@ -1,36 +1,27 @@
 <script setup>
-import GoBackButton from "@/components/GoBackButton.vue";
 import NextPrevNavigation from "@/components/NextPrevNavigation.vue";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
-import { onMounted, ref, watch } from "vue";
 import "@/assets/plyr-custom.css";
+import { onMounted, ref, watch } from "vue";
 import HelpButton from "@/components/HelpButton.vue";
 import TextField from "@/components/TextField.vue";
+import Progresbar from "@/components/Progresbar.vue";
 
 const props = defineProps({
   data: Object,
 });
 
-const pagesStack = ref([]);
-
 const currentPage = ref(1);
-const maxPage = ref(props.data.pages.length);
-
-watch(currentPage, () => {
-  if (!pagesStack.value.includes(currentPage.value)) {
-    pagesStack.value.push(currentPage.value - 1);
-  }
-  if (
-    currentPage.value === maxPage.value &&
-    !pagesStack.value.includes(currentPage.value)
-  ) {
-    pagesStack.value.push(currentPage.value);
-  }
-});
+const maxPage = ref(props.data?.pages.length);
 
 onMounted(() => {
-  const player = new Plyr("#player");
+  const player = new Plyr("#player", {
+    captions: {
+      active: false,
+      update: true,
+    },
+  });
 });
 </script>
 
@@ -40,7 +31,7 @@ onMounted(() => {
       <div class="header-top">
         <p class="lessons-count">
           <span>{{ currentPage }}</span> / {{ maxPage }}
-          <span> {{ " " + props.data.pages[currentPage - 1].title }}</span>
+          <span> {{ " " + props.data?.pages[currentPage - 1].title }}</span>
         </p>
         <NextPrevNavigation v-model="currentPage" :maxPage="maxPage" />
       </div>
@@ -48,22 +39,15 @@ onMounted(() => {
         <div class="theme-block">
           <p class="theme">{{ props.data.theme }}</p>
         </div>
-        <div class="progress-bar">
-          <div
-            v-for="i in maxPage"
-            :class="`progress-cell ${
-              i === currentPage
-                ? 'current'
-                : pagesStack.includes(i)
-                ? 'completed'
-                : ''
-            }`"
-          ></div>
-        </div>
+        <Progresbar
+          v-model="currentPage"
+          :maxPage="maxPage"
+          :currentPage="currentPage"
+        />
       </div>
     </header>
     <div class="lesson-wrapper">
-      <div v-if="props.data.pages[currentPage - 1].videoUrl" class="player">
+      <div v-if="props.data?.pages[currentPage - 1].videoUrl" class="player">
         <video
           id="player"
           playsinline
@@ -71,23 +55,31 @@ onMounted(() => {
           poster="https://atuin.ru/demo/plyr/poster.jpg"
         >
           <source
-            :src="props.data.pages[currentPage - 1].videoUrl"
+            :src="props.data?.pages[currentPage - 1].videoUrl"
             type="video/mp4"
           />
+          <track
+            label="English"
+            srclang="en"
+            default="true,"
+            src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+          />
         </video>
+        <plyr-captions />
       </div>
       <p class="description-title">Описание</p>
       <div
-        v-for="(i, index) in props.data.pages[currentPage - 1].descriptionBlock"
+        v-for="(i, index) in props.data?.pages[currentPage - 1]
+          .descriptionBlock"
         class="description-block"
       >
         <div class="divider"></div>
         <p
           class="description-text"
-          v-html="props.data.pages[currentPage - 1].descriptionBlock[index]"
+          v-html="props.data?.pages[currentPage - 1].descriptionBlock[index]"
         ></p>
       </div>
-      <TextField v-if="props.data.pages[currentPage - 1].textField" />
+      <TextField v-if="props.data?.pages[currentPage - 1].textField" />
       <HelpButton v-if="currentPage === maxPage" />
       <div class="divider"></div>
       <footer class="lesson-footer">
@@ -152,26 +144,6 @@ onMounted(() => {
   border-radius: 4px;
   padding: 6px 12px;
   background: rgba(255, 255, 255, 0.08);
-}
-
-.progress-bar {
-  display: flex;
-  gap: 8px;
-}
-
-.progress-cell {
-  border-radius: 6px;
-  width: 102px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.progress-cell.current {
-  background: rgba(255, 255, 255, 0.64);
-}
-
-.progress-cell.completed {
-  background: rgba(50, 180, 19, 0.64);
 }
 
 .lesson-wrapper {

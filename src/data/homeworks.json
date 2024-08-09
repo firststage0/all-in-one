@@ -8,7 +8,35 @@
     "tasks": ["Задание от преподавателя"],
     "status": "waiting",
     "deadline": "16.07.2024",
-    "grade": null
+    "grade": null,
+    "test": [
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      },
+      {
+        "question": "Как называется первый объектно-ориентированный язык?",
+        "rightAnswer": 4,
+        "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
+      }
+    ],
+    "isTestCompleted": false
   },
   {
     "id": 2,
@@ -30,7 +58,8 @@
     "tasks": ["Задание от преподавателя"],
     "status": "checked",
     "deadline": null,
-    "grade": 4
+    "grade": 4,
+    "videoUrl": "https://atuin.ru/demo/plyr/1280.mp4"
   },
   {
     "id": 4,
