@@ -8,37 +8,16 @@ import FooterComponent from "@/components/FooterComponent.vue";
 
 import "@/assets/main.css";
 
-import { isWindowActive } from "@/functions/modalWindowsStatus";
-
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { jsonData } from "@/functions/getDataFromServer";
 
-import ProfileModalWindow from "@/components/ProfileModalWindow.vue";
-
 const isLoading = ref(false);
-
-watch(isWindowActive, () => {
-  const isScrollBlocked = ref(false);
-  for (let key in isWindowActive) {
-    if (isWindowActive[key].status) {
-      isScrollBlocked.value = true;
-      break;
-    }
-  }
-  if (isScrollBlocked.value) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "unset";
-  }
-});
 </script>
 
 <template>
   <HeaderComponent />
   <div class="background-container" v-if="!isLoading">
     <main class="main">
-      <ProfileModalWindow v-if="isWindowActive['profile'].status" />
-
       <div class="container"><MainContent :data="jsonData" /></div>
 
       <div class="container"><WhatLearn /></div>

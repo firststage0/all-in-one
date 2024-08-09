@@ -7,7 +7,11 @@ import { onMounted, ref } from "vue";
 import flagRussia from "@/assets/icons/flag-russia.svg";
 import flagAmerica from "@/assets/icons/flag-america.svg";
 
-import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
+import {
+  toogleWindowStatus,
+  isWindowActive,
+} from "@/functions/modalWindowsStatus";
+import ProfileModalWindow from "./ProfileModalWindow.vue";
 
 const isThemeDark = ref(true);
 const toogleTheme = () => {
@@ -35,6 +39,7 @@ const languages = {
 </script>
 
 <template>
+  <ProfileModalWindow v-if="isWindowActive['profile'].status" />
   <header class="header-component">
     <div class="container">
       <div class="title">
