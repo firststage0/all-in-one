@@ -72,6 +72,11 @@ const router = createRouter({
       name: "Homework",
       component: () => import("@/views/HomeworkPage.vue"),
     },
+    {
+      path: "/add-course",
+      name: "add cource",
+      component: () => import("@/views/AddCourse.vue"),
+    },
   ],
 });
 

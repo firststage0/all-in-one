@@ -1,10 +1,23 @@
 <script setup>
 import "@/assets/css/style.css";
+const props = defineProps({
+  isAdmin: Boolean,
+});
 </script>
 
 <template>
   <div class="course-box">
     <div class="course-box-list">
+      <router-link to="/add-course" class="router-link">
+        <a href="#" class="course-box-item add">
+          <div class="course-box-item-add">
+            <div class="center">
+              <img src="@/assets/icons/button-icons/add.svg" alt="" />
+              <p>Добавить урок</p>
+            </div>
+          </div>
+        </a>
+      </router-link>
       <a href="#" class="course-box-item">
         <div class="course-box-item-top">
           <div class="course-box-item-top-left">
