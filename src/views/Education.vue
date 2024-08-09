@@ -51,7 +51,10 @@ const activeMenuButtonIndex = ref(null);
           <div class="add-theme-wrapper">
             <div class="gradient">
               <button class="add-theme">
-                <img src="@/assets/icons/button-icons/add.svg" alt="" />
+                <img
+                  src="@/assets/icons/button-icons/add-gradient.svg"
+                  alt=""
+                />
                 <p>Добавить тему</p>
               </button>
             </div>
@@ -192,7 +195,7 @@ const activeMenuButtonIndex = ref(null);
   border: none;
   padding: 12px 8px;
   border-radius: 16px;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
   justify-content: center;
 }
@@ -223,6 +226,12 @@ const activeMenuButtonIndex = ref(null);
   padding: 16px;
   border: none;
   background: inherit;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .menu-button.active {
