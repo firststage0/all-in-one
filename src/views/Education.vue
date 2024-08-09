@@ -10,7 +10,12 @@ import LessonCard from "@/components/LessonCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
 import { useRoute } from "vue-router";
 import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
-
+import {
+  toogleWindowStatus,
+  isWindowActive,
+} from "@/functions/modalWindowsStatus";
+import NewThemeModalWindow from "@/components/NewThemeModalWindow.vue";
+import NewLessonModalWindow from "@/components/NewLessonModalWindow.vue";
 const $route = useRoute();
 
 const isMarked = ref({
@@ -39,6 +44,8 @@ const activeMenuButtonIndex = ref(null);
 
 <template>
   <HeaderComponent />
+  <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
+  <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
   <div class="education-wrapper">
     <div class="main-container">
       <CourceCard :isBackButtonShow="true" />
@@ -50,7 +57,7 @@ const activeMenuButtonIndex = ref(null);
         <div class="menu">
           <div class="add-theme-wrapper">
             <div class="gradient">
-              <button class="add-theme">
+              <button class="add-theme" @click="toogleWindowStatus('newTheme')">
                 <img
                   src="@/assets/icons/button-icons/add-gradient.svg"
                   alt=""
@@ -82,7 +89,7 @@ const activeMenuButtonIndex = ref(null);
           "
           class="lessons-block"
         >
-          <button class="add-lesson">
+          <button class="add-lesson" @click="toogleWindowStatus('newLesson')">
             <div class="center">
               <img src="@/assets/icons/button-icons/add.svg" alt="" />
               <p>Добавить урок</p>

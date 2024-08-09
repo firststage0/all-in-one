@@ -1,7 +1,6 @@
 <script setup>
 import "@/assets/styles.css";
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
-import "@/assets/styles.css";
 </script>
 
 <template>
