@@ -9,6 +9,7 @@ import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
 import { useRoute } from "vue-router";
+import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
 
 const $route = useRoute();
 
@@ -41,11 +42,24 @@ const activeMenuButtonIndex = ref(null);
   <div class="education-wrapper">
     <div class="main-container">
       <CourceCard :isBackButtonShow="true" />
-
-      <SlideNavBar v-model="buttonId" />
-
+      <nav class="nav">
+        <SlideNavBar v-model="buttonId" />
+        <CourseAdminPanel :isOnEdit="false" :isPaused="false" />
+      </nav>
       <div v-if="isMarked[1]" class="education-interface">
         <div class="menu">
+          <div class="add-theme-wrapper">
+            <div class="gradient">
+              <button class="add-theme">
+                <img
+                  src="@/assets/icons/button-icons/add-gradient.svg"
+                  alt=""
+                />
+                <p>Добавить тему</p>
+              </button>
+            </div>
+            <div class="divider"></div>
+          </div>
           <button
             v-for="(i, menu_index) in themes"
             @click="
@@ -68,6 +82,12 @@ const activeMenuButtonIndex = ref(null);
           "
           class="lessons-block"
         >
+          <button class="add-lesson">
+            <div class="center">
+              <img src="@/assets/icons/button-icons/add.svg" alt="" />
+              <p>Добавить урок</p>
+            </div>
+          </button>
           <router-link
             :class="`router-link ${element.isCompleted ? 'inactive' : ''}`"
             :to="{ path: `/lesson/${element.id}`, query: { buttonId: 1 } }"
@@ -121,6 +141,13 @@ const activeMenuButtonIndex = ref(null);
   gap: 16px;
 }
 
+.nav {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
 .inactive {
   pointer-events: none;
 }
@@ -141,9 +168,55 @@ const activeMenuButtonIndex = ref(null);
   background: #151514;
 }
 
+.add-theme-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.gradient {
+  background: linear-gradient(135deg, #2870dd 0%, #aa54b7 100%);
+  border-radius: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 296px;
+  height: 48px;
+  padding: 1px;
+}
+
+.add-theme {
+  display: flex;
+  width: 293px;
+  height: 45px;
+  background-color: #151514;
+  border: none;
+  padding: 12px 8px;
+  border-radius: 16px;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-theme > p {
+  font-weight: 700;
+  font-size: 16px;
+  background: linear-gradient(135deg, #2870dd 0%, #aa54b7 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.add-theme > img {
+  stroke: linear-gradient(135deg, #2870dd 0%, #aa54b7 100%);
+}
+
 .menu-button {
   transition: 400ms;
   width: 296px;
+  height: 78px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -155,9 +228,40 @@ const activeMenuButtonIndex = ref(null);
   background: inherit;
 }
 
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .menu-button.active {
   transition: 400ms;
   background: linear-gradient(90deg, #2870dd 0%, #255cea 100%);
+}
+
+.add-lesson {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  background-color: inherit;
+  gap: 8px;
+  border-radius: 12px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.center > p {
+  font-family: var(--inter-semibold-font);
+  font-weight: bold;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .lessons-block {
