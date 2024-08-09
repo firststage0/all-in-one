@@ -9,6 +9,7 @@ import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
 import { useRoute } from "vue-router";
+import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
 
 const $route = useRoute();
 
@@ -41,9 +42,10 @@ const activeMenuButtonIndex = ref(null);
   <div class="education-wrapper">
     <div class="main-container">
       <CourceCard :isBackButtonShow="true" />
-
-      <SlideNavBar v-model="buttonId" />
-
+      <nav class="nav">
+        <SlideNavBar v-model="buttonId" />
+        <CourseAdminPanel :isOnEdit="false" :isPaused="false" />
+      </nav>
       <div v-if="isMarked[1]" class="education-interface">
         <div class="menu">
           <button
@@ -119,6 +121,13 @@ const activeMenuButtonIndex = ref(null);
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.nav {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .inactive {

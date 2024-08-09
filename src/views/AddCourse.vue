@@ -29,11 +29,34 @@ const changeLevel = (level) => {
   }
 };
 
-const handleEnter = (event) => {
-  switch (event) {
-    case 0: {
-    }
+const file = ref(null);
+
+const handleFileUpload = (event) => {
+  file.value = event.target.files[0];
+};
+
+const uploadImage = () => {
+  if (!file.value) {
+    alert("Please select a file");
+    return;
   }
+
+  const formData = new FormData();
+  formData.append("image", file.value);
+
+  // TODO: Попробовать сделать загрузку изображения через эту штуку: https://cloudinary.com/documentation/image_upload_api_reference
+
+  fetch("/api/upload", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 </script>
 
