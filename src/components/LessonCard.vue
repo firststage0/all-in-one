@@ -1,20 +1,57 @@
 <script setup>
+import EditPanel from "@/components/EditPanel.vue";
+import EditLessonModalWindow from "@/components/EditLessonModalWindow.vue";
+import { isWindowActive } from "@/functions/modalWindowsStatus";
+import { useRouter } from "vue-router";
+import DeleteLessonModalWindow from "@/components/DeleteLessonModalWindow.vue";
 const props = defineProps({
   data: Object,
+  isOnEdit: Boolean,
 });
+
+const router = useRouter();
+
+const navigate = (elementId) => {
+  console.log("navigate", elementId);
+
+  router.push({ path: `/lesson/${elementId}`, query: { buttonId: 1 } });
+};
+
+const editLesson = () => {
+  isWindowActive["editLesson"].status = true;
+};
+
+const deleteLesson = () => {
+  isWindowActive["deleteLesson"].status = true;
+};
 </script>
 
 <template>
-  <div :class="`card ${props.data.isCompleted ? 'inactive' : ''}`">
+  <EditLessonModalWindow v-if="isWindowActive['editLesson'].status" />
+  <DeleteLessonModalWindow v-if="isWindowActive['deleteLesson'].status" />
+  <div
+    :class="`card ${props.data.isCompleted ? 'inactive' : ''}`"
+    @click="navigate(props.data.id)"
+  >
     <main class="card-main">
-      <div class="type-block">
-        <img
-          src="@/assets/icons/type-icons/video.svg"
-          alt=""
-          class="type-img"
-        />
-        <p class="type-title">{{ props.data.type }}</p>
+      <div class="header">
+        <div class="left">
+          <img
+            src="@/assets/icons/type-icons/video.svg"
+            alt=""
+            class="type-img"
+          />
+          <p class="type-title">{{ props.data.type }}</p>
+        </div>
+        <div class="right">
+          <EditPanel
+            v-if="props.isOnEdit"
+            :editFuncition="editLesson"
+            :deleteFunction="deleteLesson"
+          />
+        </div>
       </div>
+
       <p class="card-title">{{ props.data.title }}</p>
     </main>
     <footer class="card-footer">
@@ -59,16 +96,27 @@ const props = defineProps({
 }
 
 .card-main {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.type-block {
+.header {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
   gap: 8px;
+}
+
+.right {
+  position: relative;
+  z-index: 10;
 }
 
 .type-img {

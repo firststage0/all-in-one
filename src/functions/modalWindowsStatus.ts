@@ -15,7 +15,7 @@ export const toogleWindowStatus = (windowName: string) => {
 }
 
 watch(isWindowActive, () => {
-  console.log(isWindowActive);
+
   
   const isScrollBlocked = ref(false);
   for (const key in isWindowActive) {

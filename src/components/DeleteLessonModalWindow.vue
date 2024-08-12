@@ -1,41 +1,24 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
-import LessonTypes from "./LessonTypes.vue";
 </script>
 
 <template>
-  <div class="modal-window" @click.self="toogleWindowStatus('newLesson')">
+  <div class="modal-window" @click.self="toogleWindowStatus('deleteLesson')">
     <div class="wrapper">
       <header class="header">
-        <p class="header-title">Новый урок</p>
-        <button class="close" @click.stop="toogleWindowStatus('newLesson')">
+        <p class="header-title">Удаление урока</p>
+        <button class="close" @click.stop="toogleWindowStatus('deleteLesson')">
           <img src="@/assets/icons/close-icon.svg" alt="" />
         </button>
       </header>
       <main class="main">
-        <div class="main-block">
-          <p class="title">Название</p>
-          <input
-            class="input"
-            type="text"
-            placeholder="Введите название урока"
-          />
-        </div>
-        <div class="main-block">
-          <p class="title">Тип урока</p>
-          <LessonTypes />
-          <div class="main-block">
-            <p class="title">Длительность</p>
-            <div class="input-block">
-              <input type="text" class="duration-input" placeholder="20" />
-              <p class="duration-text">мин</p>
-            </div>
-          </div>
-        </div>
+        <p class="question">Вы действительно хотите удалить?</p>
+        <p class="title">Урок</p>
+        <p class="description">Вводный курс студента</p>
       </main>
       <footer class="footer">
         <button class="left">Отменить</button>
-        <button class="right">Сохранить</button>
+        <button class="right">Да</button>
       </footer>
     </div>
   </div>
@@ -46,9 +29,9 @@ import LessonTypes from "./LessonTypes.vue";
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 20;
   width: 100%;
   height: 100%;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +45,7 @@ import LessonTypes from "./LessonTypes.vue";
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 16px;
-  width: 496px;
+  width: 400px;
 
   background: #232427;
 }
@@ -101,67 +84,21 @@ import LessonTypes from "./LessonTypes.vue";
   padding: 24px;
 }
 
-.main-block {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 8px;
-  justify-content: flex-start;
+.question {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.description {
+  font-family: var(--inter-semibold-font);
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .title {
-  font-family: var(--inter-semibold-font);
-  font-weight: 500;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.48);
-}
-
-.input-block {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.input {
-  border: none;
-  width: 100%;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border-radius: 12px;
-  padding: 12px 16px;
-  background: #2a2b2e;
-}
-
-.input::placeholder {
-  font-family: var(--inter-semibold-font);
-  font-weight: 500;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.duration-input {
-  border-radius: 12px;
-  padding: 12px 16px;
-  width: 64px;
-  height: 48px;
-  background: #2a2b2e;
-  border: none;
-}
-
-.duration-input::placeholder {
-  font-family: var(--inter-semibold-font);
-  font-weight: 500;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.duration-text {
-  font-family: var(--inter-semibold-font);
-  font-weight: 500;
+  font-family: var(--inter-font);
+  font-weight: 600;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.48);
 }

@@ -1,14 +1,14 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
-import LessonTypes from "./LessonTypes.vue";
+import LessonTypes from "@/components/LessonTypes.vue";
 </script>
 
 <template>
-  <div class="modal-window" @click.self="toogleWindowStatus('newLesson')">
+  <div class="modal-window" @click.self="toogleWindowStatus('editLesson')">
     <div class="wrapper">
       <header class="header">
-        <p class="header-title">Новый урок</p>
-        <button class="close" @click.stop="toogleWindowStatus('newLesson')">
+        <p class="header-title">Редактирование урока</p>
+        <button class="close" @click.stop="toogleWindowStatus('editLesson')">
           <img src="@/assets/icons/close-icon.svg" alt="" />
         </button>
       </header>
@@ -116,12 +116,6 @@ import LessonTypes from "./LessonTypes.vue";
   color: rgba(255, 255, 255, 0.48);
 }
 
-.input-block {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .input {
   border: none;
   width: 100%;
@@ -141,6 +135,12 @@ import LessonTypes from "./LessonTypes.vue";
   font-weight: 500;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.32);
+}
+
+.input-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .duration-input {
