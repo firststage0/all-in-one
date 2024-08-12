@@ -8,7 +8,7 @@ import homeworks from "@/data/homeworks.json";
 import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
 import {
   toogleWindowStatus,
@@ -16,19 +16,15 @@ import {
 } from "@/functions/modalWindowsStatus";
 import NewThemeModalWindow from "@/components/NewThemeModalWindow.vue";
 import NewLessonModalWindow from "@/components/NewLessonModalWindow.vue";
+import EditPanel from "@/components/EditPanel.vue";
+import EditThemeModalWindow from "@/components/EditThemeModalWindow.vue";
+import DeleteThemeModalWindow from "@/components/DeleteThemeModalWindow.vue";
 const $route = useRoute();
-const router = useRouter();
 const isMarked = ref({
   1: true,
   2: false,
   3: false,
 });
-
-const navigate = (elementId) => {
-  console.log("navigate", elementId);
-
-  router.push({ path: `/lesson/${elementId}`, query: { buttonId: 1 } });
-};
 
 const buttonId = ref(null);
 
@@ -46,13 +42,22 @@ onMounted(() => {
 
 const themes = ref(themesData);
 const activeMenuButtonIndex = ref(null);
+
+const editTheme = () => {
+  toogleWindowStatus("editTheme");
+};
+
+const deleteTheme = () => {
+  toogleWindowStatus("deleteTheme");
+};
 </script>
 
 <template>
   <HeaderComponent />
   <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
   <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
-
+  <EditThemeModalWindow v-if="isWindowActive['editTheme'].status" />
+  <DeleteThemeModalWindow v-if="isWindowActive['deleteTheme'].status" />
   <div class="education-wrapper">
     <div class="main-container">
       <CourceCard :isBackButtonShow="true" />
@@ -76,7 +81,7 @@ const activeMenuButtonIndex = ref(null);
           </div>
           <button
             v-for="(i, menu_index) in themes"
-            @click="
+            @click.stop="
               {
                 activeMenuButtonIndex = menu_index;
               }
@@ -85,6 +90,12 @@ const activeMenuButtonIndex = ref(null);
               activeMenuButtonIndex === menu_index ? 'active' : ''
             }`"
           >
+            <div class="edit-panel">
+              <EditPanel
+                :editFuncition="editTheme"
+                :deleteFunction="deleteTheme"
+              />
+            </div>
             <p class="button-title">{{ i.title }}</p>
             <p class="description">{{ i.description }}</p>
           </button>
@@ -102,11 +113,8 @@ const activeMenuButtonIndex = ref(null);
               <p>Добавить урок</p>
             </div>
           </button>
-          <div
-            @click.stop="navigate(1)"
-            v-for="element in themes[activeMenuButtonIndex].lessons"
-          >
-            <LessonCard :data="element" />
+          <div v-for="element in themes[activeMenuButtonIndex].lessons">
+            <LessonCard :isOnEdit="true" :data="element" />
           </div>
         </div>
       </div>
@@ -239,6 +247,13 @@ const activeMenuButtonIndex = ref(null);
   padding: 16px;
   border: none;
   background: inherit;
+  position: relative;
+}
+
+.edit-panel {
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
 
 .divider {

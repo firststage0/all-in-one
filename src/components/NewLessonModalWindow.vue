@@ -1,5 +1,6 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
+import LessonTypes from "./LessonTypes.vue";
 </script>
 
 <template>
@@ -22,11 +23,7 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
         </div>
         <div class="main-block">
           <p class="title">Тип урока</p>
-          <div class="button-block">
-            <button class="main-button"><p>Видеокурс</p></button>
-            <button class="main-button"><p>Вебинарный формат</p></button>
-            <button class="main-button"><p>Домашка</p></button>
-          </div>
+          <LessonTypes />
           <div class="main-block">
             <p class="title">Длительность</p>
             <div class="input-block">
@@ -119,6 +116,12 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
   color: rgba(255, 255, 255, 0.48);
 }
 
+.input-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .input {
   border: none;
   width: 100%;
@@ -138,30 +141,6 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
   font-weight: 500;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.32);
-}
-
-.button-block {
-  display: flex;
-  gap: 8px;
-}
-
-.main-button {
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 16px;
-  border-radius: 12px;
-  padding: 16px 24px;
-  background: rgba(255, 255, 255, 0.04);
-  flex: 1 1 auto;
-}
-
-.input-block {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .duration-input {

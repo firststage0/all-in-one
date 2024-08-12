@@ -2,13 +2,22 @@
 import EditPanel from "@/components/EditPanel.vue";
 import EditLessonModalWindow from "@/components/EditLessonModalWindow.vue";
 import { isWindowActive } from "@/functions/modalWindowsStatus";
+import { useRouter } from "vue-router";
+import DeleteLessonModalWindow from "@/components/DeleteLessonModalWindow.vue";
 const props = defineProps({
   data: Object,
-  isOnEditMode: Boolean,
+  isOnEdit: Boolean,
 });
 
+const router = useRouter();
+
+const navigate = (elementId) => {
+  console.log("navigate", elementId);
+
+  router.push({ path: `/lesson/${elementId}`, query: { buttonId: 1 } });
+};
+
 const editLesson = () => {
-  console.log("edit lesson");
   isWindowActive["editLesson"].status = true;
 };
 
@@ -19,7 +28,11 @@ const deleteLesson = () => {
 
 <template>
   <EditLessonModalWindow v-if="isWindowActive['editLesson'].status" />
-  <div :class="`card ${props.data.isCompleted ? 'inactive' : ''}`">
+  <DeleteLessonModalWindow v-if="isWindowActive['deleteLesson'].status" />
+  <div
+    :class="`card ${props.data.isCompleted ? 'inactive' : ''}`"
+    @click="navigate(props.data.id)"
+  >
     <main class="card-main">
       <div class="header">
         <div class="left">
@@ -32,6 +45,7 @@ const deleteLesson = () => {
         </div>
         <div class="right">
           <EditPanel
+            v-if="props.isOnEdit"
             :editFuncition="editLesson"
             :deleteFunction="deleteLesson"
           />
