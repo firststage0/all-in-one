@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 const props = defineProps({
   data: Object,
   isAdmin: Boolean,
+  is,
 });
 
 const status = ref({

@@ -3,6 +3,7 @@ const props = defineProps({
   isSended: Boolean,
   isFiles: Boolean,
   ifTime: Boolean,
+  isAdmin: Boolean,
 });
 </script>
 
@@ -37,9 +38,9 @@ const props = defineProps({
       contenteditable="true"
       placeholder="Ваш ответ"
     >
-      Для участия в челлендже (первую копию не доделал :( , не имел понятия,
-      через трансформ делается или другим способом)
-      https://www.dropbox.com/s/r60qgzqpugh0tnp/4.%20%D0%A7%D0%B5%D0%?dl=0
+      <b>Задание от преподавателя</b> <br />
+
+      Задание от преподавателя
     </div>
     <div class="input-button-group">
       <button v-if="!props.isSended" class="add-file-button">
@@ -51,7 +52,7 @@ const props = defineProps({
         <p>Прикрепить файл</p>
       </button>
       <button v-if="!props.isSended" class="send-button">
-        <p>Отправить</p>
+        <p>{{ props.isAdmin ? "Сохранить" : "Отправить" }}</p>
       </button>
       <button v-if="props.isSended" class="change-button">
         <img src="@/assets/icons/button-icons/change.svg" alt="" />
@@ -142,7 +143,7 @@ const props = defineProps({
   font-family: var(--inter-font);
   font-weight: 500;
   font-size: 16px;
-  line-height: 1.375;
+  line-height: 2;
 }
 
 .textarea.with-files {

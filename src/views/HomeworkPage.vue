@@ -25,7 +25,7 @@ onMounted(() => {
       <router-link to="/education" class="router-link"
         ><GoBackButton />
       </router-link>
-      <Homework :data="homeworks[$route.params.id - 1]" />
+      <Homework :data="homeworks[$route.params.id - 1]" :isAdmin="true" />
     </div>
   </div>
 </template>
