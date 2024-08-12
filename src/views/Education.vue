@@ -8,7 +8,7 @@ import homeworks from "@/data/homeworks.json";
 import HomeworkCard from "@/components/HomeworkCard.vue";
 import LessonCard from "@/components/LessonCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
 import {
   toogleWindowStatus,
@@ -17,12 +17,18 @@ import {
 import NewThemeModalWindow from "@/components/NewThemeModalWindow.vue";
 import NewLessonModalWindow from "@/components/NewLessonModalWindow.vue";
 const $route = useRoute();
-
+const router = useRouter();
 const isMarked = ref({
   1: true,
   2: false,
   3: false,
 });
+
+const navigate = (elementId) => {
+  console.log("navigate", elementId);
+
+  router.push({ path: `/lesson/${elementId}`, query: { buttonId: 1 } });
+};
 
 const buttonId = ref(null);
 
@@ -46,6 +52,7 @@ const activeMenuButtonIndex = ref(null);
   <HeaderComponent />
   <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
   <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
+
   <div class="education-wrapper">
     <div class="main-container">
       <CourceCard :isBackButtonShow="true" />
@@ -95,13 +102,12 @@ const activeMenuButtonIndex = ref(null);
               <p>Добавить урок</p>
             </div>
           </button>
-          <router-link
-            :class="`router-link ${element.isCompleted ? 'inactive' : ''}`"
-            :to="{ path: `/lesson/${element.id}`, query: { buttonId: 1 } }"
+          <div
+            @click.stop="navigate(1)"
             v-for="element in themes[activeMenuButtonIndex].lessons"
           >
             <LessonCard :data="element" />
-          </router-link>
+          </div>
         </div>
       </div>
       <div v-if="isMarked[2]" class="homework-interface">

@@ -1,20 +1,43 @@
 <script setup>
+import EditPanel from "@/components/EditPanel.vue";
+import EditLessonModalWindow from "@/components/EditLessonModalWindow.vue";
+import { isWindowActive } from "@/functions/modalWindowsStatus";
 const props = defineProps({
   data: Object,
+  isOnEditMode: Boolean,
 });
+
+const editLesson = () => {
+  console.log("edit lesson");
+  isWindowActive["editLesson"].status = true;
+};
+
+const deleteLesson = () => {
+  isWindowActive["deleteLesson"].status = true;
+};
 </script>
 
 <template>
+  <EditLessonModalWindow v-if="isWindowActive['editLesson'].status" />
   <div :class="`card ${props.data.isCompleted ? 'inactive' : ''}`">
     <main class="card-main">
-      <div class="type-block">
-        <img
-          src="@/assets/icons/type-icons/video.svg"
-          alt=""
-          class="type-img"
-        />
-        <p class="type-title">{{ props.data.type }}</p>
+      <div class="header">
+        <div class="left">
+          <img
+            src="@/assets/icons/type-icons/video.svg"
+            alt=""
+            class="type-img"
+          />
+          <p class="type-title">{{ props.data.type }}</p>
+        </div>
+        <div class="right">
+          <EditPanel
+            :editFuncition="editLesson"
+            :deleteFunction="deleteLesson"
+          />
+        </div>
       </div>
+
       <p class="card-title">{{ props.data.title }}</p>
     </main>
     <footer class="card-footer">
@@ -59,16 +82,27 @@ const props = defineProps({
 }
 
 .card-main {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.type-block {
+.header {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
   gap: 8px;
+}
+
+.right {
+  position: relative;
+  z-index: 10;
 }
 
 .type-img {

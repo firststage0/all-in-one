@@ -1,7 +1,13 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import coursesList from "@/data/coursesList.json";
+import {
+  ref as refStorage,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { storage } from "@/functions/firebase";
 
 const course = ref({
   title: null,
@@ -29,41 +35,68 @@ const changeLevel = (level) => {
   }
 };
 
-const file = ref(null);
+onMounted(() => {
+  document
+    .getElementById("uploadForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
 
-const handleFileUpload = (event) => {
-  file.value = event.target.files[0];
-};
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
 
-const uploadImage = () => {
-  if (!file.value) {
-    alert("Please select a file");
-    return;
-  }
+      const storageRef = refStorage(storage, "images/" + file.name);
 
-  const formData = new FormData();
-  formData.append("image", file.value);
+      const metadata = {
+        contentType: file.type,
+      };
 
-  // TODO: Попробовать сделать загрузку изображения через эту штуку: https://cloudinary.com/documentation/image_upload_api_reference
+      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
-  fetch("/api/upload", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error(error);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          switch (error.code) {
+            case "storage/unauthorized":
+              break;
+            case "storage/canceled":
+              break;
+
+            case "storage/unknown":
+              break;
+          }
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.refStorage).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+          });
+        }
+      );
     });
-};
+});
 </script>
 
 <template>
   <HeaderComponent />
   <div class="page">
     <div class="container">
+      <form id="uploadForm" style="margin-bottom: 40px">
+        <h1>Тестовая форма загрузки изображения в firebase</h1>
+        <input type="file" name="file" id="fileInput" />
+        <button type="submit">Upload</button>
+      </form>
       <p class="title">Добавление курса</p>
       <div class="wrapper">
         <div class="settings">
