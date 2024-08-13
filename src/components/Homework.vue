@@ -278,28 +278,30 @@ const tooglePage = (id) => {
               </div>
             </div>
           </div>
-          <li v-for="(element, index) in tableData" class="table-items">
-            <div class="table-name-block">
-              <p class="name-block-top">0x424ca...a6f5F6c</p>
-              <p class="name-block-bottom">{{ element.name }}</p>
-            </div>
-            <div class="table-status-block">
-              <p class="table-text">{{ element.status }}</p>
-            </div>
-            <div class="table-mark-block">
-              <p :class="`table-text ${element.mark ? 'green' : ''}`">
-                {{ element.mark ? element.mark : "-" }}
-              </p>
-            </div>
-            <button
-              @click="toogleWindowStatus('studentHomework')"
-              :class="`view-button ${
-                element.status === 'Нет ответа' ? 'disabled' : ''
-              }`"
-            >
-              <img src="@/assets/icons/button-icons/eye.svg" alt="" />
-            </button>
-          </li>
+          <ul class="table-list">
+            <li v-for="(element, index) in tableData" class="table-items">
+              <div class="table-name-block">
+                <p class="name-block-top">0x424ca...a6f5F6c</p>
+                <p class="name-block-bottom">{{ element.name }}</p>
+              </div>
+              <div class="table-status-block">
+                <p class="table-text">{{ element.status }}</p>
+              </div>
+              <div class="table-mark-block">
+                <p :class="`table-text ${element.mark ? 'green' : ''}`">
+                  {{ element.mark ? element.mark : "-" }}
+                </p>
+              </div>
+              <button
+                @click="toogleWindowStatus('studentHomework')"
+                :class="`view-button ${
+                  element.status === 'Нет ответа' ? 'disabled' : ''
+                }`"
+              >
+                <img src="@/assets/icons/button-icons/eye.svg" alt="" />
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </main>
@@ -843,6 +845,15 @@ const tooglePage = (id) => {
   font-size: 14px;
   text-align: center;
   color: rgba(255, 255, 255, 0.36);
+}
+
+.table-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style-type: none;
+  max-height: 245px;
+  overflow-y: auto;
 }
 
 .table-items {
