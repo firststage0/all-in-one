@@ -6,8 +6,15 @@ import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 import "@/assets/plyr-custom.css";
 import Test from "@/components/Test.vue";
+import {
+  isWindowActive,
+  toogleWindowStatus,
+} from "@/functions/modalWindowsStatus";
+import NewTestModalWindow from "@/components/NewTestModalWindow.vue";
+
 const props = defineProps({ data: Object, isAdmin: Boolean });
 const status = ref("");
+const test = ref(true);
 
 const tableData = ref([
   { name: "@zaivanza", status: "Ждет оценку", mark: "-" },
@@ -61,6 +68,7 @@ const tooglePage = (id) => {
 </script>
 
 <template>
+  <NewTestModalWindow v-if="isWindowActive['newTest'].status" />
   <div class="homework">
     <header class="header">
       <div class="header-top">
@@ -131,9 +139,31 @@ const tooglePage = (id) => {
         </div>
       </div>
       <div class="page-one" v-if="currentPage === 1">
-        <button class="add-test">
+        <button
+          v-if="!test"
+          @click="toogleWindowStatus('newTest')"
+          class="add-test"
+        >
           <img src="@/assets/icons/button-icons/add.svg" alt="" />Добавить тест
         </button>
+        <div v-if="test" class="test-block">
+          <p class="test-block-header">Добавлен тест</p>
+          <div class="test-block-bottom">
+            <p class="test-questions-count">5 вопросов</p>
+            <button @click="toogleWindowStatus('newTest')" class="edit-test">
+              <img
+                src="@/assets/icons/button-icons/edit.svg"
+                alt=""
+                class="edit-test-img"
+              />
+              <p class="edit-test-text">Редактировать тест</p>
+            </button>
+            <button class="delete-test">
+              <img src="@/assets/icons/button-icons/red-trash.svg" alt="" />
+              <p class="delete-test-text">Удалить тест</p>
+            </button>
+          </div>
+        </div>
         <div class="main-description">
           <div class="main-content-title">Описание</div>
           <div class="divider"></div>
@@ -512,6 +542,59 @@ const tooglePage = (id) => {
 
 .add-test > img {
   width: 15px;
+}
+
+.test-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.test-block-header {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.test-block-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.test-questions-count {
+  font-family: var(--inter-semibold-font);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.edit-test,
+.delete-test {
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.delete-test {
+  background-color: inherit;
+}
+
+.edit-test-text,
+.delete-test-text {
+  font-family: var(--inter-font);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.delete-test-text {
+  color: #e33;
 }
 
 .main-description {
