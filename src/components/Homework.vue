@@ -23,9 +23,19 @@ const filterValues = ref({
   mark: "Все",
 });
 
+const dropdownMenuStatus = ref({
+  status: false,
+  mark: false,
+});
+
+const toogleDropdownMenu = (type) => {
+  dropdownMenuStatus.value[type] = !dropdownMenuStatus.value[type];
+};
+
 const toogleFilter = (value, filter, type) => {
   console.log(filterValues.value[type]);
   filterValues.value[type] = filter[value];
+  toogleDropdownMenu(type);
 };
 
 onMounted(() => {
@@ -160,19 +170,25 @@ const tooglePage = (id) => {
               </div>
             </div>
             <div class="filter-wrapper">
-              <div class="filter-block filter">
+              <div
+                @click="toogleDropdownMenu('status')"
+                class="filter-block filter"
+              >
                 <div class="text-block">
                   <p class="text-block-top">Статус</p>
                   <p class="text-block-bottom">{{ filterValues.status }}</p>
                 </div>
                 <button>
                   <img
+                    :class="`show-img ${
+                      dropdownMenuStatus['status'] ? 'active' : ''
+                    }`"
                     src="@/assets/icons/button-icons/faq-show-img.svg"
                     alt=""
                   />
                 </button>
               </div>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu" v-if="dropdownMenuStatus['status']">
                 <button
                   v-for="(element, index) in statusFilter"
                   class="dropdown-item"
@@ -183,20 +199,25 @@ const tooglePage = (id) => {
               </div>
             </div>
             <div class="filter-wrapper">
-              <div class="filter-block filter">
+              <div
+                @click="toogleDropdownMenu('mark')"
+                class="filter-block filter"
+              >
                 <div class="text-block">
                   <p class="text-block-top">Оценка</p>
                   <p class="text-block-bottom">{{ filterValues.mark }}</p>
                 </div>
                 <button>
                   <img
-                    class="show-img"
+                    :class="`show-img ${
+                      dropdownMenuStatus['mark'] ? 'active' : ''
+                    }`"
                     src="@/assets/icons/button-icons/faq-show-img.svg"
                     alt=""
                   />
                 </button>
               </div>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu" v-if="dropdownMenuStatus['mark']">
                 <button
                   v-for="(element, index) in markFilter"
                   class="dropdown-item"
@@ -641,6 +662,10 @@ const tooglePage = (id) => {
   font-family: var(--inter-semibold-font);
   font-weight: 700;
   font-size: 14px;
+}
+
+.filter {
+  cursor: pointer;
 }
 
 .filter > button {
