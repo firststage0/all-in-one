@@ -14,6 +14,30 @@ const tableData = ref([
   { name: "@zaivanza", status: "Нет ответа", mark: "-" },
   { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
 ]);
+
+const statusFilter = ref(["Все", "Ждет оценку", "Нет ответа", "Проверено"]);
+const markFilter = ref(["Все", "Отлично", "Хорошо", "Пойдет", "Плохо"]);
+
+const filterValues = ref({
+  status: "Все",
+  mark: "Все",
+});
+
+const dropdownMenuStatus = ref({
+  status: false,
+  mark: false,
+});
+
+const toogleDropdownMenu = (type) => {
+  dropdownMenuStatus.value[type] = !dropdownMenuStatus.value[type];
+};
+
+const toogleFilter = (value, filter, type) => {
+  console.log(filterValues.value[type]);
+  filterValues.value[type] = filter[value];
+  toogleDropdownMenu(type);
+};
+
 onMounted(() => {
   switch (props.data.status) {
     case "waiting":
@@ -145,30 +169,63 @@ const tooglePage = (id) => {
                 <p contenteditable="true" class="text-block-bottom">zaiv</p>
               </div>
             </div>
-            <div class="filter-block filter">
-              <div class="text-block">
-                <p class="text-block-top">Статус</p>
-                <p class="text-block-bottom">Все</p>
+            <div class="filter-wrapper">
+              <div
+                @click="toogleDropdownMenu('status')"
+                class="filter-block filter"
+              >
+                <div class="text-block">
+                  <p class="text-block-top">Статус</p>
+                  <p class="text-block-bottom">{{ filterValues.status }}</p>
+                </div>
+                <button>
+                  <img
+                    :class="`show-img ${
+                      dropdownMenuStatus['status'] ? 'active' : ''
+                    }`"
+                    src="@/assets/icons/button-icons/faq-show-img.svg"
+                    alt=""
+                  />
+                </button>
               </div>
-              <button>
-                <img
-                  src="@/assets/icons/button-icons/faq-show-img.svg"
-                  alt=""
-                />
-              </button>
+              <div class="dropdown-menu" v-if="dropdownMenuStatus['status']">
+                <button
+                  v-for="(element, index) in statusFilter"
+                  class="dropdown-item"
+                  @click="toogleFilter(index, statusFilter, 'status')"
+                >
+                  <p>{{ element }}</p>
+                </button>
+              </div>
             </div>
-            <div class="filter-block filter">
-              <div class="text-block">
-                <p class="text-block-top">Оценка</p>
-                <p class="text-block-bottom">Все</p>
+            <div class="filter-wrapper">
+              <div
+                @click="toogleDropdownMenu('mark')"
+                class="filter-block filter"
+              >
+                <div class="text-block">
+                  <p class="text-block-top">Оценка</p>
+                  <p class="text-block-bottom">{{ filterValues.mark }}</p>
+                </div>
+                <button>
+                  <img
+                    :class="`show-img ${
+                      dropdownMenuStatus['mark'] ? 'active' : ''
+                    }`"
+                    src="@/assets/icons/button-icons/faq-show-img.svg"
+                    alt=""
+                  />
+                </button>
               </div>
-              <button>
-                <img
-                  class="show-img"
-                  src="@/assets/icons/button-icons/faq-show-img.svg"
-                  alt=""
-                />
-              </button>
+              <div class="dropdown-menu" v-if="dropdownMenuStatus['mark']">
+                <button
+                  v-for="(element, index) in markFilter"
+                  class="dropdown-item"
+                  @click="toogleFilter(index, markFilter, 'mark')"
+                >
+                  <p>{{ element }}</p>
+                </button>
+              </div>
             </div>
           </div>
           <div class="table-header">
@@ -607,6 +664,10 @@ const tooglePage = (id) => {
   font-size: 14px;
 }
 
+.filter {
+  cursor: pointer;
+}
+
 .filter > button {
   border: none;
   background: none;
@@ -620,6 +681,40 @@ const tooglePage = (id) => {
 .show-img.active {
   transition: 300ms;
   rotate: 180deg;
+}
+
+.filter-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu {
+  width: 100%;
+  position: absolute;
+  top: 60px;
+  display: flex;
+  flex-direction: column;
+  background: #151514;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 8px;
+  gap: 8px;
+  z-index: 2;
+}
+
+.dropdown-item {
+  border: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 6px 12px;
+}
+
+.dropdown-item > p {
+  font-family: var(--inter-font);
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .table-header {
