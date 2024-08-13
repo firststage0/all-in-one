@@ -15,9 +15,6 @@ const tableData = ref([
   { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
 ]);
 
-const currentStatus = ref("Все");
-const currentMark = ref("Все");
-
 const statusFilter = ref(["Все", "Ждет оценку", "Нет ответа", "Проверено"]);
 const markFilter = ref(["Все", "Отлично", "Хорошо", "Пойдет", "Плохо"]);
 
@@ -28,24 +25,7 @@ const filterValues = ref({
 
 const toogleFilter = (value, filter, type) => {
   console.log(filterValues.value[type]);
-
-  switch (value) {
-    case 0:
-      filterValues.value[type] = filter[value];
-      break;
-    case 1:
-      filterValues.value[type] = filter[value];
-      break;
-    case 2:
-      filterValues.value[type] = filter[value];
-      break;
-    case 3:
-      filterValues.value[type] = filter[value];
-      break;
-    case 4:
-      filterValues.value[type] = filter[value];
-      break;
-  }
+  filterValues.value[type] = filter[value];
 };
 
 onMounted(() => {
