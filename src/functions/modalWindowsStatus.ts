@@ -10,6 +10,7 @@ export const isWindowActive = reactive({
   "deleteLesson": {status: false},
   "newTest": {status: false},
   "deleteTest": {status: false},
+  "studentHomework": {status: false},
 });
 
 export const toogleWindowStatus = (windowName: string) => {

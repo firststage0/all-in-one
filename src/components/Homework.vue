@@ -12,14 +12,15 @@ import {
 } from "@/functions/modalWindowsStatus";
 import NewTestModalWindow from "@/components/NewTestModalWindow.vue";
 import DeleteTestModalWindow from "@/components/DeleteTestModalWindow.vue";
+import StudentHomeworkModalWindow from "@/components/StudentHomeworkModalWindow.vue";
 
 const props = defineProps({ data: Object, isAdmin: Boolean });
 const status = ref("");
 const test = ref(true);
 
 const tableData = ref([
-  { name: "@zaivanza", status: "Ждет оценку", mark: "-" },
-  { name: "@zaivanza", status: "Нет ответа", mark: "-" },
+  { name: "@zaivanza", status: "Ждет оценку", mark: null },
+  { name: "@zaivanza", status: "Нет ответа", mark: null },
   { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
 ]);
 
@@ -71,6 +72,7 @@ const tooglePage = (id) => {
 <template>
   <NewTestModalWindow v-if="isWindowActive['newTest'].status" />
   <DeleteTestModalWindow v-if="isWindowActive['deleteTest'].status" />
+  <StudentHomeworkModalWindow v-if="isWindowActive['studentHomework'].status" />
   <div class="homework">
     <header class="header">
       <div class="header-top">
@@ -276,18 +278,25 @@ const tooglePage = (id) => {
               </div>
             </div>
           </div>
-          <li v-for="i in tableData" class="table-items">
+          <li v-for="(element, index) in tableData" class="table-items">
             <div class="table-name-block">
               <p class="name-block-top">0x424ca...a6f5F6c</p>
-              <p class="name-block-bottom">{{ i.name }}</p>
+              <p class="name-block-bottom">{{ element.name }}</p>
             </div>
             <div class="table-status-block">
-              <p class="table-text">{{ i.status }}</p>
+              <p class="table-text">{{ element.status }}</p>
             </div>
             <div class="table-mark-block">
-              <p class="table-text green">{{ i.mark }}</p>
+              <p :class="`table-text ${element.mark ? 'green' : ''}`">
+                {{ element.mark ? element.mark : "-" }}
+              </p>
             </div>
-            <button class="view-button">
+            <button
+              @click="toogleWindowStatus('studentHomework')"
+              :class="`view-button ${
+                element.status === 'Нет ответа' ? 'disabled' : ''
+              }`"
+            >
               <img src="@/assets/icons/button-icons/eye.svg" alt="" />
             </button>
           </li>
@@ -863,6 +872,12 @@ const tooglePage = (id) => {
   padding: 12px 24px;
   border: none;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.view-button.disabled {
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.04);
+  filter: opacity(0.32);
 }
 
 .table-text {

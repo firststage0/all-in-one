@@ -10,6 +10,7 @@ import Progresbar from "@/components/Progresbar.vue";
 
 const props = defineProps({
   data: Object,
+  isAdmin: Boolean,
 });
 
 const currentPage = ref(1);
@@ -47,7 +48,16 @@ onMounted(() => {
       </div>
     </header>
     <div class="lesson-wrapper">
-      <div v-if="props.data?.pages[currentPage - 1].videoUrl" class="player">
+      <button v-if="props.isAdmin" class="upload-video">
+        <div class="center">
+          <img src="@/assets/icons/button-icons/add.svg" alt="" />
+          <p class="upload-video-text">Загрузить видео</p>
+        </div>
+      </button>
+      <div
+        v-if="props.data?.pages[currentPage - 1].videoUrl && !props.isAdmin"
+        class="player"
+      >
         <video
           id="player"
           playsinline
@@ -68,19 +78,24 @@ onMounted(() => {
         <plyr-captions />
       </div>
       <p class="description-title">Описание</p>
-      <div
-        v-for="(i, index) in props.data?.pages[currentPage - 1]
-          .descriptionBlock"
-        class="description-block"
-      >
-        <div class="divider"></div>
-        <p
-          class="description-text"
-          v-html="props.data?.pages[currentPage - 1].descriptionBlock[index]"
-        ></p>
+      <div v-if="!props.isAdmin" class="not-admin">
+        <div
+          v-for="(i, index) in props.data?.pages[currentPage - 1]
+            .descriptionBlock"
+          class="description-block"
+        >
+          <div class="divider"></div>
+          <p
+            class="description-text"
+            v-html="props.data?.pages[currentPage - 1].descriptionBlock[index]"
+          ></p>
+        </div>
+        <TextField v-if="props.data?.pages[currentPage - 1].textField" />
+        <HelpButton v-if="currentPage === maxPage" />
       </div>
-      <TextField v-if="props.data?.pages[currentPage - 1].textField" />
-      <HelpButton v-if="currentPage === maxPage" />
+      <div class="admin">
+        <TextField />
+      </div>
       <div class="divider"></div>
       <footer class="lesson-footer">
         <NextPrevNavigation v-model="currentPage" :maxPage="maxPage" />
@@ -158,6 +173,36 @@ onMounted(() => {
   background: #151514;
 }
 
+.upload-video {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: inherit;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  padding: 46px;
+  border-radius: 16px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.center > img {
+  filter: invert(0.5);
+}
+
+.upload-video-text {
+  font-family: var(--inter-semibold-font);
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.32);
+}
+
 .player {
   width: 100%;
   height: 480px;
@@ -169,6 +214,21 @@ onMounted(() => {
   font-family: var(--inter-font);
   font-weight: 600;
   font-size: 24px;
+}
+
+.not-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 16px;
 }
 
 .description-block {
