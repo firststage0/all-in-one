@@ -1,4 +1,6 @@
 <script setup>
+import FileComponent from "./FileComponent.vue";
+
 const props = defineProps({
   isSended: Boolean,
   isFiles: Boolean,
@@ -10,27 +12,11 @@ const props = defineProps({
 <template>
   <div class="input-group">
     <div v-if="props.isFiles" class="files-block">
-      <div class="file">
-        <img src="@/assets/icons/button-icons/pdf.svg" alt="" />
-        <div class="file-info">
-          <p class="file-name">my-cv.pdf</p>
-          <p class="file-size">20 KB</p>
-        </div>
-        <button class="delete-file">
-          <img src="@/assets/icons/button-icons/trash.svg" alt="" />
-        </button>
-      </div>
-
-      <div class="file">
-        <img src="@/assets/icons/button-icons/pdf.svg" alt="" />
-        <div class="file-info">
-          <p class="file-name">my-cvvvvvvvv.pdf</p>
-          <p class="file-size">20 KB</p>
-        </div>
-        <button class="delete-file">
-          <img src="@/assets/icons/button-icons/trash.svg" alt="" />
-        </button>
-      </div>
+      <FileComponent
+        v-for="(i, index) in 2"
+        :key="index"
+        :fileName="`my-cv.pdf`"
+      />
     </div>
     <p v-if="props.ifTime" class="time">Вт, 13 окт., 22:01 MSK (UTC+3)</p>
     <div
@@ -38,9 +24,9 @@ const props = defineProps({
       contenteditable="true"
       placeholder="Ваш ответ"
     >
-      <b>Задание от преподавателя</b> <br />
+      <!-- <b>Задание от преподавателя</b> <br />
 
-      Задание от преподавателя
+      Задание от преподавателя -->
     </div>
     <div class="input-button-group">
       <button v-if="!props.isSended" class="add-file-button">
@@ -81,50 +67,6 @@ const props = defineProps({
   justify-content: flex-start;
   flex-direction: row;
   gap: 8px;
-}
-
-.file {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: row;
-  gap: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  padding: 16px 16px 16px 14px;
-  background: #1f2022;
-}
-
-.file-info {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.file-name {
-  font-family: var(--inter-font);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.42857;
-  letter-spacing: -0.01em;
-}
-
-.file-size {
-  font-family: var(--inter-font);
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.33333;
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.delete-file {
-  border: none;
-  background-color: inherit;
-  display: flex;
-  width: fit-content;
-  align-self: flex-start;
 }
 
 .time {

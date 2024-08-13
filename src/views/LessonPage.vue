@@ -8,6 +8,7 @@ import GoBackButton from "@/components/GoBackButton.vue";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
 const $route = useRoute();
 
 const buttonId = ref(null || 1);
@@ -20,14 +21,18 @@ onMounted(() => {
 <template>
   <HeaderComponent />
   <div class="lesson-page">
-    <div class="wrapper">
+    <div class="lesson-page-wrapper">
       <Breadcrumbs />
       <CourceCard />
-      <SlideNavBar v-model="buttonId" />
+      <div class="nav">
+        <SlideNavBar v-model="buttonId" />
+
+        <CourseAdminPanel :isOnEdit="true" :isPaused="false" />
+      </div>
       <router-link to="/education" class="router-link"
         ><GoBackButton />
       </router-link>
-      <Lesson :data="lessons[$route.params.id - 1]" />
+      <Lesson :data="lessons[$route.params.id - 1]" :isAdmin="true" />
     </div>
   </div>
 </template>
@@ -43,7 +48,14 @@ onMounted(() => {
   align-items: center;
 }
 
-.wrapper {
+.nav {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.lesson-page-wrapper {
   margin-top: calc(var(--header-height) + 16px);
   margin-bottom: 42px;
   width: 1440px;
