@@ -21,7 +21,32 @@ const currentMark = ref("Все");
 const statusFilter = ref(["Все", "Ждет оценку", "Нет ответа", "Проверено"]);
 const markFilter = ref(["Все", "Отлично", "Хорошо", "Пойдет", "Плохо"]);
 
-const toogleFilter = (value, filter, type) => {};
+const filterValues = ref({
+  status: "Все",
+  mark: "Все",
+});
+
+const toogleFilter = (value, filter, type) => {
+  console.log(filterValues.value[type]);
+
+  switch (value) {
+    case 0:
+      filterValues.value[type] = filter[value];
+      break;
+    case 1:
+      filterValues.value[type] = filter[value];
+      break;
+    case 2:
+      filterValues.value[type] = filter[value];
+      break;
+    case 3:
+      filterValues.value[type] = filter[value];
+      break;
+    case 4:
+      filterValues.value[type] = filter[value];
+      break;
+  }
+};
 
 onMounted(() => {
   switch (props.data.status) {
@@ -158,7 +183,7 @@ const tooglePage = (id) => {
               <div class="filter-block filter">
                 <div class="text-block">
                   <p class="text-block-top">Статус</p>
-                  <p class="text-block-bottom">{{ currentStatus }}</p>
+                  <p class="text-block-bottom">{{ filterValues.status }}</p>
                 </div>
                 <button>
                   <img
@@ -171,7 +196,7 @@ const tooglePage = (id) => {
                 <button
                   v-for="(element, index) in statusFilter"
                   class="dropdown-item"
-                  @click="toogleFilter(index, statusFilter, currentStatus)"
+                  @click="toogleFilter(index, statusFilter, 'status')"
                 >
                   <p>{{ element }}</p>
                 </button>
@@ -181,7 +206,7 @@ const tooglePage = (id) => {
               <div class="filter-block filter">
                 <div class="text-block">
                   <p class="text-block-top">Оценка</p>
-                  <p class="text-block-bottom">{{ currentMark }}</p>
+                  <p class="text-block-bottom">{{ filterValues.mark }}</p>
                 </div>
                 <button>
                   <img
@@ -195,7 +220,7 @@ const tooglePage = (id) => {
                 <button
                   v-for="(element, index) in markFilter"
                   class="dropdown-item"
-                  @click="toogleFilter(index, markFilter, currentMark)"
+                  @click="toogleFilter(index, markFilter, 'mark')"
                 >
                   <p>{{ element }}</p>
                 </button>
