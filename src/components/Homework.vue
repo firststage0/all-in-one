@@ -11,6 +11,7 @@ import {
   toogleWindowStatus,
 } from "@/functions/modalWindowsStatus";
 import NewTestModalWindow from "@/components/NewTestModalWindow.vue";
+import DeleteTestModalWindow from "@/components/DeleteTestModalWindow.vue";
 
 const props = defineProps({ data: Object, isAdmin: Boolean });
 const status = ref("");
@@ -69,6 +70,7 @@ const tooglePage = (id) => {
 
 <template>
   <NewTestModalWindow v-if="isWindowActive['newTest'].status" />
+  <DeleteTestModalWindow v-if="isWindowActive['deleteTest'].status" />
   <div class="homework">
     <header class="header">
       <div class="header-top">
@@ -158,7 +160,10 @@ const tooglePage = (id) => {
               />
               <p class="edit-test-text">Редактировать тест</p>
             </button>
-            <button class="delete-test">
+            <button
+              @click="toogleWindowStatus('deleteTest')"
+              class="delete-test"
+            >
               <img src="@/assets/icons/button-icons/red-trash.svg" alt="" />
               <p class="delete-test-text">Удалить тест</p>
             </button>

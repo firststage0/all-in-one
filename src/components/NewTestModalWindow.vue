@@ -170,7 +170,7 @@ const addVariant = (blockIndex) => {
   flex-direction: column;
   gap: 24px;
   padding: 24px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .question-block {
