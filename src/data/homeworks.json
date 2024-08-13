@@ -13,26 +13,31 @@
       {
         "question": "Как называется первый объектно-ориентированный язык?",
         "rightAnswer": 4,
+        "choosenAnswer": 4,
         "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
       },
       {
         "question": "Как называется первый объектно-ориентированный язык?",
         "rightAnswer": 4,
+        "choosenAnswer": 2,
         "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
       },
       {
         "question": "Как называется первый объектно-ориентированный язык?",
         "rightAnswer": 4,
+        "choosenAnswer": 1,
         "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
       },
       {
         "question": "Как называется первый объектно-ориентированный язык?",
         "rightAnswer": 4,
+        "choosenAnswer": 4,
         "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
       },
       {
         "question": "Как называется первый объектно-ориентированный язык?",
         "rightAnswer": 4,
+        "choosenAnswer": 0,
         "variants": ["C", "BigTalk", "Assembler", "SmallTalk", "Python"]
       }
     ],
