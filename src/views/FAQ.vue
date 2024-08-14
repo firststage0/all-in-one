@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 import HeaderComponent from "../components/HeaderComponent.vue";
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const active = ref(null);
 const activeBlock = ref(null);
@@ -9,10 +10,9 @@ const activeBlock = ref(null);
 const activeBlocks = ref(Array(5).fill(null));
 </script>
 
-<template>
-  <header class="header">
-    <HeaderComponent />
-  </header>
+<template class="template">
+  <HeaderComponent />
+
   <div class="wrapper">
     <div class="faq-container">
       <p class="faq-label">FAQ</p>
@@ -75,6 +75,10 @@ const activeBlocks = ref(Array(5).fill(null));
 .header {
   position: fixed;
   width: 100%;
+}
+
+.template {
+  height: 100%;
 }
 
 .wrapper {
