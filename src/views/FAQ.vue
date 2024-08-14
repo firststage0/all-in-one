@@ -4,9 +4,6 @@ import { ref, onMounted } from "vue";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
-const active = ref(null);
-const activeBlock = ref(null);
-
 const activeBlocks = ref(Array(5).fill(null));
 </script>
 
@@ -14,60 +11,62 @@ const activeBlocks = ref(Array(5).fill(null));
   <HeaderComponent />
 
   <div class="wrapper">
-    <div class="faq-container">
-      <p class="faq-label">FAQ</p>
-      <div class="faq-content">
-        <div class="faq-menu">
-          <button v-for="(i, menu_index) in 5" class="menu-button" @click="">
-            <a :href="`#s${menu_index}`">Основное</a>
-          </button>
-        </div>
-        <div class="question-section">
-          <div
-            v-for="(i, sectionIndex) in 5"
-            class="question-block"
-            :id="`s${sectionIndex}`"
-          >
-            <p class="question-block-title">Основное</p>
-            <li v-for="(el, index) in 5" class="item">
-              <header
-                class="item-header"
-                @click="
-                  {
-                    activeBlocks[sectionIndex] =
-                      activeBlocks[sectionIndex] === index ? null : index;
-                  }
-                "
-              >
-                <p class="item-title">Label</p>
-                <button class="show-button">
-                  <img
-                    :class="`show-img ${
-                      activeBlocks[sectionIndex] === index ? 'active' : ''
-                    }`"
-                    src="@/assets/icons/button-icons/faq-show-img.svg"
-                    alt=""
-                  />
-                </button>
-              </header>
-              <div
-                :class="`item-discription ${
-                  activeBlocks[sectionIndex] === index ? 'active' : ''
-                }`"
-              >
-                <p
-                  :class="`item-discription-text ${
+    <perfect-scrollbar class="scrollbar-container" id="app">
+      <div class="faq-container">
+        <p class="faq-label">FAQ</p>
+        <div class="faq-content">
+          <div class="faq-menu">
+            <button v-for="(i, menu_index) in 5" class="menu-button" @click="">
+              <a :href="`#s${menu_index}`">Основное</a>
+            </button>
+          </div>
+          <div class="question-section">
+            <div
+              v-for="(i, sectionIndex) in 5"
+              class="question-block"
+              :id="`s${sectionIndex}`"
+            >
+              <p class="question-block-title">Основное</p>
+              <li v-for="(el, index) in 5" class="item">
+                <header
+                  class="item-header"
+                  @click="
+                    {
+                      activeBlocks[sectionIndex] =
+                        activeBlocks[sectionIndex] === index ? null : index;
+                    }
+                  "
+                >
+                  <p class="item-title">Label</p>
+                  <button class="show-button">
+                    <img
+                      :class="`show-img ${
+                        activeBlocks[sectionIndex] === index ? 'active' : ''
+                      }`"
+                      src="@/assets/icons/button-icons/faq-show-img.svg"
+                      alt=""
+                    />
+                  </button>
+                </header>
+                <div
+                  :class="`item-discription ${
                     activeBlocks[sectionIndex] === index ? 'active' : ''
                   }`"
                 >
-                  Discription
-                </p>
-              </div>
-            </li>
+                  <p
+                    :class="`item-discription-text ${
+                      activeBlocks[sectionIndex] === index ? 'active' : ''
+                    }`"
+                  >
+                    Discription
+                  </p>
+                </div>
+              </li>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </perfect-scrollbar>
   </div>
 </template>
 
@@ -77,10 +76,6 @@ const activeBlocks = ref(Array(5).fill(null));
   width: 100%;
 }
 
-.template {
-  height: 100%;
-}
-
 .wrapper {
   width: 100%;
   height: 100%;
@@ -88,6 +83,13 @@ const activeBlocks = ref(Array(5).fill(null));
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.scrollbar-container {
+  margin-top: calc(var(--header-height) + 46px);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 46px;
 }
 
 .faq-container {
