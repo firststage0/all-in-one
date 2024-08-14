@@ -10,7 +10,7 @@ const props = defineProps({
 
 <template>
   <div class="cource-card-wrapper">
-    <router-link v-if="isBackButtonShow" to="/lessons-list" class="router-link">
+    <router-link v-if="isBackButtonShow" to="/" class="router-link">
       <GoBackButton />
     </router-link>
     <div class="content">

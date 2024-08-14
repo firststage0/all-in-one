@@ -5,7 +5,7 @@ import MainContent from "@/components/MainContent.vue";
 import WhatLearn from "@/components/WhatLearn.vue";
 import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
-
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import "@/assets/main.css";
 
 import { ref } from "vue";
@@ -16,35 +16,40 @@ const isLoading = ref(false);
 
 <template>
   <HeaderComponent />
-  <div class="background-container" v-if="!isLoading">
-    <main class="main">
-      <div class="container"><MainContent :data="jsonData" /></div>
+  <perfect-scrollbar id="app">
+    <div class="background-container" v-if="!isLoading">
+      <main class="main">
+        <div class="container"><MainContent :data="jsonData" /></div>
 
-      <div class="container"><WhatLearn /></div>
-      <div class="container">
-        <FutureAchievements />
-      </div>
-      <div class="container"><CourceProgram /></div>
-    </main>
-    <footer class="footer">
-      <div class="container">
-        <FooterComponent
-          :title="jsonData?.Name"
-          :duration="jsonData?.Duration"
-          :startDate="jsonData?.StartDate"
-          :price="jsonData?.Price"
-        />
-      </div>
-    </footer>
-  </div>
+        <div class="container"><WhatLearn /></div>
+        <div class="container">
+          <FutureAchievements />
+        </div>
+        <div class="container"><CourceProgram /></div>
+      </main>
+      <footer class="footer">
+        <div class="container">
+          <FooterComponent
+            :title="jsonData?.Name"
+            :duration="jsonData?.Duration"
+            :startDate="jsonData?.StartDate"
+            :price="jsonData?.Price"
+          />
+        </div>
+      </footer>
+    </div>
+  </perfect-scrollbar>
 </template>
 
 <style scoped>
+.ps {
+  height: 100px;
+}
 .background-container {
   width: 100%;
-  height: 100%;
+
   background-color: var(--background-color);
-  background-image: url(@/assets/images/top-right-background.svg),
+  background-image: url(@/assets/images/top-right-background.png),
     url(@/assets/images/half-corus.png), url(@/assets/images/center-image.png);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: calc(50% + 500px) -5%, calc(50% + 820px) 1590px,
