@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: "/",
       name: "Home",
-      component: () => import("@/views/LessonsList.vue"),
+      component: () => import("@/views/Home.vue"),
       meta: {
         title: "Главная",
         breadcrumb: "Главная",
@@ -45,7 +45,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/course-page",
+      path: "/course-page/:id",
       name: "course-page",
       component: () => import("@/views/CoursePage.vue"),
       meta: {
