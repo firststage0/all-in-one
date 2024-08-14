@@ -6,6 +6,8 @@ const props = defineProps({
   isFooterActive: Boolean,
   isBackButtonShow: Boolean,
 });
+
+console.log(props.data);
 </script>
 
 <template>
