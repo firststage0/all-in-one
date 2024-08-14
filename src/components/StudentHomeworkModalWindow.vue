@@ -4,6 +4,8 @@ import FileComponent from "./FileComponent.vue";
 import TextField from "./TextField.vue";
 import { ref } from "vue";
 import homeworks from "@/data/homeworks.json";
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import "vue3-perfect-scrollbar/style.css";
 
 const activeButton = ref(0);
 const isTest = ref(true);
@@ -120,46 +122,33 @@ const marks = [
           <img src="@/assets/icons/close-icon.svg" alt="" />
         </button>
       </header>
-      <main class="main test">
-        <div class="info-block">
-          <div class="student">
-            <p class="gray-text">Студент</p>
-            <p class="student-name">@zaivanza</p>
+
+      <PerfectScrollbar>
+        <main class="main test">
+          <div class="info-block">
+            <div class="student">
+              <p class="gray-text">Студент</p>
+              <p class="student-name">@zaivanza</p>
+            </div>
+            <div class="time-block">
+              <p class="gray-text">Отправил работу</p>
+              <p class="time">Вт, 13 окт., 22:01 MSK (UTC+3)</p>
+            </div>
+            <div class="attempts-count">
+              <p class="gray-text">Попыток</p>
+              <p class="attempts">2</p>
+            </div>
           </div>
-          <div class="time-block">
-            <p class="gray-text">Отправил работу</p>
-            <p class="time">Вт, 13 окт., 22:01 MSK (UTC+3)</p>
-          </div>
-          <div class="attempts-count">
-            <p class="gray-text">Попыток</p>
-            <p class="attempts">2</p>
-          </div>
-        </div>
-        <ul class="test-list">
-          <div
-            v-for="(element, blockIndex) in homeworks[0].test"
-            class="test-list-block"
-          >
-            <p class="question-text">
-              {{ blockIndex + 1 + " вопрос. " + element.question }}
-            </p>
-            <li
-              :class="`question-variant ${
-                element.rightAnswer === element.choosenAnswer &&
-                element.choosenAnswer === variantIndex
-                  ? 'right'
-                  : element.rightAnswer !== element.choosenAnswer &&
-                    element.choosenAnswer === variantIndex
-                  ? 'wrong'
-                  : element.rightAnswer !== element.choosenAnswer &&
-                    element.rightAnswer === variantIndex
-                  ? 'actualRight'
-                  : ''
-              }`"
-              v-for="(variant, variantIndex) in element.variants"
+          <ul class="test-list">
+            <div
+              v-for="(element, blockIndex) in homeworks[0].test"
+              class="test-list-block"
             >
-              <div
-                :class="`variant-image ${
+              <p class="question-text">
+                {{ blockIndex + 1 + " вопрос. " + element.question }}
+              </p>
+              <li
+                :class="`question-variant ${
                   element.rightAnswer === element.choosenAnswer &&
                   element.choosenAnswer === variantIndex
                     ? 'right'
@@ -168,20 +157,45 @@ const marks = [
                     ? 'wrong'
                     : element.rightAnswer !== element.choosenAnswer &&
                       element.rightAnswer === variantIndex
-                    ? 'right'
+                    ? 'actualRight'
                     : ''
                 }`"
-              ></div>
-              <p class="variant-text">{{ variant }}</p>
-            </li>
-          </div>
-        </ul>
-      </main>
+                v-for="(variant, variantIndex) in element.variants"
+              >
+                <div
+                  :class="`variant-image ${
+                    element.rightAnswer === element.choosenAnswer &&
+                    element.choosenAnswer === variantIndex
+                      ? 'right'
+                      : element.rightAnswer !== element.choosenAnswer &&
+                        element.choosenAnswer === variantIndex
+                      ? 'wrong'
+                      : element.rightAnswer !== element.choosenAnswer &&
+                        element.rightAnswer === variantIndex
+                      ? 'right'
+                      : ''
+                  }`"
+                ></div>
+                <p class="variant-text">{{ variant }}</p>
+              </li>
+            </div>
+          </ul>
+        </main>
+      </PerfectScrollbar>
     </div>
   </div>
 </template>
 
 <style scoped>
+.ps {
+  max-height: 800px;
+}
+
+/* .main.test {
+  max-height: 800px;
+  overflow-y: auto;
+} */
+
 .student-homework-page {
   position: fixed;
   top: 0;
@@ -418,11 +432,6 @@ const marks = [
   font-weight: bold;
   font-size: 16px;
   text-align: center;
-}
-
-.main.test {
-  max-height: 800px;
-  overflow-y: auto;
 }
 
 .attempts {

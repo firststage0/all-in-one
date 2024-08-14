@@ -1,13 +1,6 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import coursesList from "@/data/coursesList.json";
-import {
-  ref as refStorage,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { storage } from "@/functions/firebase";
 
 const course = ref({
   title: null,
@@ -35,77 +28,35 @@ const changeLevel = (level) => {
   }
 };
 
-onMounted(() => {
-  document
-    .getElementById("uploadForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
+const imageUrl = ref(null);
 
-      const fileInput = document.getElementById("fileInput");
-      const file = fileInput.files[0];
-
-      const storageRef = refStorage(storage, "images/" + file.name);
-
-      const metadata = {
-        contentType: file.type,
-      };
-
-      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          switch (error.code) {
-            case "storage/unauthorized":
-              break;
-            case "storage/canceled":
-              break;
-
-            case "storage/unknown":
-              break;
-          }
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.refStorage).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-          });
-        }
-      );
-    });
-});
+const onFileChange = (e) => {
+  const file = e.target.files[0];
+  imageUrl.value = URL.createObjectURL(file);
+  console.log(file);
+};
 </script>
 
 <template>
   <HeaderComponent />
   <div class="page">
     <div class="container">
-      <form id="uploadForm" style="margin-bottom: 40px">
-        <h1>Тестовая форма загрузки изображения в firebase</h1>
-        <input type="file" name="file" id="fileInput" />
-        <button type="submit">Upload</button>
-      </form>
       <p class="title">Добавление курса</p>
       <div class="wrapper">
         <div class="settings">
           <div class="setting">
             <div class="setting-title">Обложка</div>
-            <div class="drag-and-drop">
+            <label for="file-input" class="drag-and-drop">
               <img src="@/assets/icons/button-icons/add-image.svg" alt="" />
               <p>Перетащите или нажмите чтобы загрузить изображение</p>
-            </div>
+            </label>
+            <input
+              id="file-input"
+              type="file"
+              @change="onFileChange"
+              name="file"
+              class="file-input"
+            />
           </div>
           <div class="setting">
             <div class="setting-title">Название курса</div>
@@ -186,11 +137,17 @@ onMounted(() => {
             <div class="top">
               <div class="top-left">
                 <img src="@/assets/icons/programming.svg" alt="" />
-                <p class="sphere">Программирование</p>
+                <p class="sphere">
+                  {{ course?.sphere ? course.sphere : "Программирование" }}
+                </p>
               </div>
-              <div class="top-right">{{ course?.level }}</div>
+              <div class="top-right">
+                {{ course?.level ? course.level : "Для начинающих" }}
+              </div>
             </div>
-            <div class="card-image"></div>
+            <div :class="`card-image ${imageUrl ? '' : 'empty'}`">
+              <img v-if="imageUrl" class="image" :src="imageUrl" alt="" />
+            </div>
             <p class="card-title">{{ course?.title ? course.title : "-" }}</p>
             <div class="card-bottom">
               <div class="bottom-left">
@@ -210,7 +167,7 @@ onMounted(() => {
               </div>
               <div class="bottom-right">
                 <div class="bottom-block">
-                  <p class="card-bottom-title">Начало</p>
+                  <p class="card-bottom-title start">Начало</p>
                   <p class="card-bottom-value">
                     {{ course?.date ? course.date : "-" }}
                   </p>
@@ -270,7 +227,12 @@ onMounted(() => {
   font-size: 20px;
 }
 
+.file-input {
+  display: none;
+}
+
 .drag-and-drop {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -406,8 +368,8 @@ onMounted(() => {
 }
 
 .card {
-  width: 384px;
-  height: 363px;
+  width: fit-content;
+  height: fit-content;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -438,8 +400,14 @@ onMounted(() => {
 .card-image {
   width: 352px;
   height: 178px;
-  background: url(@/assets/icons/no-image.svg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image.empty {
   background-size: 132px;
+  background: url(@/assets/icons/no-image.svg);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -449,6 +417,10 @@ onMounted(() => {
   font-family: var(--inter-font);
   font-weight: 400;
   font-size: 24px;
+}
+
+.image {
+  width: 240px;
 }
 
 .card-bottom {
@@ -476,6 +448,10 @@ onMounted(() => {
   font-weight: 500;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.48);
+}
+
+.start {
+  align-self: flex-end;
 }
 
 .card-bottom-value {

@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import TextField from "@/components/TextField.vue";
 import HelpButton from "@/components/HelpButton.vue";
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 import "@/assets/plyr-custom.css";
@@ -21,6 +22,9 @@ const test = ref(true);
 const tableData = ref([
   { name: "@zaivanza", status: "Ждет оценку", mark: null },
   { name: "@zaivanza", status: "Нет ответа", mark: null },
+  { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
+  { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
+  { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
   { name: "@zaivanza", status: "Проверено", mark: "Отлично" },
 ]);
 
@@ -67,6 +71,13 @@ const currentPage = ref(1);
 const tooglePage = (id) => {
   currentPage.value = id;
 };
+
+onMounted(() => {
+  const scrollbars = document.querySelectorAll(".scrollbar");
+  scrollbars.forEach((scrollbar) => {
+    new PerfectScrollbar(scrollbar);
+  });
+});
 </script>
 
 <template>
@@ -279,28 +290,30 @@ const tooglePage = (id) => {
             </div>
           </div>
           <ul class="table-list">
-            <li v-for="(element, index) in tableData" class="table-items">
-              <div class="table-name-block">
-                <p class="name-block-top">0x424ca...a6f5F6c</p>
-                <p class="name-block-bottom">{{ element.name }}</p>
-              </div>
-              <div class="table-status-block">
-                <p class="table-text">{{ element.status }}</p>
-              </div>
-              <div class="table-mark-block">
-                <p :class="`table-text ${element.mark ? 'green' : ''}`">
-                  {{ element.mark ? element.mark : "-" }}
-                </p>
-              </div>
-              <button
-                @click="toogleWindowStatus('studentHomework')"
-                :class="`view-button ${
-                  element.status === 'Нет ответа' ? 'disabled' : ''
-                }`"
-              >
-                <img src="@/assets/icons/button-icons/eye.svg" alt="" />
-              </button>
-            </li>
+            <PerfectScrollbar>
+              <li v-for="(element, index) in tableData" class="table-items">
+                <div class="table-name-block">
+                  <p class="name-block-top">0x424ca...a6f5F6c</p>
+                  <p class="name-block-bottom">{{ element.name }}</p>
+                </div>
+                <div class="table-status-block">
+                  <p class="table-text">{{ element.status }}</p>
+                </div>
+                <div class="table-mark-block">
+                  <p :class="`table-text ${element.mark ? 'green' : ''}`">
+                    {{ element.mark ? element.mark : "-" }}
+                  </p>
+                </div>
+                <button
+                  @click="toogleWindowStatus('studentHomework')"
+                  :class="`view-button ${
+                    element.status === 'Нет ответа' ? 'disabled' : ''
+                  }`"
+                >
+                  <img src="@/assets/icons/button-icons/eye.svg" alt="" />
+                </button>
+              </li>
+            </PerfectScrollbar>
           </ul>
         </div>
       </div>
