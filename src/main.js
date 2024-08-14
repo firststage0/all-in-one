@@ -1,5 +1,6 @@
 import "./assets/main.css";
 import { createApp } from "vue";
+
 import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { PerfectScrollbarPlugin } from "vue3-perfect-scrollbar";
@@ -61,6 +62,7 @@ const router = createRouter({
         title: "Моё обучение",
         breadcrumb: "Моё обучение",
       },
+      props: true,
     },
     {
       path: "/lesson/:id",

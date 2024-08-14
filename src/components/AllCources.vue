@@ -2,14 +2,18 @@
 import "@/assets/css/style.css";
 import { ref, watch } from "vue";
 import { fetcher } from "@/functions/fetcher";
+import { formateDate } from "@/functions/dateFormatter";
 const props = defineProps({
   isAdmin: Boolean,
 });
 const isLoading = ref(false);
 const jsonData = ref({});
-const url = "https://aiostudy.com/api/v1/courses/get-courses";
+const url = `https://aiostudy.com/api/v1/courses/get-courses?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
 
-const promise = fetcher(url, { UserToken: import.meta.env.adminToken });
+const promise = fetcher(url);
+
 isLoading.value = true;
 promise.then((data) => {
   jsonData.value = data;
@@ -19,15 +23,8 @@ promise.then((data) => {
 const formatedDates = ref([]);
 
 watch(jsonData, () => {
-  console.log(jsonData.value);
   for (let i = 0; i < jsonData.value.Courses.length; i++) {
-    const date = new Date();
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const year = date.getFullYear();
-    const formattedDate = date
-      .toLocaleDateString("ru-RU", options)
-      .replace(/\s*\d{4}\s*г\./, `, ${year}`);
-    formatedDates.value.push(formattedDate);
+    formatedDates.value[i] = formateDate(jsonData.value.Courses[i].StartDate);
   }
 });
 </script>
