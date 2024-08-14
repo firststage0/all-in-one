@@ -10,8 +10,8 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Cource Page",
-      component: () => import("@/views/CourcePage.vue"),
+      name: "Home",
+      component: () => import("@/views/LessonsList.vue"),
       meta: {
         title: "Главная",
         breadcrumb: "Главная",
@@ -45,14 +45,13 @@ const router = createRouter({
       },
     },
     {
-      path: "/lessons-list",
-      name: "lessons-list",
-      component: () => import("@/views/LessonsList.vue"),
+      path: "/course-page",
+      name: "course-page",
+      component: () => import("@/views/CoursePage.vue"),
       meta: {
-        title: "Список уроков",
-        breadcrumb: "Список уроков",
+        title: "Страница курса",
+        breadcrumb: "Страница курса",
       },
-      children: [],
     },
     {
       path: "/education",

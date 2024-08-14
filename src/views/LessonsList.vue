@@ -10,17 +10,14 @@ import NoActiveCources from "@/components/NoActiveCources.vue";
 import AllCources from "@/components/AllCources.vue";
 
 const showRightBlock = () => {
-  isMarkerLeft.value = false;
   isLeftBlockActive.value = false;
 };
 
 const showLeftBlock = () => {
-  isMarkerLeft.value = true;
   isLeftBlockActive.value = true;
 };
 
-const isMarkerLeft = ref(false);
-const isLeftBlockActive = ref(false);
+const isLeftBlockActive = ref(true);
 const scenario = ref(0);
 </script>
 
@@ -34,7 +31,7 @@ const scenario = ref(0);
       <button class="navigation-button" @click="showRightBlock">
         <p>Моё обучение</p>
       </button>
-      <div :class="`marker ${isMarkerLeft ? 'left' : 'right'}`"></div>
+      <div :class="`marker ${isLeftBlockActive ? 'left' : 'right'}`"></div>
     </div>
 
     <div v-if="!isLeftBlockActive" class="education-block">
@@ -60,7 +57,7 @@ const scenario = ref(0);
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+
   align-items: center;
   flex-direction: column;
   gap: 16px;
