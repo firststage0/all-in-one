@@ -1,6 +1,7 @@
 <script setup>
 import CourceCard from "@/components/CourceCard.vue";
 import themesData from "@/data/themes.json";
+import { fetcher } from "@/functions/fetcher";
 import { onMounted, ref, watch } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
@@ -26,8 +27,22 @@ const isMarked = ref({
   3: false,
 });
 
-const buttonId = ref(null);
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
 
+const isLoading = ref(false);
+
+const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const courseData = ref({});
+
+const buttonId = ref(null);
 watch(buttonId, () => {
   for (const key in isMarked.value) {
     buttonId.value === Number(key)
@@ -38,8 +53,14 @@ watch(buttonId, () => {
 
 onMounted(() => {
   buttonId.value = Number($route.query.buttonId || 1);
+  const promise = fetcher(url);
+  isLoading.value = true;
+  promise.then((data) => {
+    courseData.value = data;
+    isLoading.value = false;
+  });
+  console.log(courseData.value);
 });
-
 const themes = ref(themesData);
 const activeMenuButtonIndex = ref(null);
 
@@ -60,7 +81,11 @@ const deleteTheme = () => {
   <DeleteThemeModalWindow v-if="isWindowActive['deleteTheme'].status" />
   <div class="education-wrapper">
     <div class="main-container">
-      <CourceCard :isBackButtonShow="true" />
+      <CourceCard
+        v-if="!isLoading && courseData"
+        :data="courseData"
+        :isBackButtonShow="true"
+      />
       <nav class="nav">
         <SlideNavBar v-model="buttonId" />
         <CourseAdminPanel :isOnEdit="false" :isPaused="false" />

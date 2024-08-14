@@ -1,13 +1,11 @@
 <script setup>
 import GoBackButton from "@/components/GoBackButton.vue";
-
+import { formateDate } from "@/functions/dateFormatter";
 const props = defineProps({
   data: Object,
   isFooterActive: Boolean,
   isBackButtonShow: Boolean,
 });
-
-console.log(props.data);
 </script>
 
 <template>
@@ -23,18 +21,14 @@ console.log(props.data);
             alt=""
             class="title-image"
           />
-          <p class="cource-card-type">Программирование</p>
+          <p class="cource-card-type">{{ props.data.Category }}</p>
         </div>
-        <p class="for-who">Для начинающих</p>
+        <p class="for-who">{{ props.data.Сomplication }}</p>
       </header>
       <main class="main">
         <div class="title-block">
-          <img
-            src="@/assets/images/cource-card-title-image.svg"
-            alt=""
-            class="cource-image"
-          />
-          <p class="cource-title">Web3 Python-разработчик</p>
+          <img :src="props.data.PicUrl" alt="" class="cource-image" />
+          <p class="cource-title">{{ props.data.Name }}</p>
         </div>
         <div class="progress-block">
           <img
@@ -44,12 +38,15 @@ console.log(props.data);
           />
           <div class="progess-block left">
             <p class="progress-title">Процесс прохождения</p>
-            <p class="progress">25%</p>
+            <p class="progress">{{ props.data.Progress }}%</p>
           </div>
           <div class="vertical-divider"></div>
           <div class="progess-block right">
             <p class="watched-title">Просмотрено</p>
-            <p class="watched"><span>3</span> / 576 уроков</p>
+            <p class="watched">
+              <span>{{ props.data.ViewedLessons }}</span> /
+              {{ props.data.AllLessons }} уроков
+            </p>
           </div>
         </div>
       </main>
@@ -58,12 +55,12 @@ console.log(props.data);
         <div class="footer-info">
           <div class="start">
             <p class="start-title">Начало</p>
-            <p class="date">06 Июля, 2024</p>
+            <p class="date">{{ formateDate(props.data.StartDate) }}</p>
           </div>
           <div class="vertical-divider"></div>
           <div class="duration-block">
             <p class="duration-title">Длительность</p>
-            <p class="duration">6 мес.</p>
+            <p class="duration">{{ props.data.Duration }}</p>
           </div>
         </div>
         <button class="goto">

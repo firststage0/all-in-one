@@ -20,10 +20,16 @@ if (!props.data?.SocialsWhereBuy) {
 <template>
   <div class="container">
     <div class="main-content">
-      <button class="back-to-cources">
-        <img class="arrow" src="@/assets\icons\button-icons\arrow.svg" alt="" />
-        Назад к курсам
-      </button>
+      <router-link to="/" class="router-link">
+        <button class="back-to-cources">
+          <img
+            class="arrow"
+            src="@/assets\icons\button-icons\arrow.svg"
+            alt=""
+          />
+          Назад к курсам
+        </button>
+      </router-link>
       <div class="title">
         <CourceTitle :title="props.data?.Name" />
         <div class="discription">

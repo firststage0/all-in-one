@@ -2,7 +2,6 @@
 import { onMounted, ref } from "vue";
 
 import "@/assets/main.css";
-
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CourceCard from "@/components/CourceCard.vue";
 import CourcesNoConnectedWallet from "@/components/CourcesNoConnectedWallet.vue";
@@ -12,7 +11,11 @@ import { fetcher } from "@/functions/fetcher";
 import roles from "@/data/roles.json";
 
 const jsonData = ref({});
-const url = "https://aiostudy.com/api/v1/courses/get-own-courses";
+const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const isLeftBlockActive = ref(true);
 
 const showRightBlock = () => {
   isLeftBlockActive.value = false;
@@ -22,18 +25,19 @@ const showLeftBlock = () => {
   isLeftBlockActive.value = true;
 };
 
-const isLeftBlockActive = ref(true);
 const scenario = ref(0);
 
 const isLoading = ref(false);
 
 onMounted(() => {
-  const promise = fetcher(url, { UserToken: import.meta.env.adminToken });
+  const promise = fetcher(url);
+
   isLoading.value = true;
   promise.then((data) => {
     jsonData.value = data;
     isLoading.value = false;
   });
+  console.log(jsonData.value);
 });
 </script>
 
@@ -52,13 +56,19 @@ onMounted(() => {
 
     <div v-if="!isLeftBlockActive" class="education-block">
       <router-link
-        :to="{ path: '/education', query: { buttonId: 1 } }"
+        v-for="(element, index) in jsonData.Courses"
+        v-if="!isLoading"
+        :to="{
+          path: '/education',
+          query: { buttonId: 1, id: element.UniqueID },
+          props: { data: jsonData.value },
+        }"
         class="router-link"
       >
         <CourceCard
           v-if="scenario === 0 && !isLoading"
           :isFooterActive="true"
-          :data="jsonData"
+          :data="element"
         />
       </router-link>
 
