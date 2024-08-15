@@ -4,12 +4,14 @@ import EditLessonModalWindow from "@/components/EditLessonModalWindow.vue";
 import { isWindowActive } from "@/functions/modalWindowsStatus";
 import { useRouter } from "vue-router";
 import DeleteLessonModalWindow from "@/components/DeleteLessonModalWindow.vue";
+import { ref } from "firebase/storage";
 const props = defineProps({
   data: Object,
   isOnEdit: Boolean,
   topicId: Number,
   courseId: Number,
   lessonId: Number,
+  getLessons: Function,
 });
 
 const router = useRouter();
@@ -20,9 +22,10 @@ const navigate = (elementId) => {
   router.push({ path: `/lesson/${elementId}`, query: { buttonId: 1 } });
 };
 
+const currentLessonId = ref(null);
+
 const editLesson = () => {
   isWindowActive["editLesson"].status = true;
-  console.log(props.data);
 };
 
 const deleteLesson = () => {
@@ -32,13 +35,15 @@ const deleteLesson = () => {
 
 <template>
   <EditLessonModalWindow
-    :lessonId="props.lessonId"
+    :getLessons="props.getLessons"
+    :lessonId="props.data.UniqueID"
     :courseId="props.courseId"
     :topicId="props.topicId"
     :data="props.data"
     v-if="isWindowActive['editLesson'].status"
   />
   <DeleteLessonModalWindow
+    :getLessons="props.getLessons"
     :data="props.data"
     :courseId="props.courseId"
     :lessonId="props.lessonId"
@@ -61,6 +66,7 @@ const deleteLesson = () => {
         </div>
         <div class="right">
           <EditPanel
+            :id="currentLessonId"
             v-if="props.isOnEdit"
             :editFuncition="editLesson"
             :deleteFunction="deleteLesson"

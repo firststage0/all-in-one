@@ -55,7 +55,6 @@ const handleEditTopicClick = (id) => {
 
 const handleDeleteTopicClick = (id) => {
   topicId.value = id;
-
   toogleWindowStatus("deleteTheme");
 };
 
@@ -113,18 +112,25 @@ const activeMenuButtonIndex = ref(null);
 
 <template>
   <HeaderComponent />
-  <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
+  <NewThemeModalWindow
+    :courseId="courseData.UniqueID"
+    :getTopics="getTopics"
+    v-if="isWindowActive['newTheme'].status"
+  />
   <NewLessonModalWindow
+    :getTopics="getTopics"
     :courseId="courseData.UniqueID"
     :topicId="topics[activeMenuButtonIndex].UniqueID"
     v-if="isWindowActive['newLesson'].status"
   />
   <EditThemeModalWindow
+    :getTopics="getTopics"
     :id="topics[topicId].UniqueID"
     :title="topics[topicId].Name"
     v-if="isWindowActive['editTheme'].status"
   />
   <DeleteThemeModalWindow
+    :getTopics="getTopics"
     :themeId="topicId + 1"
     :id="topics[topicId].UniqueID"
     :title="topics[topicId].Name"
@@ -135,7 +141,7 @@ const activeMenuButtonIndex = ref(null);
       <div class="main-container">
         <CourceCard :data="courseData" :isBackButtonShow="true" />
         <nav class="nav">
-          <SlideNavBar v-model="buttonId" />
+          <SlideNavBar :courseId="courseId" v-model="buttonId" />
           <CourseAdminPanel :isOnEdit="false" :isPaused="false" />
         </nav>
         <div v-if="isMarked[1]" class="education-interface">
@@ -186,6 +192,7 @@ const activeMenuButtonIndex = ref(null);
             </button>
             <div v-for="element in lessons[activeMenuButtonIndex]">
               <LessonCard
+                :getLessons="getLessons"
                 :lessonId="element.UniqueID"
                 :topicId="topics[activeMenuButtonIndex].UniqueID"
                 :courseId="courseData.UniqueID"

@@ -2,6 +2,10 @@
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import { fetchPost } from "@/functions/fetcher";
 import { ref, watch } from "vue";
+const props = defineProps({
+  courseId: Number,
+  getTopics: Function,
+});
 const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
@@ -10,7 +14,7 @@ const name = ref();
 const body = {
   UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
   Course: {
-    UniqueID: 3,
+    UniqueID: props.courseId,
     TopicsIDsToDel: [],
     TopicsToAdd: [
       {
@@ -28,6 +32,7 @@ watch(name, () => {
 
 const addTopic = () => {
   fetchPost(url, body).then(() => {
+    props.getTopics();
     toogleWindowStatus("newTheme");
   });
 };

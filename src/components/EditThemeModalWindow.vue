@@ -5,6 +5,7 @@ import { fetchPost } from "@/functions/fetcher";
 const props = defineProps({
   id: Number,
   title: String,
+  getTopics: Function,
 });
 
 const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
@@ -34,6 +35,7 @@ watch(name, () => {
 const editTheme = () => {
   fetchPost(url, body).then(() => {
     toogleWindowStatus("editTheme");
+    props.getTopics();
   });
 };
 </script>

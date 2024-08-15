@@ -27,8 +27,10 @@ const body = {
 
 const deleteLesson = () => {
   console.log(body);
-  fetchPost(url, body);
-  toogleWindowStatus("deleteLesson");
+  fetchPost(url, body).then(() => {
+    props.getLessons();
+    toogleWindowStatus("deleteLesson");
+  });
 };
 </script>
 

@@ -5,6 +5,7 @@ const props = defineProps({
   id: Number,
   title: String,
   themeId: Number,
+  getTopics: Function,
 });
 
 console.log(props.themeId);
@@ -26,6 +27,7 @@ const body = {
 function deleteTheme() {
   fetchPost(url, body).then(() => {
     toogleWindowStatus("deleteTheme");
+    props.getTopics();
   });
 }
 </script>

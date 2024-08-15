@@ -8,11 +8,14 @@ const props = defineProps({
   courseId: Number,
   topicId: Number,
   lessonId: Number,
+  getLessons: Function,
 });
 
 const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
+
+console.log(props.data);
 
 const buttonId = ref(null);
 
@@ -69,8 +72,10 @@ watch([name, duration, type], () => {
 
 const editLesson = () => {
   console.log(body);
-  fetchPost(url, body);
-  toogleWindowStatus("editLesson");
+  fetchPost(url, body).then(() => {
+    props.getLessons();
+    toogleWindowStatus("editLesson");
+  });
 };
 </script>
 

@@ -7,6 +7,7 @@ const buttonId = ref(0);
 const props = defineProps({
   courseId: Number,
   topicId: Number,
+  getLessons: Function,
 });
 
 const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
@@ -66,8 +67,10 @@ watch([name, duration, type], () => {
 const createLesson = () => {
   console.log(body);
 
-  fetchPost(url, body);
-  toogleWindowStatus("newLesson");
+  fetchPost(url, body).then(() => {
+    props.getLessons();
+    toogleWindowStatus("newLesson");
+  });
 };
 </script>
 
