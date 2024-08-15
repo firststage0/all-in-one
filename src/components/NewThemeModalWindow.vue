@@ -17,12 +17,7 @@ const body = {
         Name: "",
       },
     ],
-    TopicsToUpdate: [
-      {
-        UniqueID: "",
-        Name: "",
-      },
-    ],
+    TopicsToUpdate: [],
   },
 };
 
@@ -57,7 +52,9 @@ const addTopic = () => {
         />
       </main>
       <footer class="footer">
-        <button class="left">Отменить</button>
+        <button @click="toogleWindowStatus('newTheme')" class="left">
+          Отменить
+        </button>
         <button @click="addTopic" class="right">Создать</button>
       </footer>
     </div>
