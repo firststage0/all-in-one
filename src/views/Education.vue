@@ -1,6 +1,6 @@
 <script setup>
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import CourceCard from "@/components/CourceCard.vue";
-import themesData from "@/data/themes.json";
 import { fetcher } from "@/functions/fetcher";
 import { onMounted, ref, watch } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
@@ -27,20 +27,45 @@ const isMarked = ref({
   3: false,
 });
 
-const props = defineProps({
-  data: {
-    type: Object,
-    required: true,
-  },
-});
-
 const isLoading = ref(false);
+const courseId = Number($route.query.id);
 
 const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
+const urlTopics = `https://dev.aiostudy.com/api/v1/courses/get-topics?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}&CourseID=${courseId}`;
+
+const urlLessons = `https://dev.aiostudy.com/api/v1/courses/get-lessons?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const topics = ref([]);
 const courseData = ref({});
+const lessons = ref([]);
+
+const getTopics = () => {
+  const promise = fetcher(urlTopics);
+  isLoading.value = true;
+  promise.then((data) => {
+    topics.value = data.Topics;
+    isLoading.value = false;
+  });
+};
+
+const getLessons = () => {
+  if (topics.value) {
+    for (const i of topics.value) {
+      const promise = fetcher(urlLessons + `&TopicID=${i.UniqueID}`);
+      isLoading.value = true;
+      promise.then((data) => {
+        lessons.value.push(data.Lessons);
+      });
+    }
+  }
+};
 
 const buttonId = ref(null);
 watch(buttonId, () => {
@@ -56,12 +81,20 @@ onMounted(() => {
   const promise = fetcher(url);
   isLoading.value = true;
   promise.then((data) => {
-    courseData.value = data;
+    for (const element of data.Courses) {
+      if (element.UniqueID === courseId) {
+        courseData.value = element;
+      }
+    }
     isLoading.value = false;
   });
-  console.log(courseData.value);
+  getTopics();
 });
-const themes = ref(themesData);
+
+watch(topics, () => {
+  getLessons();
+});
+
 const activeMenuButtonIndex = ref(null);
 
 const editTheme = () => {
@@ -79,99 +112,98 @@ const deleteTheme = () => {
   <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
   <EditThemeModalWindow v-if="isWindowActive['editTheme'].status" />
   <DeleteThemeModalWindow v-if="isWindowActive['deleteTheme'].status" />
-  <div class="education-wrapper">
-    <div class="main-container">
-      <CourceCard
-        v-if="!isLoading && courseData"
-        :data="courseData"
-        :isBackButtonShow="true"
-      />
-      <nav class="nav">
-        <SlideNavBar v-model="buttonId" />
-        <CourseAdminPanel :isOnEdit="false" :isPaused="false" />
-      </nav>
-      <div v-if="isMarked[1]" class="education-interface">
-        <div class="menu">
-          <div class="add-theme-wrapper">
-            <div class="gradient">
-              <button class="add-theme" @click="toogleWindowStatus('newTheme')">
-                <img
-                  src="@/assets/icons/button-icons/add-gradient.svg"
-                  alt=""
+  <perfect-scrollbar id="app">
+    <div class="education-wrapper">
+      <div class="main-container">
+        <CourceCard :data="courseData" :isBackButtonShow="true" />
+        <nav class="nav">
+          <SlideNavBar v-model="buttonId" />
+          <CourseAdminPanel :isOnEdit="false" :isPaused="false" />
+        </nav>
+        <div v-if="isMarked[1]" class="education-interface">
+          <div class="menu">
+            <div class="add-theme-wrapper">
+              <div class="gradient">
+                <button
+                  class="add-theme"
+                  @click="toogleWindowStatus('newTheme')"
+                >
+                  <img
+                    src="@/assets/icons/button-icons/add-gradient.svg"
+                    alt=""
+                  />
+                  <p>Добавить тему</p>
+                </button>
+              </div>
+              <div class="divider"></div>
+            </div>
+            <button
+              v-for="(i, menu_index) in topics"
+              @click.stop="
+                {
+                  activeMenuButtonIndex = menu_index;
+                }
+              "
+              :class="`menu-button ${
+                activeMenuButtonIndex === menu_index ? 'active' : ''
+              }`"
+            >
+              <div class="edit-panel">
+                <EditPanel
+                  :editFuncition="editTheme"
+                  :deleteFunction="deleteTheme"
                 />
-                <p>Добавить тему</p>
-              </button>
-            </div>
-            <div class="divider"></div>
+              </div>
+              <p class="button-title">{{ "Тема " + (menu_index + 1) }}</p>
+              <p class="description">{{ i.Name }}</p>
+            </button>
           </div>
-          <button
-            v-for="(i, menu_index) in themes"
-            @click.stop="
-              {
-                activeMenuButtonIndex = menu_index;
-              }
-            "
-            :class="`menu-button ${
-              activeMenuButtonIndex === menu_index ? 'active' : ''
-            }`"
-          >
-            <div class="edit-panel">
-              <EditPanel
-                :editFuncition="editTheme"
-                :deleteFunction="deleteTheme"
-              />
+          <div v-if="activeMenuButtonIndex !== null" class="lessons-block">
+            <button class="add-lesson" @click="toogleWindowStatus('newLesson')">
+              <div class="center">
+                <img src="@/assets/icons/button-icons/add.svg" alt="" />
+                <p>Добавить урок</p>
+              </div>
+            </button>
+            <div v-for="element in lessons[activeMenuButtonIndex]">
+              <LessonCard :isOnEdit="true" :data="element" />
             </div>
-            <p class="button-title">{{ i.title }}</p>
-            <p class="description">{{ i.description }}</p>
-          </button>
-        </div>
-        <div
-          v-if="
-            activeMenuButtonIndex !== null &&
-            themes[activeMenuButtonIndex].lessons
-          "
-          class="lessons-block"
-        >
-          <button class="add-lesson" @click="toogleWindowStatus('newLesson')">
-            <div class="center">
-              <img src="@/assets/icons/button-icons/add.svg" alt="" />
-              <p>Добавить урок</p>
-            </div>
-          </button>
-          <div v-for="element in themes[activeMenuButtonIndex].lessons">
-            <LessonCard :isOnEdit="true" :data="element" />
           </div>
         </div>
-      </div>
-      <div v-if="isMarked[2]" class="homework-interface">
-        <div class="homework-wrapper">
-          <router-link
-            class="router-link"
-            :to="{ path: `/homework/${element.id}`, query: { buttonId: 2 } }"
-            v-for="element in homeworks"
-          >
-            <HomeworkCard :data="element" :isAdmin="false" />
-          </router-link>
+        <div v-if="isMarked[2]" class="homework-interface">
+          <div class="homework-wrapper">
+            <router-link
+              class="router-link"
+              :to="{ path: `/homework/${element.id}`, query: { buttonId: 2 } }"
+              v-for="element in homeworks"
+            >
+              <HomeworkCard :data="element" :isAdmin="false" />
+            </router-link>
+          </div>
         </div>
-      </div>
-      <div v-if="isMarked[3]" class="achievements-interface">
-        <div class="achievements-grid">
-          <Achievements
-            v-for="i in 10"
-            :name="
-              i === 1 || i === 6
-                ? 'Первое взаимодействие с блокчейном'
-                : 'Свап на Uniswap V3'
-            "
-            :isCompleted="i === 1 || i === 2 ? true : false"
-          />
+        <div v-if="isMarked[3]" class="achievements-interface">
+          <div class="achievements-grid">
+            <Achievements
+              v-for="i in 10"
+              :name="
+                i === 1 || i === 6
+                  ? 'Первое взаимодействие с блокчейном'
+                  : 'Свап на Uniswap V3'
+              "
+              :isCompleted="i === 1 || i === 2 ? true : false"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <style scoped>
+.ps__rail-y {
+  top: calc(var(--header-height) + 16px);
+}
+
 .education-wrapper {
   display: flex;
   flex-direction: column;
@@ -293,6 +325,7 @@ const deleteTheme = () => {
 }
 
 .add-lesson {
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -315,6 +348,10 @@ const deleteTheme = () => {
   font-weight: bold;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.32);
+}
+
+.center > img {
+  filter: contrast(0.2);
 }
 
 .lessons-block {
