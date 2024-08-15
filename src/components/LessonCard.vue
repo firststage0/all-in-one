@@ -7,6 +7,9 @@ import DeleteLessonModalWindow from "@/components/DeleteLessonModalWindow.vue";
 const props = defineProps({
   data: Object,
   isOnEdit: Boolean,
+  topicId: Number,
+  courseId: Number,
+  lessonId: Number,
 });
 
 const router = useRouter();
@@ -19,6 +22,7 @@ const navigate = (elementId) => {
 
 const editLesson = () => {
   isWindowActive["editLesson"].status = true;
+  console.log(props.data);
 };
 
 const deleteLesson = () => {
@@ -27,8 +31,17 @@ const deleteLesson = () => {
 </script>
 
 <template>
-  <EditLessonModalWindow v-if="isWindowActive['editLesson'].status" />
-  <DeleteLessonModalWindow v-if="isWindowActive['deleteLesson'].status" />
+  <EditLessonModalWindow
+    :lessonId="props.lessonId"
+    :courseId="props.courseId"
+    :topicId="props.topicId"
+    :data="props.data"
+    v-if="isWindowActive['editLesson'].status"
+  />
+  <DeleteLessonModalWindow
+    :data="props.data"
+    v-if="isWindowActive['deleteLesson'].status"
+  />
   <div
     :class="`card ${props.data.isCompleted ? 'inactive' : ''}`"
     @click="navigate(props.data.UniqueID)"

@@ -48,8 +48,14 @@ const lessons = ref([]);
 
 const topicId = ref(null);
 
+const handleEditTopicClick = (id) => {
+  topicId.value = id;
+  toogleWindowStatus("editTheme");
+};
+
 const handleDeleteTopicClick = (id) => {
   topicId.value = id;
+
   toogleWindowStatus("deleteTheme");
 };
 
@@ -103,19 +109,21 @@ watch(topics, () => {
 });
 
 const activeMenuButtonIndex = ref(null);
-
-const editTheme = () => {
-  toogleWindowStatus("editTheme");
-};
 </script>
 
 <template>
   <HeaderComponent />
   <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
   <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
-  <EditThemeModalWindow v-if="isWindowActive['editTheme'].status" />
+  <EditThemeModalWindow
+    :id="topics[topicId].UniqueID"
+    :title="topics[topicId].Name"
+    v-if="isWindowActive['editTheme'].status"
+  />
   <DeleteThemeModalWindow
-    :id="topicId"
+    :themeId="topicId + 1"
+    :id="topics[topicId].UniqueID"
+    :title="topics[topicId].Name"
     v-if="isWindowActive['deleteTheme'].status"
   />
   <perfect-scrollbar id="app">
@@ -156,8 +164,8 @@ const editTheme = () => {
             >
               <div class="edit-panel">
                 <EditPanel
-                  :id="topics[menu_index].UniqueID"
-                  :editFuncition="editTheme"
+                  :id="menu_index"
+                  :editFuncition="handleEditTopicClick"
                   :deleteFunction="handleDeleteTopicClick"
                 />
               </div>
@@ -173,7 +181,13 @@ const editTheme = () => {
               </div>
             </button>
             <div v-for="element in lessons[activeMenuButtonIndex]">
-              <LessonCard :isOnEdit="true" :data="element" />
+              <LessonCard
+                :lessonId="element.UniqueID"
+                :topicId="topics[activeMenuButtonIndex].UniqueID"
+                :courseId="courseData.UniqueID"
+                :isOnEdit="true"
+                :data="element"
+              />
             </div>
           </div>
         </div>
