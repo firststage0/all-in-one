@@ -114,7 +114,11 @@ const activeMenuButtonIndex = ref(null);
 <template>
   <HeaderComponent />
   <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
-  <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
+  <NewLessonModalWindow
+    :courseId="courseData.UniqueID"
+    :topicId="topics[activeMenuButtonIndex].UniqueID"
+    v-if="isWindowActive['newLesson'].status"
+  />
   <EditThemeModalWindow
     :id="topics[topicId].UniqueID"
     :title="topics[topicId].Name"

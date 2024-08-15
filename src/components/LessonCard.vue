@@ -40,6 +40,9 @@ const deleteLesson = () => {
   />
   <DeleteLessonModalWindow
     :data="props.data"
+    :courseId="props.courseId"
+    :lessonId="props.lessonId"
+    :topicId="props.topicId"
     v-if="isWindowActive['deleteLesson'].status"
   />
   <div
