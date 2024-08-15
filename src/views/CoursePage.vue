@@ -7,11 +7,17 @@ import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import "@/assets/main.css";
-
 import { ref } from "vue";
-import { jsonData } from "@/functions/getDataFromServer";
-
+const jsonData = ref({});
+import { fetcher } from "@/functions/fetcher";
+const url = "https://aiostudy.com/api/v1/courses/get-course?CourseID=3";
 const isLoading = ref(false);
+const promise = fetcher(url);
+isLoading.value = true;
+promise.then((data) => {
+  jsonData.value = data;
+  isLoading.value = false;
+});
 </script>
 
 <template>
