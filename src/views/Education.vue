@@ -46,6 +46,13 @@ const topics = ref([]);
 const courseData = ref({});
 const lessons = ref([]);
 
+const topicId = ref(null);
+
+const handleDeleteTopicClick = (id) => {
+  topicId.value = id;
+  toogleWindowStatus("deleteTheme");
+};
+
 const getTopics = () => {
   const promise = fetcher(urlTopics);
   isLoading.value = true;
@@ -100,10 +107,6 @@ const activeMenuButtonIndex = ref(null);
 const editTheme = () => {
   toogleWindowStatus("editTheme");
 };
-
-const deleteTheme = () => {
-  toogleWindowStatus("deleteTheme");
-};
 </script>
 
 <template>
@@ -111,7 +114,10 @@ const deleteTheme = () => {
   <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
   <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
   <EditThemeModalWindow v-if="isWindowActive['editTheme'].status" />
-  <DeleteThemeModalWindow v-if="isWindowActive['deleteTheme'].status" />
+  <DeleteThemeModalWindow
+    :id="topicId"
+    v-if="isWindowActive['deleteTheme'].status"
+  />
   <perfect-scrollbar id="app">
     <div class="education-wrapper">
       <div class="main-container">
@@ -150,8 +156,9 @@ const deleteTheme = () => {
             >
               <div class="edit-panel">
                 <EditPanel
+                  :id="topics[menu_index].UniqueID"
                   :editFuncition="editTheme"
-                  :deleteFunction="deleteTheme"
+                  :deleteFunction="handleDeleteTopicClick"
                 />
               </div>
               <p class="button-title">{{ "Тема " + (menu_index + 1) }}</p>

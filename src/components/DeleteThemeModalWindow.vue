@@ -1,5 +1,31 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
+import { fetchPost } from "@/functions/fetcher";
+const props = defineProps({
+  id: Number,
+});
+
+console.log(props.id);
+
+const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const body = {
+  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  Course: {
+    UniqueID: 3,
+    TopicsIDsToDel: [Number(props.id)],
+    TopicsToAdd: [],
+    TopicsToUpdate: [],
+  },
+};
+
+function deleteTheme() {
+  fetchPost(url, body).then(() => {
+    toogleWindowStatus("deleteTheme");
+  });
+}
 </script>
 
 <template>
@@ -17,8 +43,10 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
         <p class="description">Циклы и Массивы</p>
       </main>
       <footer class="footer">
-        <button class="left">Отменить</button>
-        <button class="right">Да</button>
+        <button class="left" @click="toogleWindowStatus('deleteTheme')">
+          Отменить
+        </button>
+        <button class="right" @click="deleteTheme">Да</button>
       </footer>
     </div>
   </div>
