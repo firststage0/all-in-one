@@ -1,5 +1,43 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
+import { ref, watch } from "vue";
+import { fetchPost } from "@/functions/fetcher";
+const props = defineProps({
+  id: Number,
+  title: String,
+});
+
+console.log(props.id, props.title);
+
+const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const name = ref(props.title);
+
+const body = {
+  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  Course: {
+    UniqueID: 3,
+    TopicsIDsToDel: [],
+    TopicsToAdd: [],
+    TopicsToUpdate: [
+      {
+        UniqueID: String(props.id),
+        Name: props.title,
+      },
+    ],
+  },
+};
+watch(name, () => {
+  body.Course.TopicsToUpdate[0].Name = name.value;
+});
+
+const editTheme = () => {
+  fetchPost(url, body).then(() => {
+    toogleWindowStatus("editTheme");
+  });
+};
 </script>
 
 <template>
@@ -13,11 +51,18 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
       </header>
       <main class="main">
         <p class="title">Название</p>
-        <input class="input" type="text" placeholder="Введите название темы" />
+        <input
+          v-model="name"
+          class="input"
+          type="text"
+          placeholder="Введите название темы"
+        />
       </main>
       <footer class="footer">
-        <button class="left">Отменить</button>
-        <button class="right">Сохранить</button>
+        <button @click="toogleWindowStatus('editTheme')" class="left">
+          Отменить
+        </button>
+        <button @click="editTheme" class="right">Сохранить</button>
       </footer>
     </div>
   </div>

@@ -3,9 +3,11 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import { fetchPost } from "@/functions/fetcher";
 const props = defineProps({
   id: Number,
+  title: String,
+  themeId: Number,
 });
 
-console.log(props.id);
+console.log(props.themeId);
 
 const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
@@ -39,8 +41,8 @@ function deleteTheme() {
       </header>
       <main class="main">
         <p class="question">Вы действительно хотите удалить?</p>
-        <p class="title">Тема 1</p>
-        <p class="description">Циклы и Массивы</p>
+        <p class="title">Тема {{ props.themeId }}</p>
+        <p class="description">{{ props.title }}</p>
       </main>
       <footer class="footer">
         <button class="left" @click="toogleWindowStatus('deleteTheme')">
@@ -89,7 +91,7 @@ function deleteTheme() {
 
 .header-title {
   font-family: var(--inter-semibold-font);
-  font-weight: bold;
+  font-weight: 500;
   font-size: 24px;
 }
 
@@ -120,13 +122,13 @@ function deleteTheme() {
 
 .description {
   font-family: var(--inter-font);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
 }
 
 .title {
   font-family: var(--inter-font);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.48);
 }

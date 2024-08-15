@@ -2,7 +2,7 @@
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import CourceCard from "@/components/CourceCard.vue";
 import { fetcher } from "@/functions/fetcher";
-import { onMounted, ref, watch } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
 import homeworks from "@/data/homeworks.json";
@@ -48,8 +48,14 @@ const lessons = ref([]);
 
 const topicId = ref(null);
 
+const handleEditTopicClick = (id) => {
+  topicId.value = id;
+  toogleWindowStatus("editTheme");
+};
+
 const handleDeleteTopicClick = (id) => {
   topicId.value = id;
+  console.log(typeof topicId.value);
   toogleWindowStatus("deleteTheme");
 };
 
@@ -103,19 +109,21 @@ watch(topics, () => {
 });
 
 const activeMenuButtonIndex = ref(null);
-
-const editTheme = () => {
-  toogleWindowStatus("editTheme");
-};
 </script>
 
 <template>
   <HeaderComponent />
   <NewThemeModalWindow v-if="isWindowActive['newTheme'].status" />
   <NewLessonModalWindow v-if="isWindowActive['newLesson'].status" />
-  <EditThemeModalWindow v-if="isWindowActive['editTheme'].status" />
+  <EditThemeModalWindow
+    :id="topics[topicId].UniqueID"
+    :title="topics[topicId].Name"
+    v-if="isWindowActive['editTheme'].status"
+  />
   <DeleteThemeModalWindow
-    :id="topicId"
+    :themeId="topicId + 1"
+    :id="topics[topicId].UniqueID"
+    :title="topics[topicId].Name"
     v-if="isWindowActive['deleteTheme'].status"
   />
   <perfect-scrollbar id="app">
@@ -148,6 +156,7 @@ const editTheme = () => {
               @click.stop="
                 {
                   activeMenuButtonIndex = menu_index;
+                  console.log(menu_index);
                 }
               "
               :class="`menu-button ${
@@ -156,8 +165,8 @@ const editTheme = () => {
             >
               <div class="edit-panel">
                 <EditPanel
-                  :id="topics[menu_index].UniqueID"
-                  :editFuncition="editTheme"
+                  :id="menu_index"
+                  :editFuncition="handleEditTopicClick"
                   :deleteFunction="handleDeleteTopicClick"
                 />
               </div>
