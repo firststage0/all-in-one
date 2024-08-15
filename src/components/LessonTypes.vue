@@ -1,10 +1,31 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  buttonId: Number,
+});
+
+const type = defineModel();
+</script>
 
 <template>
   <div class="button-block">
-    <button class="main-button"><p>Видеокурс</p></button>
-    <button class="main-button active"><p>Вебинарный формат</p></button>
-    <button class="main-button"><p>Домашка</p></button>
+    <button
+      @click="type = 'Видеокурс'"
+      :class="`main-button ${props.buttonId === 0 ? 'active' : ''}`"
+    >
+      <p>Видеокурс</p>
+    </button>
+    <button
+      @click="type = 'Вебинарный формат'"
+      :class="`main-button ${props.buttonId === 1 ? 'active' : ''}`"
+    >
+      <p>Вебинарный формат</p>
+    </button>
+    <button
+      @click="type = 'Домашка'"
+      :class="`main-button ${props.buttonId === 2 ? 'active' : ''}`"
+    >
+      <p>Домашка</p>
+    </button>
   </div>
 </template>
 

@@ -7,8 +7,6 @@ const props = defineProps({
   title: String,
 });
 
-console.log(props.id, props.title);
-
 const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;

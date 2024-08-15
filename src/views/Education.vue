@@ -2,7 +2,7 @@
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import CourceCard from "@/components/CourceCard.vue";
 import { fetcher } from "@/functions/fetcher";
-import { nextTick, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import Achievements from "@/components/Achievements.vue";
 import homeworks from "@/data/homeworks.json";
@@ -55,7 +55,7 @@ const handleEditTopicClick = (id) => {
 
 const handleDeleteTopicClick = (id) => {
   topicId.value = id;
-  console.log(typeof topicId.value);
+
   toogleWindowStatus("deleteTheme");
 };
 
@@ -156,7 +156,6 @@ const activeMenuButtonIndex = ref(null);
               @click.stop="
                 {
                   activeMenuButtonIndex = menu_index;
-                  console.log(menu_index);
                 }
               "
               :class="`menu-button ${
@@ -182,7 +181,13 @@ const activeMenuButtonIndex = ref(null);
               </div>
             </button>
             <div v-for="element in lessons[activeMenuButtonIndex]">
-              <LessonCard :isOnEdit="true" :data="element" />
+              <LessonCard
+                :lessonId="element.UniqueID"
+                :topicId="topics[activeMenuButtonIndex].UniqueID"
+                :courseId="courseData.UniqueID"
+                :isOnEdit="true"
+                :data="element"
+              />
             </div>
           </div>
         </div>
