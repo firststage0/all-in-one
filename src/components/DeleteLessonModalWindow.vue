@@ -1,5 +1,35 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
+import { fetchPost } from "@/functions/fetcher";
+const props = defineProps({
+  data: Object,
+  lessonId: Number,
+  courseId: Number,
+  topicId: Number,
+});
+
+console.log(props.data);
+
+const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const body = {
+  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  Course: {
+    UniqueID: props.courseId,
+    TopicID: props.topicId,
+    LessonsIDsToDel: [props.lessonId],
+    LessonsToAdd: [],
+    LessonsToUpdate: [],
+  },
+};
+
+const deleteLesson = () => {
+  console.log(body);
+  fetchPost(url, body);
+  toogleWindowStatus("deleteLesson");
+};
 </script>
 
 <template>
@@ -14,11 +44,13 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
       <main class="main">
         <p class="question">Вы действительно хотите удалить?</p>
         <p class="title">Урок</p>
-        <p class="description">Вводный курс студента</p>
+        <p class="description">{{ props.data.Name }}</p>
       </main>
       <footer class="footer">
-        <button class="left">Отменить</button>
-        <button class="right">Да</button>
+        <button @click="toogleWindowStatus('deleteLesson')" class="left">
+          Отменить
+        </button>
+        <button @click="deleteLesson" class="right">Да</button>
       </footer>
     </div>
   </div>

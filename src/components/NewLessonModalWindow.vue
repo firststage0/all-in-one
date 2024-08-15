@@ -1,6 +1,74 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import LessonTypes from "./LessonTypes.vue";
+import { ref, watch } from "vue";
+import { fetchPost } from "@/functions/fetcher";
+const buttonId = ref(0);
+const props = defineProps({
+  courseId: Number,
+  topicId: Number,
+});
+
+const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+console.log(props.courseId, props.topicId);
+
+const type = ref("Видеокурс");
+const duration = ref(null);
+const name = ref(null);
+
+const setType = () => {
+  switch (type.value) {
+    case "Видеокурс": {
+      buttonId.value = 0;
+      break;
+    }
+    case "Вебинарный формат": {
+      buttonId.value = 1;
+      break;
+    }
+    case "Домашка": {
+      buttonId.value = 2;
+      break;
+    }
+  }
+};
+
+watch(type, () => {
+  setType();
+});
+
+const body = {
+  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  Course: {
+    UniqueID: props.courseId,
+    TopicID: props.topicId,
+    LessonsIDsToDel: [],
+    LessonsToAdd: [
+      {
+        Name: "",
+        Duration: 0,
+        Type: "",
+      },
+    ],
+    LessonsToUpdate: [],
+  },
+};
+
+watch([name, duration, type], () => {
+  body.Course.LessonsToAdd[0].Name = name.value;
+  body.Course.LessonsToAdd[0].Duration = duration.value;
+  body.Course.LessonsToAdd[0].Type = type.value;
+});
+
+const createLesson = () => {
+  console.log(body);
+
+  fetchPost(url, body);
+  toogleWindowStatus("newLesson");
+};
 </script>
 
 <template>
@@ -16,6 +84,7 @@ import LessonTypes from "./LessonTypes.vue";
         <div class="main-block">
           <p class="title">Название</p>
           <input
+            v-model="name"
             class="input"
             type="text"
             placeholder="Введите название урока"
@@ -23,19 +92,26 @@ import LessonTypes from "./LessonTypes.vue";
         </div>
         <div class="main-block">
           <p class="title">Тип урока</p>
-          <LessonTypes />
+          <LessonTypes v-model="type" :buttonId="buttonId" />
           <div class="main-block">
             <p class="title">Длительность</p>
             <div class="input-block">
-              <input type="text" class="duration-input" placeholder="20" />
+              <input
+                v-model="duration"
+                type="text"
+                class="duration-input"
+                placeholder="20"
+              />
               <p class="duration-text">мин</p>
             </div>
           </div>
         </div>
       </main>
       <footer class="footer">
-        <button class="left">Отменить</button>
-        <button class="right">Сохранить</button>
+        <button @click="toogleWindowStatus('newLesson')" class="left">
+          Отменить
+        </button>
+        <button @click="createLesson" class="right">Сохранить</button>
       </footer>
     </div>
   </div>
