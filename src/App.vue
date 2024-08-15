@@ -1,13 +1,4 @@
-<script setup>
-import { onMounted } from "vue";
-import getData from "@/functions/getDataFromServer";
-
-const url = "https://aiostudy.com/api/v1/courses/get-course?CourseID=3";
-
-onMounted(async () => {
-  await getData(url);
-});
-</script>
+<script setup></script>
 
 <template>
   <router-view></router-view>

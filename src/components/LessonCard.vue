@@ -31,7 +31,7 @@ const deleteLesson = () => {
   <DeleteLessonModalWindow v-if="isWindowActive['deleteLesson'].status" />
   <div
     :class="`card ${props.data.isCompleted ? 'inactive' : ''}`"
-    @click="navigate(props.data.id)"
+    @click="navigate(props.data.UniqueID)"
   >
     <main class="card-main">
       <div class="header">
@@ -41,7 +41,7 @@ const deleteLesson = () => {
             alt=""
             class="type-img"
           />
-          <p class="type-title">{{ props.data.type }}</p>
+          <p class="type-title">{{ props.data.Type }}</p>
         </div>
         <div class="right">
           <EditPanel
@@ -52,13 +52,13 @@ const deleteLesson = () => {
         </div>
       </div>
 
-      <p class="card-title">{{ props.data.title }}</p>
+      <p class="card-title">{{ props.data.Name }}</p>
     </main>
     <footer class="card-footer">
       <div class="duration-block">
         <img src="@/assets/icons/duration.svg" alt="" class="duration-img" />
         <p class="duration">Длительность</p>
-        <p class="duration-value">{{ props.data.duration }}</p>
+        <p class="duration-value">{{ props.data.Duration + " мин" }}</p>
       </div>
       <button
         :class="`go-to-button ${props.data.isCompleted ? 'inactive' : ''}`"

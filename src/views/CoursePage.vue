@@ -7,11 +7,21 @@ import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import "@/assets/main.css";
-
 import { ref } from "vue";
-import { jsonData } from "@/functions/getDataFromServer";
+import { useRoute } from "vue-router";
+const $route = useRoute();
+const jsonData = ref({});
+import { fetcher } from "@/functions/fetcher";
+const url = `https://dev.aiostudy.com/api/v1/courses/get-course?CourseID=${$route.params.id}`;
 
 const isLoading = ref(false);
+const promise = fetcher(url);
+isLoading.value = true;
+promise.then((data) => {
+  jsonData.value = data.Course;
+
+  isLoading.value = false;
+});
 </script>
 
 <template>
@@ -47,7 +57,6 @@ const isLoading = ref(false);
 }
 .background-container {
   width: 100%;
-
   background-color: var(--background-color);
   background-image: url(@/assets/images/top-right-background.png),
     url(@/assets/images/half-corus.png), url(@/assets/images/center-image.png);

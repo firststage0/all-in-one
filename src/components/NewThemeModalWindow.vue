@@ -1,5 +1,41 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
+import { fetchPost } from "@/functions/fetcher";
+import { ref, watch } from "vue";
+const url = `https://dev.aiostudy.com/api/v1/courses/update-topics?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const name = ref();
+const body = {
+  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  Course: {
+    UniqueID: 3,
+    TopicsIDsToDel: [],
+    TopicsToAdd: [
+      {
+        Name: "",
+      },
+    ],
+    TopicsToUpdate: [
+      {
+        UniqueID: "",
+        Name: "",
+      },
+    ],
+  },
+};
+
+watch(name, () => {
+  body.Course.TopicsToAdd[0].Name = name.value;
+  console.log(typeof name.value);
+});
+
+const addTopic = () => {
+  fetchPost(url, body).then(() => {
+    toogleWindowStatus("newTheme");
+  });
+};
 </script>
 
 <template>
@@ -13,11 +49,16 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
       </header>
       <main class="main">
         <p class="title">Название</p>
-        <input class="input" type="text" placeholder="Введите название темы" />
+        <input
+          class="input"
+          type="text"
+          v-model="name"
+          placeholder="Введите название темы"
+        />
       </main>
       <footer class="footer">
         <button class="left">Отменить</button>
-        <button class="right">Создать</button>
+        <button @click="addTopic" class="right">Создать</button>
       </footer>
     </div>
   </div>
@@ -102,6 +143,9 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
   border-radius: 12px;
   padding: 12px 16px;
   background: #2a2b2e;
+  font-family: var(--inter-semibold-font);
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .input::placeholder {

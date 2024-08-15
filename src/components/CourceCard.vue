@@ -1,10 +1,15 @@
 <script setup>
 import GoBackButton from "@/components/GoBackButton.vue";
 import { formateDate } from "@/functions/dateFormatter";
+import { computed, watch } from "vue";
 const props = defineProps({
   data: Object,
   isFooterActive: Boolean,
   isBackButtonShow: Boolean,
+});
+
+const data = computed(() => {
+  return props.data;
 });
 </script>
 
@@ -21,14 +26,14 @@ const props = defineProps({
             alt=""
             class="title-image"
           />
-          <p class="cource-card-type">{{ props.data.Category }}</p>
+          <p class="cource-card-type">{{ data.Category }}</p>
         </div>
-        <p class="for-who">{{ props.data.Сomplication }}</p>
+        <p class="for-who">{{ data.Сomplication }}</p>
       </header>
       <main class="main">
         <div class="title-block">
-          <img :src="props.data.PicUrl" alt="" class="cource-image" />
-          <p class="cource-title">{{ props.data.Name }}</p>
+          <img :src="data.PicUrl" alt="" class="cource-image" />
+          <p class="cource-title">{{ data.Name }}</p>
         </div>
         <div class="progress-block">
           <img
@@ -38,14 +43,14 @@ const props = defineProps({
           />
           <div class="progess-block left">
             <p class="progress-title">Процесс прохождения</p>
-            <p class="progress">{{ props.data.Progress }}%</p>
+            <p class="progress">{{ data.Progress }}%</p>
           </div>
           <div class="vertical-divider"></div>
           <div class="progess-block right">
             <p class="watched-title">Просмотрено</p>
             <p class="watched">
-              <span>{{ props.data.ViewedLessons }}</span> /
-              {{ props.data.AllLessons }} уроков
+              <span>{{ data.ViewedLessons }}</span> /
+              {{ data.AllLessons }} уроков
             </p>
           </div>
         </div>
@@ -55,12 +60,12 @@ const props = defineProps({
         <div class="footer-info">
           <div class="start">
             <p class="start-title">Начало</p>
-            <p class="date">{{ formateDate(props.data.StartDate) }}</p>
+            <p class="date">{{ formateDate(data.StartDate) }}</p>
           </div>
           <div class="vertical-divider"></div>
           <div class="duration-block">
             <p class="duration-title">Длительность</p>
-            <p class="duration">{{ props.data.Duration }}</p>
+            <p class="duration">{{ data.Duration }}</p>
           </div>
         </div>
         <button class="goto">
