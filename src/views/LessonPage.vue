@@ -54,7 +54,7 @@ onMounted(() => {
       <Breadcrumbs />
       <CourceCard :data="courseData" />
       <div class="nav">
-        <SlideNavBar v-model="buttonId" />
+        <SlideNavBar :courseId="courseId" v-model="buttonId" />
         <CourseAdminPanel :isOnEdit="true" :isPaused="false" />
       </div>
       <router-link

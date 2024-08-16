@@ -165,7 +165,7 @@ const activeMenuButtonIndex = ref(null);
     v-if="isWindowActive['editTheme'].status"
   />
   <DeleteThemeModalWindow
-    :getLessons="getLessons"
+    :getTopics="getTopics"
     :themeId="topicId + 1"
     :id="topics[topicId].UniqueID"
     :title="topics[topicId].Name"
@@ -250,7 +250,10 @@ const activeMenuButtonIndex = ref(null);
           <div class="homework-wrapper">
             <router-link
               class="router-link"
-              :to="{ path: `/homework/${element.id}`, query: { buttonId: 2 } }"
+              :to="{
+                path: `/homework/${element.id}`,
+                query: { buttonId: 2, id: courseId },
+              }"
               v-for="element in homeworks"
             >
               <HomeworkCard :data="element" :isAdmin="false" />

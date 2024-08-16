@@ -7,12 +7,26 @@ import GoBackButton from "@/components/GoBackButton.vue";
 import Homework from "@/components/Homework.vue";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
+import { fetcher } from "@/functions/fetcher";
 const $route = useRoute();
 
 const buttonId = ref(null || 1);
+const courseId = Number($route.query.id);
+const courseData = ref({});
+const isLoading = ref(false);
+
+const courseUrl = `https://dev.aiostudy.com/api/v1/courses/get-course?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}&CourseID=${courseId}`;
 
 onMounted(() => {
   buttonId.value = Number($route.query.buttonId || 1);
+  const promise = fetcher(courseUrl);
+  isLoading.value = true;
+  promise.then((data) => {
+    courseData.value = data.Course;
+    isLoading.value = false;
+  });
 });
 </script>
 
@@ -20,9 +34,14 @@ onMounted(() => {
   <HeaderComponent />
   <div class="homework-page">
     <div class="homework-page-wrapper">
-      <CourceCard />
-      <SlideNavBar v-model="buttonId" />
-      <router-link to="/education" class="router-link"
+      <CourceCard v-if="!isLoading" :data="courseData" />
+      <SlideNavBar :courseId="courseId" v-model="buttonId" />
+      <router-link
+        :to="{
+          path: '/education',
+          query: { buttonId: buttonId, id: courseId },
+        }"
+        class="router-link"
         ><GoBackButton />
       </router-link>
       <Homework :data="homeworks[$route.params.id - 1]" :isAdmin="true" />

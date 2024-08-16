@@ -37,7 +37,7 @@ watch(jsonData, () => {
           <div class="course-box-item-add">
             <div class="center">
               <img src="@/assets/icons/button-icons/add.svg" alt="" />
-              <p>Добавить урок</p>
+              <p>Добавить курс</p>
             </div>
           </div>
         </a>
