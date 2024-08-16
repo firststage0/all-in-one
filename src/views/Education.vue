@@ -92,8 +92,6 @@ const getLessons = () => {
       });
     }
   }
-  console.log("Lessons ", lessons.value);
-  console.log("Topics ", topics.value);
 };
 
 const buttonId = ref(null);
