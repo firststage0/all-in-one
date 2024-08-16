@@ -1,6 +1,6 @@
 <script setup>
 import Lesson from "@/components/Lesson.vue";
-import globalData from "@/data/globalData.json";
+import lessons from "@/data/lessons.json";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CourceCard from "@/components/CourceCard.vue";
 import SlideNavBar from "@/components/SlideNavBar.vue";
@@ -10,6 +10,7 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import CourseAdminPanel from "@/components/CourseAdminPanel.vue";
 import { fetcher } from "@/functions/fetcher";
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 const $route = useRoute();
 
 const buttonId = ref(null || 1);
@@ -23,9 +24,9 @@ const lessonId = Number($route.query.lessonId);
 const lessonUrl = `https://dev.aiostudy.com/api/v1/courses/get-lesson?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }&TopicID=${topicId}&LessonID=${lessonId}`;
-const courseUrl = `https://dev.aiostudy.com/api/v1/courses/get-course?UserToken=${
+const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
-}&CourseID=${courseId}`;
+}`;
 
 const getData = (url) => {
   return fetcher(url).then((data) => {
@@ -35,11 +36,16 @@ const getData = (url) => {
 
 onMounted(() => {
   buttonId.value = Number($route.query.buttonId || 1);
-  const promise = getData(courseUrl);
-
+  const promise = getData(url);
   promise.then((data) => {
-    courseData.value = data.Course;
+    for (const element of data.Courses) {
+      if (element.UniqueID === courseId) {
+        courseData.value = element;
+      }
+    }
+    isLoading.value = false;
   });
+
   const promise2 = getData(lessonUrl);
   promise2.then((data) => {
     lessonData.value = data.Lesson;
@@ -49,26 +55,30 @@ onMounted(() => {
 
 <template>
   <HeaderComponent />
-  <div class="lesson-page">
-    <div class="lesson-page-wrapper">
-      <Breadcrumbs />
-      <CourceCard :data="courseData" />
-      <div class="nav">
-        <SlideNavBar :courseId="courseId" v-model="buttonId" />
-        <CourseAdminPanel :isOnEdit="true" :isPaused="false" />
+  <perfect-scrollbar id="app">
+    <div class="lesson-page">
+      <div class="lesson-page-wrapper">
+        <Breadcrumbs />
+        <CourceCard :data="courseData" />
+        <div class="nav">
+          <SlideNavBar :courseId="courseId" v-model="buttonId" />
+          <CourseAdminPanel :isOnEdit="true" :isPaused="false" />
+        </div>
+        <router-link
+          :to="{ path: '/education', query: { buttonId: 1, id: courseId } }"
+          class="router-link"
+          ><GoBackButton />
+        </router-link>
+
+        <Lesson :data="lessons[0]" :isAdmin="true" />
       </div>
-      <router-link
-        :to="{ path: '/education', query: { buttonId: 1, id: courseId } }"
-        class="router-link"
-        ><GoBackButton />
-      </router-link>
-      <!-- <Lesson :data="lessons[$route.params.id - 1]" :isAdmin="true" /> -->
     </div>
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <style scoped>
 .lesson-page {
+  margin-top: calc(var(--header-height) + 26px);
   width: 100%;
   height: 100%;
   display: flex;
@@ -86,7 +96,7 @@ onMounted(() => {
 }
 
 .lesson-page-wrapper {
-  margin-top: calc(var(--header-height) + 16px);
+  /* margin-top: calc(var(--header-height) + 26px); */
   margin-bottom: 42px;
   width: 1440px;
   height: 100%;

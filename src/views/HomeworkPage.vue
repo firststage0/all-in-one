@@ -15,16 +15,20 @@ const courseId = Number($route.query.id);
 const courseData = ref({});
 const isLoading = ref(false);
 
-const courseUrl = `https://dev.aiostudy.com/api/v1/courses/get-course?UserToken=${
+const courseUrl = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
-}&CourseID=${courseId}`;
+}`;
 
 onMounted(() => {
   buttonId.value = Number($route.query.buttonId || 1);
   const promise = fetcher(courseUrl);
   isLoading.value = true;
   promise.then((data) => {
-    courseData.value = data.Course;
+    for (const element of data.Courses) {
+      if (element.UniqueID === courseId) {
+        courseData.value = element;
+      }
+    }
     isLoading.value = false;
   });
 });

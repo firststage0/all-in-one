@@ -13,6 +13,8 @@ const props = defineProps({
   isAdmin: Boolean,
 });
 
+console.log(props.data);
+
 const currentPage = ref(1);
 const maxPage = ref(props.data?.pages.length);
 
@@ -27,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="lesson-page">
+  <div class="lesson-page-component">
     <header class="lesson-header">
       <div class="header-top">
         <p class="lessons-count">
@@ -105,7 +107,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.lesson-page {
+.lesson-page-component {
   display: flex;
   flex-direction: column;
   gap: 16px;
