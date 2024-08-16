@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-
+import globalData from "@/data/globalData.json";
 import "@/assets/main.css";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CourceCard from "@/components/CourceCard.vue";
@@ -9,6 +9,7 @@ import NoActiveCources from "@/components/NoActiveCources.vue";
 import AllCources from "@/components/AllCources.vue";
 import { fetcher } from "@/functions/fetcher";
 import roles from "@/data/roles.json";
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const jsonData = ref({});
 const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
@@ -31,55 +32,55 @@ const isLoading = ref(false);
 
 onMounted(() => {
   const promise = fetcher(url);
-
   isLoading.value = true;
   promise.then((data) => {
     jsonData.value = data;
     isLoading.value = false;
   });
-  console.log(jsonData.value);
 });
 </script>
 
 <template>
   <HeaderComponent />
-  <div v-if="!isLoading" class="container">
-    <div class="navigation-block">
-      <button class="navigation-button" @click="showLeftBlock">
-        <p>Курсы</p>
-      </button>
-      <button class="navigation-button" @click="showRightBlock">
-        <p>Моё обучение</p>
-      </button>
-      <div :class="`marker ${isLeftBlockActive ? 'left' : 'right'}`"></div>
-    </div>
+  <perfect-scrollbar id="app">
+    <div v-if="!isLoading" class="container">
+      <div class="navigation-block">
+        <button class="navigation-button" @click="showLeftBlock">
+          <p>Курсы</p>
+        </button>
+        <button class="navigation-button" @click="showRightBlock">
+          <p>Моё обучение</p>
+        </button>
+        <div :class="`marker ${isLeftBlockActive ? 'left' : 'right'}`"></div>
+      </div>
 
-    <div v-if="!isLeftBlockActive" class="education-block">
-      <router-link
-        v-for="(element, index) in jsonData.Courses"
-        v-if="!isLoading"
-        :to="{
-          path: '/education',
-          query: { buttonId: 1, id: element.UniqueID },
-          props: { data: jsonData.value },
-        }"
-        class="router-link"
-      >
-        <CourceCard
-          v-if="scenario === 0 && !isLoading"
-          :isFooterActive="true"
-          :data="element"
-        />
-      </router-link>
+      <div v-if="!isLeftBlockActive" class="education-block">
+        <router-link
+          v-for="(element, index) in jsonData.Courses"
+          v-if="!isLoading"
+          :to="{
+            path: '/education',
+            query: { buttonId: 1, id: element.UniqueID },
+            props: { data: jsonData.value },
+          }"
+          class="router-link"
+        >
+          <CourceCard
+            @click="globalData.courseId = element.UniqueID"
+            v-if="scenario === 0 && !isLoading"
+            :isFooterActive="true"
+            :data="element"
+          />
+        </router-link>
 
-      <CourcesNoConnectedWallet v-if="scenario === 1" />
+        <CourcesNoConnectedWallet v-if="scenario === 1" />
 
-      <NoActiveCources v-if="scenario === 2" />
-    </div>
-    <div v-if="isLeftBlockActive">
-      <AllCources :isAdmin="roles.admin" />
-    </div>
-  </div>
+        <NoActiveCources v-if="scenario === 2" />
+      </div>
+      <div v-if="isLeftBlockActive">
+        <AllCources :isAdmin="roles.admin" />
+      </div></div
+  ></perfect-scrollbar>
 </template>
 
 <style scoped>

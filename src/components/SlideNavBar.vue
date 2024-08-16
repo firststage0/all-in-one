@@ -1,6 +1,8 @@
 <script setup>
 const buttonId = defineModel();
-
+const props = defineProps({
+  courseId: Number,
+});
 const toogleNavButton = (id) => {
   buttonId.value = id;
 };
@@ -10,7 +12,7 @@ const toogleNavButton = (id) => {
   <nav class="nav-bar">
     <router-link
       class="router-link"
-      :to="{ path: '/education', query: { buttonId: 1 } }"
+      :to="{ path: '/education', query: { buttonId: 1, id: props.courseId } }"
     >
       <button
         :class="`nav-button ${buttonId === 1 ? 'active' : ''}`"
@@ -21,7 +23,7 @@ const toogleNavButton = (id) => {
     >
     <router-link
       class="router-link"
-      :to="{ path: '/education', query: { buttonId: 2 } }"
+      :to="{ path: '/education', query: { buttonId: 2, id: props.courseId } }"
     >
       <button
         :class="`nav-button ${buttonId === 2 ? 'active' : ''}`"
@@ -32,7 +34,7 @@ const toogleNavButton = (id) => {
     </router-link>
     <router-link
       class="router-link"
-      :to="{ path: '/education', query: { buttonId: 3 } }"
+      :to="{ path: '/education', query: { buttonId: 3, id: props.courseId } }"
     >
       <button
         :class="`nav-button ${buttonId === 3 ? 'active' : ''}`"

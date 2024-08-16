@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 const course = ref({
   title: null,
   level: null,
@@ -39,138 +39,140 @@ const onFileChange = (e) => {
 
 <template>
   <HeaderComponent />
-  <div class="page">
-    <div class="container">
-      <p class="title">Добавление курса</p>
-      <div class="wrapper">
-        <div class="settings">
-          <div class="setting">
-            <div class="setting-title">Обложка</div>
-            <label for="file-input" class="drag-and-drop">
-              <img src="@/assets/icons/button-icons/add-image.svg" alt="" />
-              <p>Перетащите или нажмите чтобы загрузить изображение</p>
-            </label>
-            <input
-              id="file-input"
-              type="file"
-              @change="onFileChange"
-              name="file"
-              class="file-input"
-            />
-          </div>
-          <div class="setting">
-            <div class="setting-title">Название курса</div>
-            <input
-              class="input"
-              type="text"
-              placeholder="Введите название курса"
-              v-model="course.title"
-            />
-          </div>
-          <div class="setting">
-            <div class="setting-title">Уровень</div>
-            <div class="levels">
-              <button
-                @click="changeLevel(0)"
-                :class="`level ${buttonId === 0 ? 'active' : ''}`"
-              >
-                Для начинающих
-              </button>
-              <button
-                @click="changeLevel(1)"
-                :class="`level ${buttonId === 1 ? 'active' : ''}`"
-              >
-                Для профессионалов
-              </button>
-              <button
-                @click="changeLevel(2)"
-                :class="`level ${buttonId === 2 ? 'active' : ''}`"
-              >
-                Для всех
-              </button>
-            </div>
-          </div>
-          <div class="setting">
-            <div class="setting-title">Сфера</div>
-            <input
-              v-model="course.sphere"
-              class="input"
-              type="text"
-              placeholder="Введите сферу курса"
-            />
-          </div>
-          <div class="setting">
-            <div class="setting-title">Цена курса</div>
-            <input
-              v-model="course.price"
-              class="input"
-              type="text"
-              placeholder="Введите контракт курса"
-            />
-          </div>
-          <div class="bottom-settings">
-            <div class="setting duration">
-              <div class="setting-title">Длительность курса</div>
+  <perfect-scrollbar id="app">
+    <div class="page">
+      <div class="container">
+        <p class="title">Добавление курса</p>
+        <div class="wrapper">
+          <div class="settings">
+            <div class="setting">
+              <div class="setting-title">Обложка</div>
+              <label for="file-input" class="drag-and-drop">
+                <img src="@/assets/icons/button-icons/add-image.svg" alt="" />
+                <p>Перетащите или нажмите чтобы загрузить изображение</p>
+              </label>
               <input
-                v-model="course.duration"
-                class="input"
-                type="text"
-                placeholder="Введите число"
+                id="file-input"
+                type="file"
+                @change="onFileChange"
+                name="file"
+                class="file-input"
               />
-              <p class="input-right-text">Мес.</p>
             </div>
             <div class="setting">
-              <div class="setting-title">Дата начала курса</div>
+              <div class="setting-title">Название курса</div>
               <input
-                v-model="course.date"
                 class="input"
                 type="text"
-                placeholder="дд.мм.гг"
+                placeholder="Введите название курса"
+                v-model="course.title"
               />
             </div>
+            <div class="setting">
+              <div class="setting-title">Уровень</div>
+              <div class="levels">
+                <button
+                  @click="changeLevel(0)"
+                  :class="`level ${buttonId === 0 ? 'active' : ''}`"
+                >
+                  Для начинающих
+                </button>
+                <button
+                  @click="changeLevel(1)"
+                  :class="`level ${buttonId === 1 ? 'active' : ''}`"
+                >
+                  Для профессионалов
+                </button>
+                <button
+                  @click="changeLevel(2)"
+                  :class="`level ${buttonId === 2 ? 'active' : ''}`"
+                >
+                  Для всех
+                </button>
+              </div>
+            </div>
+            <div class="setting">
+              <div class="setting-title">Сфера</div>
+              <input
+                v-model="course.sphere"
+                class="input"
+                type="text"
+                placeholder="Введите сферу курса"
+              />
+            </div>
+            <div class="setting">
+              <div class="setting-title">Цена курса</div>
+              <input
+                v-model="course.price"
+                class="input"
+                type="text"
+                placeholder="Введите контракт курса"
+              />
+            </div>
+            <div class="bottom-settings">
+              <div class="setting duration">
+                <div class="setting-title">Длительность курса</div>
+                <input
+                  v-model="course.duration"
+                  class="input"
+                  type="text"
+                  placeholder="Введите число"
+                />
+                <p class="input-right-text">Мес.</p>
+              </div>
+              <div class="setting">
+                <div class="setting-title">Дата начала курса</div>
+                <input
+                  v-model="course.date"
+                  class="input"
+                  type="text"
+                  placeholder="дд.мм.гг"
+                />
+              </div>
+            </div>
+            <button class="create"><p>Создать курс</p></button>
           </div>
-          <button class="create"><p>Создать курс</p></button>
-        </div>
-        <div class="card-block">
-          <p class="preview">Предпросмотр</p>
-          <div class="card">
-            <div class="top">
-              <div class="top-left">
-                <img src="@/assets/icons/programming.svg" alt="" />
-                <p class="sphere">
-                  {{ course?.sphere ? course.sphere : "Программирование" }}
-                </p>
-              </div>
-              <div class="top-right">
-                {{ course?.level ? course.level : "Для начинающих" }}
-              </div>
-            </div>
-            <div :class="`card-image ${imageUrl ? '' : 'empty'}`">
-              <img v-if="imageUrl" class="image" :src="imageUrl" alt="" />
-            </div>
-            <p class="card-title">{{ course?.title ? course.title : "-" }}</p>
-            <div class="card-bottom">
-              <div class="bottom-left">
-                <div class="bottom-block">
-                  <p class="card-bottom-title">Цена</p>
-                  <p class="card-bottom-value">
-                    {{ course?.price ? course.price : "-" }} USDT
+          <div class="card-block">
+            <p class="preview">Предпросмотр</p>
+            <div class="card">
+              <div class="top">
+                <div class="top-left">
+                  <img src="@/assets/icons/programming.svg" alt="" />
+                  <p class="sphere">
+                    {{ course?.sphere ? course.sphere : "Программирование" }}
                   </p>
                 </div>
-                <div class="vertical-divider"></div>
-                <div class="bottom-block">
-                  <p class="card-bottom-title">Длительность</p>
-                  <p class="card-bottom-value">
-                    {{ course?.duration ? course.duration : "-" }} мес.
-                  </p>
+                <div class="top-right">
+                  {{ course?.level ? course.level : "Для начинающих" }}
                 </div>
               </div>
-              <div class="bottom-right">
-                <div class="bottom-block">
-                  <p class="card-bottom-title start">Начало</p>
-                  <p class="card-bottom-value">
-                    {{ course?.date ? course.date : "-" }}
-                  </p>
+              <div :class="`card-image ${imageUrl ? '' : 'empty'}`">
+                <img v-if="imageUrl" class="image" :src="imageUrl" alt="" />
+              </div>
+              <p class="card-title">{{ course?.title ? course.title : "-" }}</p>
+              <div class="card-bottom">
+                <div class="bottom-left">
+                  <div class="bottom-block">
+                    <p class="card-bottom-title">Цена</p>
+                    <p class="card-bottom-value">
+                      {{ course?.price ? course.price : "-" }} USDT
+                    </p>
+                  </div>
+                  <div class="vertical-divider"></div>
+                  <div class="bottom-block">
+                    <p class="card-bottom-title">Длительность</p>
+                    <p class="card-bottom-value">
+                      {{ course?.duration ? course.duration : "-" }} мес.
+                    </p>
+                  </div>
+                </div>
+                <div class="bottom-right">
+                  <div class="bottom-block">
+                    <p class="card-bottom-title start">Начало</p>
+                    <p class="card-bottom-value">
+                      {{ course?.date ? course.date : "-" }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -178,7 +180,7 @@ const onFileChange = (e) => {
         </div>
       </div>
     </div>
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <style scoped>
@@ -420,7 +422,8 @@ const onFileChange = (e) => {
 }
 
 .image {
-  width: 240px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .card-bottom {
