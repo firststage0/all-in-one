@@ -6,6 +6,7 @@ import WhatLearn from "@/components/WhatLearn.vue";
 import CourceProgram from "@/components/CourceProgram.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import Experts from "@/components/Experts.vue";
 import "@/assets/main.css";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -36,7 +37,9 @@ promise.then((data) => {
           <FutureAchievements />
         </div>
         <div class="container"><CourceProgram /></div>
+        <div class="container"><Experts /></div>
       </main>
+
       <footer class="footer">
         <div class="container">
           <FooterComponent
