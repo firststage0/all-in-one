@@ -12,7 +12,7 @@ import roles from "@/data/roles.json";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const jsonData = ref({});
-const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
+const url = `https://dev.aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
