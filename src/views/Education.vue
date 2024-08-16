@@ -121,7 +121,7 @@ onMounted(() => {
 watch(topics, () => {
   setTimeout(() => {
     getLessons();
-  }, 100);
+  }, 300);
 });
 
 const activeMenuButtonIndex = ref(null);
