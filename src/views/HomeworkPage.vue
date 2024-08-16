@@ -5,6 +5,7 @@ import SlideNavBar from "@/components/SlideNavBar.vue";
 import homeworks from "@/data/homeworks.json";
 import GoBackButton from "@/components/GoBackButton.vue";
 import Homework from "@/components/Homework.vue";
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import { fetcher } from "@/functions/fetcher";
@@ -36,21 +37,23 @@ onMounted(() => {
 
 <template>
   <HeaderComponent />
-  <div class="homework-page">
-    <div class="homework-page-wrapper">
-      <CourceCard v-if="!isLoading" :data="courseData" />
-      <SlideNavBar :courseId="courseId" v-model="buttonId" />
-      <router-link
-        :to="{
-          path: '/education',
-          query: { buttonId: buttonId, id: courseId },
-        }"
-        class="router-link"
-        ><GoBackButton />
-      </router-link>
-      <Homework :data="homeworks[$route.params.id - 1]" :isAdmin="true" />
+  <PerfectScrollbar id="app">
+    <div class="homework-page">
+      <div class="homework-page-wrapper">
+        <CourceCard v-if="!isLoading" :data="courseData" />
+        <SlideNavBar :courseId="courseId" v-model="buttonId" />
+        <router-link
+          :to="{
+            path: '/education',
+            query: { buttonId: buttonId, id: courseId },
+          }"
+          class="router-link"
+          ><GoBackButton />
+        </router-link>
+        <Homework :data="homeworks[$route.params.id - 1]" :isAdmin="true" />
+      </div>
     </div>
-  </div>
+  </PerfectScrollbar>
 </template>
 
 <style scoped>
