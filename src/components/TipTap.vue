@@ -53,6 +53,7 @@
       </div>
     </div>
     <editor-content
+      @update:modelValue="(value) => $emit('update:modelValue', value)"
       @click="editor.commands.focus()"
       class="tiptap ProseMirror"
       :editor="editor"

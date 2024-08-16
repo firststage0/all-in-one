@@ -68,6 +68,8 @@ watch([name, duration, type], () => {
   body.Course.LessonsToAdd[0].Type = type.value;
 });
 
+const description = ref(null);
+
 const createLesson = () => {
   fetchPost(url, body).then(() => {
     props.getLessons();
@@ -110,9 +112,7 @@ const createLesson = () => {
               <p class="duration-text">мин</p>
             </div>
           </div>
-          <div class="">
-            <TipTap />
-          </div>
+          <div class=""><TipTap v-model="description" /></div>
         </div>
       </main>
       <footer class="footer">
