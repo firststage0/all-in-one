@@ -1,9 +1,6 @@
 <script setup>
-import EditPanel from "@/components/EditPanel.vue";
-import EditLessonModalWindow from "@/components/EditLessonModalWindow.vue";
 import { isWindowActive } from "@/functions/modalWindowsStatus";
 import { useRouter } from "vue-router";
-import DeleteLessonModalWindow from "@/components/DeleteLessonModalWindow.vue";
 import { ref } from "firebase/storage";
 const props = defineProps({
   data: Object,
@@ -17,9 +14,15 @@ const props = defineProps({
 const router = useRouter();
 
 const navigate = (elementId) => {
-  console.log("navigate", elementId);
-
-  router.push({ path: `/lesson/${elementId}`, query: { buttonId: 1 } });
+  router.push({
+    path: `/lesson/${elementId}`,
+    query: {
+      buttonId: 1,
+      courseId: props.courseId,
+      topicId: props.topicId,
+      lessonId: props.lessonId,
+    },
+  });
 };
 
 const currentLessonId = ref(null);
@@ -34,22 +37,6 @@ const deleteLesson = () => {
 </script>
 
 <template>
-  <EditLessonModalWindow
-    :getLessons="props.getLessons"
-    :lessonId="props.data.UniqueID"
-    :courseId="props.courseId"
-    :topicId="props.topicId"
-    :data="props.data"
-    v-if="isWindowActive['editLesson'].status"
-  />
-  <DeleteLessonModalWindow
-    :getLessons="props.getLessons"
-    :data="props.data"
-    :courseId="props.courseId"
-    :lessonId="props.lessonId"
-    :topicId="props.topicId"
-    v-if="isWindowActive['deleteLesson'].status"
-  />
   <div
     :class="`card ${props.data.isCompleted ? 'inactive' : ''}`"
     @click="navigate(props.data.UniqueID)"
@@ -64,14 +51,7 @@ const deleteLesson = () => {
           />
           <p class="type-title">{{ props.data.Type }}</p>
         </div>
-        <div class="right">
-          <EditPanel
-            :id="currentLessonId"
-            v-if="props.isOnEdit"
-            :editFuncition="editLesson"
-            :deleteFunction="deleteLesson"
-          />
-        </div>
+        <div class="right"></div>
       </div>
 
       <p class="card-title">{{ props.data.Name }}</p>

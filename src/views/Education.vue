@@ -20,6 +20,8 @@ import NewLessonModalWindow from "@/components/NewLessonModalWindow.vue";
 import EditPanel from "@/components/EditPanel.vue";
 import EditThemeModalWindow from "@/components/EditThemeModalWindow.vue";
 import DeleteThemeModalWindow from "@/components/DeleteThemeModalWindow.vue";
+import EditLessonModalWindow from "@/components/EditLessonModalWindow.vue";
+import DeleteLessonModalWindow from "@/components/DeleteLessonModalWindow.vue";
 const $route = useRoute();
 const isMarked = ref({
   1: true,
@@ -27,8 +29,9 @@ const isMarked = ref({
   3: false,
 });
 
-const isLoading = ref(false);
 const courseId = Number($route.query.id);
+
+const isLoading = ref(false);
 
 const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
@@ -47,6 +50,17 @@ const courseData = ref({});
 const lessons = ref([]);
 
 const topicId = ref(null);
+const lessonId = ref(null);
+
+const handleEditLessonClick = (id) => {
+  lessonId.value = id;
+  toogleWindowStatus("editLesson");
+};
+
+const handleDeleteLessonClick = (id) => {
+  lessonId.value = id;
+  toogleWindowStatus("deleteLesson");
+};
 
 const handleEditTopicClick = (id) => {
   topicId.value = id;
@@ -112,6 +126,24 @@ const activeMenuButtonIndex = ref(null);
 
 <template>
   <HeaderComponent />
+
+  <DeleteLessonModalWindow
+    :getLessons="getLessons"
+    :data="lessons[activeMenuButtonIndex][lessonId]"
+    :courseId="courseId"
+    :lessonId="lessonId"
+    :topicId="topics[activeMenuButtonIndex].UniqueID"
+    v-if="isWindowActive['deleteLesson'].status"
+  />
+
+  <EditLessonModalWindow
+    :getLessons="getLessons"
+    :courseId="courseId"
+    :topicId="topics[activeMenuButtonIndex].UniqueID"
+    :data="lessons[activeMenuButtonIndex][lessonId]"
+    v-if="isWindowActive['editLesson'].status"
+  />
+
   <NewThemeModalWindow
     :courseId="courseData.UniqueID"
     :getTopics="getTopics"
@@ -190,7 +222,16 @@ const activeMenuButtonIndex = ref(null);
                 <p>Добавить урок</p>
               </div>
             </button>
-            <div v-for="element in lessons[activeMenuButtonIndex]">
+            <div
+              class="lessons"
+              v-for="(element, lesson_id) in lessons[activeMenuButtonIndex]"
+            >
+              <EditPanel
+                class="edit-panel"
+                :id="lesson_id"
+                :editFuncition="handleEditLessonClick"
+                :deleteFunction="handleDeleteLessonClick"
+              />
               <LessonCard
                 :getLessons="getLessons"
                 :lessonId="element.UniqueID"
@@ -232,6 +273,10 @@ const activeMenuButtonIndex = ref(null);
 </template>
 
 <style scoped>
+.lessons {
+  position: relative;
+}
+
 .ps__rail-y {
   top: calc(var(--header-height) + 16px);
 }

@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-
+import globalData from "@/data/globalData.json";
 import "@/assets/main.css";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CourceCard from "@/components/CourceCard.vue";
@@ -31,13 +31,11 @@ const isLoading = ref(false);
 
 onMounted(() => {
   const promise = fetcher(url);
-
   isLoading.value = true;
   promise.then((data) => {
     jsonData.value = data;
     isLoading.value = false;
   });
-  console.log(jsonData.value);
 });
 </script>
 
@@ -66,6 +64,7 @@ onMounted(() => {
         class="router-link"
       >
         <CourceCard
+          @click="globalData.courseId = element.UniqueID"
           v-if="scenario === 0 && !isLoading"
           :isFooterActive="true"
           :data="element"

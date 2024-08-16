@@ -52,6 +52,9 @@ const body = {
         Name: "",
         Duration: 0,
         Type: "",
+        Description: "Описание",
+        VideoBase64: "",
+        DocumentsBase64: [""],
       },
     ],
     LessonsToUpdate: [],
@@ -68,7 +71,6 @@ const createLesson = () => {
   console.log(body);
 
   fetchPost(url, body).then(() => {
-    props.getLessons();
     toogleWindowStatus("newLesson");
   });
 };

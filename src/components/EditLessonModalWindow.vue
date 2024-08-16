@@ -49,7 +49,7 @@ const body = {
     LessonsToAdd: [],
     LessonsToUpdate: [
       {
-        UniqueID: props.lessonId,
+        UniqueID: props.data.UniqueID,
         Name: "string",
         Duration: 0,
         Type: "Видеокурс",
@@ -73,7 +73,6 @@ watch([name, duration, type], () => {
 const editLesson = () => {
   console.log(body);
   fetchPost(url, body).then(() => {
-    props.getLessons();
     toogleWindowStatus("editLesson");
   });
 };
