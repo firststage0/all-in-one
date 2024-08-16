@@ -15,8 +15,6 @@ const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
-console.log(props.data);
-
 const buttonId = ref(null);
 
 const name = ref(props.data.Name);
@@ -41,18 +39,22 @@ const setType = () => {
 };
 
 const body = {
-  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  UserToken: "847ffb17-e4f1-4a5f-a2f5-a503fb1f2bc6",
   Course: {
-    UniqueID: props.courseId,
-    TopicID: props.topicId,
+    UniqueID: 3,
+    TopicID: 2,
     LessonsIDsToDel: [],
     LessonsToAdd: [],
     LessonsToUpdate: [
       {
         UniqueID: props.data.UniqueID,
-        Name: "string",
-        Duration: 0,
-        Type: "Видеокурс",
+        Name: name.value,
+        Duration: duration.value,
+        Type: type.value,
+        Description: "string",
+        VideoBase64: null,
+        DocumentsToDel: [],
+        DocumentsToAdd: [],
       },
     ],
   },
@@ -73,6 +75,7 @@ watch([name, duration, type], () => {
 const editLesson = () => {
   console.log(body);
   fetchPost(url, body).then(() => {
+    props.getLessons();
     toogleWindowStatus("editLesson");
   });
 };

@@ -83,6 +83,7 @@ const getTopics = () => {
 
 const getLessons = () => {
   if (topics.value) {
+    lessons.value = [];
     for (const i of topics.value) {
       const promise = fetcher(urlLessons + `&TopicID=${i.UniqueID}`);
       isLoading.value = true;
@@ -91,6 +92,8 @@ const getLessons = () => {
       });
     }
   }
+  console.log("Lessons ", lessons.value);
+  console.log("Topics ", topics.value);
 };
 
 const buttonId = ref(null);
@@ -131,7 +134,7 @@ const activeMenuButtonIndex = ref(null);
     :getLessons="getLessons"
     :data="lessons[activeMenuButtonIndex][lessonId]"
     :courseId="courseId"
-    :lessonId="lessonId"
+    :lessonId="lessons[activeMenuButtonIndex][lessonId].UniqueID"
     :topicId="topics[activeMenuButtonIndex].UniqueID"
     v-if="isWindowActive['deleteLesson'].status"
   />
@@ -150,19 +153,19 @@ const activeMenuButtonIndex = ref(null);
     v-if="isWindowActive['newTheme'].status"
   />
   <NewLessonModalWindow
-    :getTopics="getTopics"
+    :getLessons="getLessons"
     :courseId="courseData.UniqueID"
     :topicId="topics[activeMenuButtonIndex].UniqueID"
     v-if="isWindowActive['newLesson'].status"
   />
   <EditThemeModalWindow
-    :getTopics="getTopics"
+    :getLessons="getLessons"
     :id="topics[topicId].UniqueID"
     :title="topics[topicId].Name"
     v-if="isWindowActive['editTheme'].status"
   />
   <DeleteThemeModalWindow
-    :getTopics="getTopics"
+    :getLessons="getLessons"
     :themeId="topicId + 1"
     :id="topics[topicId].UniqueID"
     :title="topics[topicId].Name"

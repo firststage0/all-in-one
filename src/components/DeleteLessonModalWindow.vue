@@ -6,6 +6,7 @@ const props = defineProps({
   lessonId: Number,
   courseId: Number,
   topicId: Number,
+  getLessons: Function,
 });
 
 console.log(props.data);
