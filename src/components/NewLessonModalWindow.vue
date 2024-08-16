@@ -3,6 +3,7 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import LessonTypes from "./LessonTypes.vue";
 import { ref, watch } from "vue";
 import { fetchPost } from "@/functions/fetcher";
+import TipTap from "@/components/TipTap.vue";
 const buttonId = ref(0);
 const props = defineProps({
   courseId: Number,
@@ -67,6 +68,8 @@ watch([name, duration, type], () => {
   body.Course.LessonsToAdd[0].Type = type.value;
 });
 
+const description = ref(null);
+
 const createLesson = () => {
   fetchPost(url, body).then(() => {
     props.getLessons();
@@ -109,6 +112,7 @@ const createLesson = () => {
               <p class="duration-text">мин</p>
             </div>
           </div>
+          <div class=""><TipTap v-model="description" /></div>
         </div>
       </main>
       <footer class="footer">
@@ -122,6 +126,13 @@ const createLesson = () => {
 </template>
 
 <style scoped>
+.tiptap-block {
+  background-color: #1f2022;
+  height: 50px;
+  width: 100%;
+  border-radius: 12px;
+}
+
 .modal-window {
   position: fixed;
   top: 0;
