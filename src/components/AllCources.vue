@@ -8,7 +8,7 @@ const props = defineProps({
 });
 const isLoading = ref(false);
 const jsonData = ref({});
-const url = `https://aiostudy.com/api/v1/courses/get-courses?UserToken=${
+const url = `https://dev.aiostudy.com/api/v1/courses/get-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 

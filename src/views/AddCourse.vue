@@ -2,28 +2,38 @@
 import { ref } from "vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
-const course = ref({
-  title: null,
-  level: null,
-  sphere: null,
-  price: null,
-  duration: null,
-  date: null,
-  image: null,
-});
+import { fetchPost } from "../functions/fetcher";
+import img from "@/data/imgForCourse.json";
+const url = `https://dev.aiostudy.com/api/v1/courses/create-course?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}`;
+
+const body = {
+  UserToken: String(import.meta.env.VITE_APP_ADMIN_TOKEN),
+  Course: {
+    CoverBase64: img.url,
+    Name: "",
+    Сomplication: "Для начинающих",
+    Category: "",
+    Price: 0,
+    Currency: "USDT",
+    Duration: 0,
+    StartDate: "",
+  },
+};
 
 const buttonId = ref(0);
 const changeLevel = (level) => {
   buttonId.value = level;
   switch (level) {
     case 0:
-      course.value.level = "Для начинающих";
+      body.Course.Сomplication = "Для начинающих";
       break;
     case 1:
-      course.value.level = "Для профессионалов";
+      body.Course.Сomplication = "Для профессионалов";
       break;
     case 2:
-      course.value.level = "Для всех";
+      body.Course.Сomplication = "Для всех";
       break;
   }
 };
@@ -34,6 +44,12 @@ const onFileChange = (e) => {
   const file = e.target.files[0];
   imageUrl.value = URL.createObjectURL(file);
   console.log(file);
+};
+
+const createCourse = async () => {
+  fetchPost(url, body).then(() => {
+    console.log(body);
+  });
 };
 </script>
 
@@ -65,7 +81,7 @@ const onFileChange = (e) => {
                 class="input"
                 type="text"
                 placeholder="Введите название курса"
-                v-model="course.title"
+                v-model="body.Course.Name"
               />
             </div>
             <div class="setting">
@@ -94,7 +110,7 @@ const onFileChange = (e) => {
             <div class="setting">
               <div class="setting-title">Сфера</div>
               <input
-                v-model="course.sphere"
+                v-model="body.Course.Category"
                 class="input"
                 type="text"
                 placeholder="Введите сферу курса"
@@ -103,7 +119,7 @@ const onFileChange = (e) => {
             <div class="setting">
               <div class="setting-title">Цена курса</div>
               <input
-                v-model="course.price"
+                v-model="body.Course.Price"
                 class="input"
                 type="text"
                 placeholder="Введите контракт курса"
@@ -113,7 +129,7 @@ const onFileChange = (e) => {
               <div class="setting duration">
                 <div class="setting-title">Длительность курса</div>
                 <input
-                  v-model="course.duration"
+                  v-model="body.Course.Duration"
                   class="input"
                   type="text"
                   placeholder="Введите число"
@@ -123,14 +139,16 @@ const onFileChange = (e) => {
               <div class="setting">
                 <div class="setting-title">Дата начала курса</div>
                 <input
-                  v-model="course.date"
+                  v-model="body.Course.StartDate"
                   class="input"
                   type="text"
                   placeholder="дд.мм.гг"
                 />
               </div>
             </div>
-            <button class="create"><p>Создать курс</p></button>
+            <button @click="createCourse" class="create">
+              <p>Создать курс</p>
+            </button>
           </div>
           <div class="card-block">
             <p class="preview">Предпросмотр</p>
