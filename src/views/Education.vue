@@ -72,26 +72,30 @@ const handleDeleteTopicClick = (id) => {
   toogleWindowStatus("deleteTheme");
 };
 
-const getTopics = () => {
-  const promise = fetcher(urlTopics);
-  isLoading.value = true;
-  promise.then((data) => {
-    topics.value = data.Topics;
-    isLoading.value = false;
-  });
-};
-
-const getLessons = () => {
+const getLessons = async () => {
   if (topics.value) {
     lessons.value = [];
     for (const i of topics.value) {
       const promise = fetcher(urlLessons + `&TopicID=${i.UniqueID}`);
       isLoading.value = true;
-      promise.then((data) => {
+      await promise.then((data) => {
         lessons.value.push(data.Lessons);
       });
     }
   }
+};
+
+const getTopics = async () => {
+  const promise = fetcher(urlTopics);
+  isLoading.value = true;
+  await promise
+    .then((data) => {
+      topics.value = data.Topics;
+      isLoading.value = false;
+    })
+    .then(() => {
+      getLessons();
+    });
 };
 
 const buttonId = ref(null);
@@ -116,12 +120,6 @@ onMounted(() => {
     isLoading.value = false;
   });
   getTopics();
-});
-
-watch(topics, () => {
-  setTimeout(() => {
-    getLessons();
-  }, 300);
 });
 
 const activeMenuButtonIndex = ref(null);
@@ -218,7 +216,12 @@ const activeMenuButtonIndex = ref(null);
               <p class="description">{{ i.Name }}</p>
             </button>
           </div>
-          <div v-if="activeMenuButtonIndex !== null" class="lessons-block">
+          <div
+            v-if="
+              activeMenuButtonIndex !== null && lessons[activeMenuButtonIndex]
+            "
+            class="lessons-block"
+          >
             <button class="add-lesson" @click="toogleWindowStatus('newLesson')">
               <div class="center">
                 <img src="@/assets/icons/button-icons/add.svg" alt="" />
