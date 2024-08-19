@@ -3,6 +3,7 @@ import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import LessonTypes from "@/components/LessonTypes.vue";
 import { ref, watch } from "vue";
 import { fetchPost } from "@/functions/fetcher";
+import TipTap from "@/components/TipTap.vue";
 const props = defineProps({
   data: Object,
   courseId: Number,
@@ -15,11 +16,14 @@ const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
+console.log(props.data);
+
 const buttonId = ref(null);
 
 const name = ref(props.data.Name);
 const duration = ref(props.data.Duration);
 const type = ref(props.data.Type);
+const description = ref(props.data.Description);
 
 const setType = () => {
   switch (type.value) {
@@ -51,7 +55,7 @@ const body = {
         Name: name.value,
         Duration: duration.value,
         Type: type.value,
-        Description: "string",
+        Description: "",
         VideoBase64: null,
         DocumentsToDel: [],
         DocumentsToAdd: [],
@@ -66,16 +70,25 @@ watch(type, () => {
   setType();
 });
 
-watch([name, duration, type], () => {
-  body.Course.LessonsToUpdate[0].Name = name.value;
-  body.Course.LessonsToUpdate[0].Duration = duration.value;
+watch([name, duration, type, description], () => {
+  body.Course.LessonsToUpdate[0].Name = name.value ? name.value : null;
+  body.Course.LessonsToUpdate[0].Duration = duration.value
+    ? duration.value
+    : null;
   body.Course.LessonsToUpdate[0].Type = type.value;
+  body.Course.LessonsToUpdate[0].Description = description.value
+    ? description.value
+    : null;
+});
+
+watch(description, () => {
+  console.log(description.value);
 });
 
 const editLesson = () => {
-  console.log(body);
   fetchPost(url, body).then(() => {
     props.getLessons();
+    console.log(body);
     toogleWindowStatus("editLesson");
   });
 };
@@ -114,6 +127,7 @@ const editLesson = () => {
               />
               <p class="duration-text">мин</p>
             </div>
+            <div class="editor"><TipTap v-model="description" /></div>
           </div>
         </div>
       </main>

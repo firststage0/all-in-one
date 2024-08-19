@@ -15,11 +15,10 @@ const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
-console.log(props.courseId, props.topicId);
-
 const type = ref("Видеокурс");
 const duration = ref(null);
 const name = ref(null);
+const description = ref("");
 
 const setType = () => {
   switch (type.value) {
@@ -53,7 +52,7 @@ const body = {
         Name: "",
         Duration: 0,
         Type: "",
-        Description: "Описание",
+        Description: "",
         VideoBase64: null,
         DocumentsBase64: [],
       },
@@ -62,17 +61,17 @@ const body = {
   },
 };
 
-watch([name, duration, type], () => {
+watch([name, duration, type, description], () => {
   body.Course.LessonsToAdd[0].Name = name.value;
   body.Course.LessonsToAdd[0].Duration = duration.value;
   body.Course.LessonsToAdd[0].Type = type.value;
+  body.Course.LessonsToAdd[0].Description = description.value;
 });
-
-const description = ref(null);
 
 const createLesson = () => {
   fetchPost(url, body).then(() => {
     props.getLessons();
+    console.log(body);
     toogleWindowStatus("newLesson");
   });
 };
@@ -112,7 +111,7 @@ const createLesson = () => {
               <p class="duration-text">мин</p>
             </div>
           </div>
-          <div class=""><TipTap v-model="description" /></div>
+          <div class="editor"><TipTap v-model="description" /></div>
         </div>
       </main>
       <footer class="footer">
@@ -225,6 +224,9 @@ const createLesson = () => {
   border-radius: 12px;
   padding: 12px 16px;
   background: #2a2b2e;
+  font-family: var(--inter-semibold-font);
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .input::placeholder {
@@ -297,6 +299,12 @@ const createLesson = () => {
   background: linear-gradient(90deg, #2870dd 0%, #255cea 100%);
   font-family: var(--inter-font);
   font-weight: bold;
+  font-size: 16px;
+}
+
+.editor {
+  font-family: var(--inter-semibold-font);
+  font-weight: 600;
   font-size: 16px;
 }
 </style>
