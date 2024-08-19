@@ -62,10 +62,10 @@ const body = {
 };
 
 watch([name, duration, type, description], () => {
-  body.Course.LessonsToAdd[0].Name = name.value;
-  body.Course.LessonsToAdd[0].Duration = duration.value;
+  body.Course.LessonsToAdd[0].Name = name.value || "Новый урок";
+  body.Course.LessonsToAdd[0].Duration = duration.value || 0;
   body.Course.LessonsToAdd[0].Type = type.value;
-  body.Course.LessonsToAdd[0].Description = description.value;
+  body.Course.LessonsToAdd[0].Description = description.value || "";
 });
 
 const createLesson = () => {
