@@ -67,7 +67,7 @@ const props = defineProps({
   width: fit-content;
   height: 100%;
   border-radius: 12px;
-  padding: 1px;
+  padding: 1px 1px 2px 1px;
   background: linear-gradient(135deg, #2870dd 0%, #aa54b7 100%);
 }
 

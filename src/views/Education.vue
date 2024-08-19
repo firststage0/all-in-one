@@ -33,7 +33,7 @@ const courseId = Number($route.query.id);
 
 const isLoading = ref(false);
 
-const url = `https://aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
+const url = `https://dev.aiostudy.com/api/v1/courses/get-own-courses?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
@@ -51,6 +51,8 @@ const lessons = ref([]);
 
 const topicId = ref(null);
 const lessonId = ref(null);
+
+const activeMenuButtonIndex = ref(null);
 
 const handleEditLessonClick = (id) => {
   lessonId.value = id;
@@ -95,6 +97,7 @@ const getTopics = async () => {
     })
     .then(() => {
       getLessons();
+      console.log(lessons.value);
     });
 };
 
@@ -121,8 +124,6 @@ onMounted(() => {
   });
   getTopics();
 });
-
-const activeMenuButtonIndex = ref(null);
 </script>
 
 <template>
@@ -348,7 +349,7 @@ const activeMenuButtonIndex = ref(null);
   align-items: flex-start;
   width: 296px;
   height: 48px;
-  padding: 1px;
+  padding: 1px 1px 1px 2px;
 }
 
 .add-theme {
