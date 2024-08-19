@@ -97,7 +97,6 @@ const getTopics = async () => {
     })
     .then(() => {
       getLessons();
-      console.log(lessons.value);
     });
 };
 
@@ -142,7 +141,8 @@ onMounted(() => {
     :getLessons="getLessons"
     :courseId="courseId"
     :topicId="topics[activeMenuButtonIndex].UniqueID"
-    :data="lessons[activeMenuButtonIndex][lessonId]"
+    :uniqueID="lessons[activeMenuButtonIndex][lessonId].UniqueID"
+    :lessonId="lessons[activeMenuButtonIndex][lessonId].UniqueID"
     v-if="isWindowActive['editLesson'].status"
   />
 

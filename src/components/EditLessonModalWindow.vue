@@ -1,29 +1,51 @@
 <script setup>
 import { toogleWindowStatus } from "@/functions/modalWindowsStatus";
 import LessonTypes from "@/components/LessonTypes.vue";
-import { ref, watch } from "vue";
-import { fetchPost } from "@/functions/fetcher";
+import { onMounted, ref, watch } from "vue";
+import { fetcher, fetchPost } from "@/functions/fetcher";
 import TipTap from "@/components/TipTap.vue";
 const props = defineProps({
-  data: Object,
+  uniqueID: Number,
   courseId: Number,
   topicId: Number,
   lessonId: Number,
   getLessons: Function,
 });
 
-const url = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
+const jsonData = ref({});
+
+const url = `https://dev.aiostudy.com/api/v1/courses/get-lesson?UserToken=${
+  import.meta.env.VITE_APP_ADMIN_TOKEN
+}&TopicID=${props.topicId}&LessonID=${props.lessonId}`;
+
+const isLoading = ref(false);
+
+onMounted(() => {
+  isLoading.value = true;
+  fetcher(url).then((data) => {
+    jsonData.value = data.Lesson;
+    isLoading.value = false;
+  });
+});
+
+const urlUpdate = `https://dev.aiostudy.com/api/v1/courses/update-lessons?UserToken=${
   import.meta.env.VITE_APP_ADMIN_TOKEN
 }`;
 
-console.log(props.data);
-
 const buttonId = ref(null);
 
-const name = ref(props.data.Name);
-const duration = ref(props.data.Duration);
-const type = ref(props.data.Type);
-const description = ref(props.data.Description);
+const name = ref(null);
+const duration = ref(null);
+const type = ref(null);
+const description = ref(null);
+
+watch(jsonData, () => {
+  name.value = jsonData.value.Name;
+  duration.value = jsonData.value.Duration;
+  type.value = jsonData.value.Type;
+  description.value = jsonData.value.Description;
+  console.log(description.value);
+});
 
 const setType = () => {
   switch (type.value) {
@@ -51,7 +73,7 @@ const body = {
     LessonsToAdd: [],
     LessonsToUpdate: [
       {
-        UniqueID: props.data.UniqueID,
+        UniqueID: props.uniqueID,
         Name: name.value,
         Duration: duration.value,
         Type: type.value,
@@ -81,21 +103,20 @@ watch([name, duration, type, description], () => {
     : null;
 });
 
-watch(description, () => {
-  console.log(description.value);
-});
-
 const editLesson = () => {
-  fetchPost(url, body).then(() => {
+  fetchPost(urlUpdate, body).then(() => {
     props.getLessons();
-    console.log(body);
     toogleWindowStatus("editLesson");
   });
 };
 </script>
 
 <template>
-  <div class="modal-window" @click.self="toogleWindowStatus('editLesson')">
+  <div
+    v-if="!isLoading"
+    class="modal-window"
+    @click.self="toogleWindowStatus('editLesson')"
+  >
     <div class="wrapper">
       <header class="header">
         <p class="header-title">Редактирование урока</p>
@@ -163,7 +184,6 @@ const editLesson = () => {
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 16px;
   width: 496px;
-
   background: #232427;
 }
 
@@ -228,6 +248,9 @@ const editLesson = () => {
   border-radius: 12px;
   padding: 12px 16px;
   background: #2a2b2e;
+  font-family: var(--inter-semibold-font);
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .input::placeholder {
@@ -306,6 +329,12 @@ const editLesson = () => {
   background: linear-gradient(90deg, #2870dd 0%, #255cea 100%);
   font-family: var(--inter-font);
   font-weight: bold;
+  font-size: 16px;
+}
+
+.editor {
+  font-family: var(--inter-semibold-font);
+  font-weight: 600;
   font-size: 16px;
 }
 </style>
